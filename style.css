@@ -228,13 +228,16 @@ h1 {
   margin-top: 10px;
 }
 
-/* 検索結果のフェードイン */
 #results {
   opacity: 0;
-  transition: opacity 0.6s ease-in-out;
+  visibility: hidden; /* displayではなくvisibilityを使う */
+  transition: opacity 0.6s ease-in-out, visibility 0s 0.6s;
 }
+
 #results.show {
   opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s ease-in-out;
 }
 
 /* 検索ボタンのクリックアニメーション */
