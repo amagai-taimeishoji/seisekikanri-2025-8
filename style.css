@@ -81,7 +81,7 @@ h1 {
   background-color: white; /* 数値セルは白 */
   font-size: 3vw; /* 数値の文字サイズ */
   justify-content: flex-end; /* データは右寄せ */
-  text-align: right;
+  text-align: right !important;
   height: 10vw;
   width: 20vw;
   padding-right: 4px;
