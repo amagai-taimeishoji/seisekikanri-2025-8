@@ -56,7 +56,11 @@ document.getElementById("search-button").addEventListener("click", async () => {
     const data = await response.json();
 
     if (data.error) {
-  status.textContent = "選択した年月のデータは見つからないよっ。";
+  if (data.error.includes("シート") && data.error.includes("見つかりません")) {
+    status.textContent = "選択した年月のデータは見つからないよっ";
+  } else {
+    status.textContent = data.error; // 他のエラーはそのまま表示
+  }
   return;
 }
 
