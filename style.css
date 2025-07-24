@@ -96,12 +96,13 @@ h1 {
 #bar-chart {
   width: 100%;
   max-width: 90vw;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 #pie-chart {
   width: 60%;
   max-width: 90vw;
+  margin-top:0px;
   margin-bottom: 20px;
 }
 
