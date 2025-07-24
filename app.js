@@ -17,7 +17,7 @@ function createBarChart(scores) {
   ];
 
   const colors = labels.map(label =>
-    label === "最新" ? "rgba(255, 206, 86, 0.8)" : "rgba(200, 160, 255, 0.6)"
+    label === "最新" ? "rgba(255, 206, 86, 1)" : "rgba(150, 100, 230, 0.9)"
   );
 
   barChartInstance = new Chart(chartCtx, {
@@ -32,8 +32,25 @@ function createBarChart(scores) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } }
+      maintainAspectRatio: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMin: Math.min(...reorderedScores, 0),
+          suggestedMax: Math.max(...reorderedScores, 0),
+          ticks: {
+            color: "#333",
+            font: { size: 14 }
+          }
+        },
+        x: {
+          ticks: {
+            color: "#333",
+            font: { size: 14 }
+          }
+        }
+      }
     }
   });
 }
@@ -57,10 +74,10 @@ function createPieChart(data) {
           data["よんちゃ率"] * 100
         ],
         backgroundColor: [
-          "rgba(255, 99, 99, 0.7)",   // トップ：やさしい赤
-          "rgba(255, 159, 64, 0.7)",  // にちゃ：やさしいオレンジ
-          "rgba(99, 255, 132, 0.7)",  // さんちゃ：やさしい緑
-          "rgba(99, 159, 255, 0.7)"   // よんちゃ：やさしい青
+          "rgba(230, 70, 70, 0.9)",   // トップ：濃いめ赤
+          "rgba(255, 140, 50, 0.9)",  // にちゃ：濃いめオレンジ
+          "rgba(70, 200, 100, 0.9)",  // さんちゃ：濃いめ緑
+          "rgba(60, 120, 230, 0.9)"   // よんちゃ：濃いめ青
         ]
       }]
     },
