@@ -125,7 +125,15 @@ h1 {
   width: 90%;
   max-width: 500px;
   height: auto !important;
-  aspect-ratio: 1 / 1;
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+#bar-chart {
+  width: 90%;
+  max-width: 600px;
+  aspect-ratio: 3 / 2; /* 横:縦 = 3:2 に固定 */
+  height: auto !important;
   display: block;
   margin: 0 auto 20px auto;
 }
