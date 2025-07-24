@@ -71,9 +71,10 @@ h1 {
 }
 
 #status-message {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 3.5vw;
   color: red;
+  text-align: center;
 }
 
 /* 結果表示エリア */
