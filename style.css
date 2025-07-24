@@ -176,3 +176,11 @@ h1 {
   margin-top: -45px;
   margin-bottom: 20px;
 }
+
+#status-message {
+  display: block;
+  margin-top: 10px; /* 検索エリアの下に余白 */
+  font-size: 3.5vw;
+  color: red;
+  text-align: center;
+}
