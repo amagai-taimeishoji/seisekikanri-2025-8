@@ -13,14 +13,6 @@ function getDisplayLabel(key) {
   return displayLabels[key] || key;
 }
 
-// スコア表示フォーマット（NaN対応）
-function formatScore(value) {
-  if (value === null || value === undefined || isNaN(value)) {
-    return "データ不足";
-  }
-  return `${Number(value).toFixed(1)}pt`;
-}
-
 // 年・月の選択肢を動的に作成
 const yearSelect = document.getElementById("year-select");
 const monthSelect = document.getElementById("month-select");
@@ -147,8 +139,8 @@ document.getElementById("search-button").addEventListener("click", async () => {
     // 棒グラフ
     createBarChart([
       data["2"], data["3"], data["4"], data["5"],
-      data["6"], data["7"], data["8"], data["9"], data["10"],
-      data["最新スコア"]
+      data["6"], data["7"], data["8"], data["9"],
+      data["10"], data["最新スコア"]
     ]);
 
     // 円グラフ
@@ -158,6 +150,14 @@ document.getElementById("search-button").addEventListener("click", async () => {
     status.textContent = "通信エラーが発生しました";
   }
 });
+
+// スコア表示フォーマット（NaN対応）
+function formatScore(value) {
+  if (value === null || value === undefined || isNaN(value)) {
+    return "データ不足";
+  }
+  return `${Number(value).toFixed(1)}pt`;
+}
 
 // 表作成
 function createTable(id, rows, cols) {
@@ -179,13 +179,26 @@ function createTable(id, rows, cols) {
 let barChartInstance = null;
 let pieChartInstance = null;
 
-// 棒グラフ
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
   if (barChartInstance) barChartInstance.destroy();
 
-  const labels = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "最新"];
-  const dataValues = scores.map(v => {
+  // ラベルを逆順に設定：左が古い10 → 右が最新
+  const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
+
+  // scoresもラベルに合わせて逆順に
+  const dataValues = [
+    scores[8], // 10
+    scores[7], // 9
+    scores[6], // 8
+    scores[5], // 7
+    scores[4], // 6
+    scores[3], // 5
+    scores[2], // 4
+    scores[1], // 3
+    scores[0], // 2
+    scores[9]  // 最新
+  ].map(v => {
     const num = Number(v);
     return isNaN(num) ? 0 : num;
   });
@@ -206,7 +219,6 @@ function createBarChart(scores) {
   });
 }
 
-// 円グラフ
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
   if (pieChartInstance) pieChartInstance.destroy();
@@ -230,7 +242,12 @@ function createPieChart(data) {
     options: {
       responsive: true,
       maintainAspectRatio: true,
-      plugins: { legend: { position: "left", labels: { boxWidth: 20, padding: 15 } } }
+      plugins: {
+        legend: {
+          position: "left",
+          labels: { boxWidth: 20, padding: 15 }
+        }
+      }
     }
   });
 }
