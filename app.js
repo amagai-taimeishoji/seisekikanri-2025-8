@@ -2,7 +2,6 @@
 let barChartInstance = null;
 let pieChartInstance = null;
 
-// 棒グラフ
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
   if (barChartInstance) barChartInstance.destroy();
@@ -11,16 +10,17 @@ function createBarChart(scores) {
   const reorderedScores = [
     scores[8], scores[7], scores[6], scores[5],
     scores[4], scores[3], scores[2], scores[1],
-    scores[0], scores[9] // 最新スコア
+    scores[0], scores[9]
   ];
 
-  // 色設定
   const colors = labels.map(label =>
-    label === "最新" ? "rgba(255, 221, 87, 1)" : "rgba(170, 140, 200, 1)"
+    label === "最新" ? "rgba(255, 206, 86, 0.9)" : "rgba(186, 140, 255, 0.7)"
   );
 
-  // Y軸の最大値を計算（0を中心に上下対称）
-  const maxAbs = Math.max(...reorderedScores.map(s => Math.abs(s || 0))) || 10;
+  // 最大値・最小値を計算し、ゼロを中心にする
+  const maxVal = Math.max(...reorderedScores.map(s => s || 0));
+  const minVal = Math.min(...reorderedScores.map(s => s || 0));
+  const maxAbs = Math.max(Math.abs(maxVal), Math.abs(minVal));
 
   barChartInstance = new Chart(ctx, {
     type: "bar",
@@ -35,15 +35,14 @@ function createBarChart(scores) {
     options: {
       responsive: true,
       maintainAspectRatio: true,
+      layout: { padding: { top: 20, bottom: 20 } },
       plugins: { legend: { display: false } },
       scales: {
         y: {
           min: -maxAbs,
           max: maxAbs,
-          beginAtZero: true
-        },
-        x: {
-          ticks: { maxRotation: 0, minRotation: 0 }
+          beginAtZero: true,
+          ticks: { stepSize: Math.ceil(maxAbs / 5) }
         }
       }
     }
