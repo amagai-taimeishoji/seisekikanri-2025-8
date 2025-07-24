@@ -227,3 +227,18 @@ h1 {
   font-size: 3.5vw;
   margin-top: 10px;
 }
+
+/* 検索結果のフェードイン */
+#results {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+#results.show {
+  opacity: 1;
+}
+
+/* 検索ボタンのクリックアニメーション */
+#search-button:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
