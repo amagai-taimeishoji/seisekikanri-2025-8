@@ -56,9 +56,9 @@ document.getElementById("search-button").addEventListener("click", async () => {
     const data = await response.json();
 
     if (data.error) {
-      status.textContent = data.error;
-      return;
-    }
+  status.textContent = "選択した年月のデータは見つからないよっ。";
+  return;
+}
 
     status.textContent = "";
     results.style.display = "block";
