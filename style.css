@@ -18,20 +18,25 @@ h1 {
 /* 検索エリア */
 #search-area {
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* 縦並びにする */
   align-items: center;
-  gap: 6px; /* 要素間の余白 */
   margin-bottom: 20px;
-  flex-wrap: nowrap; /* 折り返さない */
 }
 
 #search-inputs {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* 横並び */
   justify-content: center;
   align-items: center;
   gap: 5px;
   margin-bottom: 5px;
+}
+
+#status-message {
+  margin-top: 5px;
+  font-size: 3.5vw;
+  color: red;
+  text-align: center;
 }
 
 #year-select, #month-select {
@@ -70,12 +75,6 @@ h1 {
   background: linear-gradient(45deg, #45a049, #66bb6a);
 }
 
-#status-message {
-  margin-top: 5px;
-  font-size: 3.5vw;
-  color: red;
-  text-align: center;
-}
 
 /* 結果表示エリア */
 #results {
