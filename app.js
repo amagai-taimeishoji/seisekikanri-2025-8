@@ -95,35 +95,20 @@ document.getElementById("search-button").addEventListener("click", async () => {
   }
 });
 
-function createBarChart(scores) {
-  const ctx = document.getElementById("bar-chart").getContext("2d");
-  const labels = ["最新", "2", "3", "4", "5", "6", "7", "8", "9", "10"].reverse();
-  const dataValues = scores.reverse();
+function createTable(id, rows, cols) {
+  const table = document.getElementById(id);
+  table.innerHTML = "";
+  table.style.gridTemplateColumns = `repeat(${cols}, 20vw)`;
 
-  new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "スコア",
-        data: dataValues,
-        backgroundColor: dataValues.map((_, i) => i === dataValues.length - 1 ? "yellow" : "purple")
-      }]
-    },
-    options: {
-      indexAxis: "x",
-      plugins: { legend: { display: false } },
-      scales: {
-        y: {
-          beginAtZero: false, // マイナスも表示
-          suggestedMin: Math.min(...dataValues) - 10, // マイナス用に余白を確保
-          suggestedMax: Math.max(...dataValues) + 10
-        }
-      }
-    }
+  rows.forEach((row, rowIndex) => {
+    row.forEach(cell => {
+      const div = document.createElement("div");
+      div.textContent = cell;
+      div.className = rowIndex % 2 === 0 ? "header" : "data";
+      table.appendChild(div);
+    });
   });
 }
-
 
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
