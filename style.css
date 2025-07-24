@@ -141,7 +141,6 @@ h1 {
   width: 90%;
   max-width: 500px;
   height: auto !important;
-  aspect-ratio: 1 / 1;
   display: block;
   margin: -40px auto 20px auto; /* ここで上に40px移動 */
 }
