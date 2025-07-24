@@ -73,7 +73,7 @@ h1 {
 
 .data {
   background-color: white;
-  font-size: 3vw;
+  font-size: 4vw;
   display: flex;
   justify-content: flex-end; /* 横方向：右寄せ */
   align-items: flex-end;     /* 縦方向：下寄せ */
