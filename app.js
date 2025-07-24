@@ -1,3 +1,69 @@
+// グラフインスタンス
+let barChartInstance = null;
+let pieChartInstance = null;
+
+// 棒グラフ
+function createBarChart(scores) {
+  const ctx = document.getElementById("bar-chart").getContext("2d");
+  if (barChartInstance) barChartInstance.destroy();
+
+  // 左から10→…→2→最新
+  const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
+  const reorderedScores = [
+    scores[8], scores[7], scores[6], scores[5],
+    scores[4], scores[3], scores[2], scores[1],
+    scores[0], scores[9] // 最新スコア
+  ];
+
+  const colors = labels.map(label =>
+    label === "最新" ? "rgba(255, 206, 86, 0.8)" : "rgba(75, 192, 192, 0.6)"
+  );
+
+  barChartInstance = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "スコア",
+        data: reorderedScores.map(s => s || 0),
+        backgroundColor: colors
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+// 円グラフ
+function createPieChart(data) {
+  const ctx = document.getElementById("pie-chart").getContext("2d");
+  if (pieChartInstance) pieChartInstance.destroy();
+
+  pieChartInstance = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
+      datasets: [{
+        data: [
+          data["トップ率"] * 100,
+          data["にちゃ率"] * 100,
+          data["さんちゃ率"] * 100,
+          data["よんちゃ率"] * 100
+        ],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#AA65CC"]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: 'left' } }
+    }
+  });
+}
+
 // Google Apps ScriptのURL
 const API_URL = "https://script.google.com/macros/s/AKfycby-JyuULrd8LD2CAoKYPR8z-CS58n6CdVBwx4YHGIDz-RWGcjw0N9mWUveCSSP1NAdK/exec";
 
@@ -54,15 +120,10 @@ document.getElementById("search-button").addEventListener("click", async () => {
   try {
     const response = await fetch(`${API_URL}?name=${encodeURIComponent(name)}&year=${year}&month=${month}`);
 
-    if (!response.ok) {
-      throw new Error(`HTTPエラー: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTPエラー: ${response.status}`);
 
     const data = await response.json();
-
-    if (!data || typeof data !== "object") {
-      throw new Error("不正なデータ形式");
-    }
+    if (!data || typeof data !== "object") throw new Error("不正なデータ形式");
 
     if (data.error) {
       if (data.error.includes("シート") && data.error.includes("見つかりません")) {
@@ -75,20 +136,13 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
     status.textContent = "";
     results.style.display = "block";
-
+    
     // 集計期間
     document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
-
-    // 来店人数
     document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
 
     // 会員No.と名前（4桁表記）
-    let memberNo = data["No."];
-    if (memberNo !== null && memberNo !== undefined) {
-      memberNo = String(memberNo).padStart(4, '0');
-    } else {
-      memberNo = "不明";
-    }
+    let memberNo = data["No."] ? String(data["No."]).padStart(4, '0') : "不明";
     document.getElementById("member-info").textContent = `No. ${memberNo}  名前 ${data["名前"]}`;
 
     // 右表
@@ -155,14 +209,12 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ], 4);
 
-    // 棒グラフ
+    // グラフ描画
     createBarChart([
       data["2"], data["3"], data["4"], data["5"],
       data["6"], data["7"], data["8"], data["9"],
       data["10"], data["最新スコア"]
     ]);
-
-    // 円グラフ
     createPieChart(data);
 
   } catch (error) {
@@ -173,9 +225,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
 // スコア表示フォーマット（NaN対応）
 function formatScore(value) {
-  if (value === null || value === undefined || isNaN(value)) {
-    return "データ不足";
-  }
+  if (value === null || value === undefined || isNaN(value)) return "データ不足";
   return `${Number(value).toFixed(1)}pt`;
 }
 
@@ -192,71 +242,5 @@ function createTable(id, rows, cols) {
       div.className = rowIndex % 2 === 0 ? "header" : "data";
       table.appendChild(div);
     });
-  });
-}
-
-// グラフインスタンス
-let barChartInstance = null;
-let pieChartInstance = null;
-
-// 棒グラフ
-function createBarChart(scores) {
-  const ctx = document.getElementById("bar-chart").getContext("2d");
-  if (barChartInstance) barChartInstance.destroy();
-
-  // 左から10→9→…→2→最新
-  const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
-  const reorderedScores = [
-    scores[8], scores[7], scores[6], scores[5],
-    scores[4], scores[3], scores[2], scores[1],
-    scores[0], scores[9] // 最新スコア
-  ];
-
-  const colors = labels.map(label =>
-    label === "最新" ? "rgba(255, 206, 86, 0.8)" : "rgba(75, 192, 192, 0.6)"
-  );
-
-  barChartInstance = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "スコア",
-        data: reorderedScores.map(s => s || 0),
-        backgroundColor: colors
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } }
-    }
-  });
-}
-
-// 円グラフ
-function createPieChart(data) {
-  const ctx = document.getElementById("pie-chart").getContext("2d");
-  if (pieChartInstance) pieChartInstance.destroy();
-
-  pieChartInstance = new Chart(ctx, {
-    type: "pie",
-    data: {
-      labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
-      datasets: [{
-        data: [
-          data["トップ率"] * 100,
-          data["にちゃ率"] * 100,
-          data["さんちゃ率"] * 100,
-          data["よんちゃ率"] * 100
-        ],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#AA65CC"]
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { position: 'left' } }
-    }
   });
 }
