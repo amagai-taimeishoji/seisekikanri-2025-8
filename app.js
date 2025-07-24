@@ -81,7 +81,13 @@ document.getElementById("search-button").addEventListener("click", async () => {
         getDisplayLabel("平均スコア"),
         getDisplayLabel("平均スコアランキング")
       ],
-      [data["累計半荘数"], data["総スコア"], data["総スコアランキング"], data["平均スコア"], data["平均スコアランキング"]],
+      [
+        data["累計半荘数"],
+        data["総スコア"],
+        data["総スコアランキング"],
+        data["平均スコア"] ? Number(data["平均スコア"]).toFixed(3) : "0.000",
+        data["平均スコアランキング"]
+    ],
       ["最新", "2", "3", "4", "5"],
       [data["最新スコア"], data["2"], data["3"], data["4"], data["5"]],
       ["6", "7", "8", "9", "10"],
