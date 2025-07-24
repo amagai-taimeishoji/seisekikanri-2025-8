@@ -170,6 +170,17 @@ function createTable(id, rows, cols) {
       const div = document.createElement("div");
       div.textContent = cell;
       div.className = rowIndex % 2 === 0 ? "header" : "data";
+
+      if (rowIndex % 2 === 0) {
+        // ヘッダー行：中央寄せ
+        div.style.textAlign = "center";
+        div.style.verticalAlign = "middle";
+      } else {
+        // データ行：右下寄せ
+        div.style.textAlign = "right";
+        div.style.verticalAlign = "bottom";
+      }
+
       table.appendChild(div);
     });
   });
