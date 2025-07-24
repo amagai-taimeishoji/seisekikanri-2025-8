@@ -48,7 +48,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     return;
   }
 
-  status.textContent = "ロード中…";
+  status.textContent = "ロード、チュ♡…";
   results.style.display = "none";
 
   try {
@@ -56,9 +56,13 @@ document.getElementById("search-button").addEventListener("click", async () => {
     const data = await response.json();
 
     if (data.error) {
-      status.textContent = data.error;
-      return;
-    }
+  if (data.error.includes("シート") && data.error.includes("見つかりません")) {
+    status.textContent = "選択した年月のデータは見つかりません。";
+  } else {
+    status.textContent = data.error; // 他のエラーはそのまま表示
+  }
+  return;
+}
 
     status.textContent = "";
     results.style.display = "block";
