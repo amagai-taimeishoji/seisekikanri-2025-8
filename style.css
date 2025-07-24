@@ -105,10 +105,9 @@ h1 {
   gap: 0;
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 15px;
 }
 
-#right-table, #left-table {
-  margin: 0 5px 5px 5px; /* 上 右 下 左 */
-  width: 100%;
-  box-sizing: border-box;
+#right-table {
+  margin-bottom: 15px;
 }
