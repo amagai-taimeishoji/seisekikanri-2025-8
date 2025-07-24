@@ -177,16 +177,15 @@ h1 {
   margin-bottom: 20px;
 }
 
-#search-area {
+#search-inputs {
   display: flex;
-  flex-direction: column; /* 子要素を縦並びに */
-  align-items: center;    /* 中央寄せ */
-  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px; /* 各要素の間隔 */
 }
 
 #status-message {
-  display: block;
-  margin-top: 10px; /* 検索エリアの下に余白 */
+  margin-top: 8px;
   font-size: 3.5vw;
   color: red;
   text-align: center;
