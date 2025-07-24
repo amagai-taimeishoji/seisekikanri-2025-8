@@ -78,22 +78,19 @@ h1 {
 }
 
 .data {
-  background-color: white; /* 数値セルは白 */
-  font-size: 3vw; /* 数値の文字サイズ */
-  justify-content: flex-end; /* データは右寄せ */
-  text-align: right !important;
+  background-color: white;
+  font-size: 3vw;
+  display: flex;
+  justify-content: flex-end; /* 横方向の右寄せ */
+  align-items: flex-end;     /* 縦方向の下寄せ */
+  text-align: right;
   height: 10vw;
   width: 20vw;
   padding-right: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: flex;
-  align-items: flex-end;
 }
-}
-
-
 
 /* グラフの幅を表と揃える */
 #bar-chart {
