@@ -111,6 +111,7 @@ h1 {
   gap: 0; /* 列と列の間の隙間をなくす */
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 15px;
 }
 
 #right-table {
