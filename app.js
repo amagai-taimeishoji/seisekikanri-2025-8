@@ -1,19 +1,25 @@
-// ラベル変換マップ
+// ① ラベル変換マップ（そのまま）
 const displayLabels = {
   "総スコアランキング": "総スコア\nランキング",
   "平均スコアランキング": "平均スコア\nランキング",
   "平均着順ランキング": "平均着順\nランキング",
   "ラス回避率ランキング": "ラス回避率\nランキング"
 };
-
 function getDisplayLabel(key) {
   return displayLabels[key] || key;
 }
 
+// ② グラフインスタンス変数（そのまま）
+let barChartInstance = null;
+let pieChartInstance = null;
+
+// ③ 検索ボタンのイベントリスナ―内を修正
 document.getElementById("search-button").addEventListener("click", async () => {
-  const name = document.getElementById("name-input").value.trim();
+  const name   = document.getElementById("name-input").value.trim();
+  const year   = document.getElementById("year-select").value;
+  const month  = document.getElementById("month-select").value;
   const status = document.getElementById("status-message");
-  const results = document.getElementById("results");
+  const results= document.getElementById("results");
 
   if (!name) {
     status.textContent = "名前を入力してください";
@@ -21,13 +27,22 @@ document.getElementById("search-button").addEventListener("click", async () => {
     return;
   }
 
+  // シート名を組み立て
+  const sheetName = `${year}年${month}月出力`;
+
   status.textContent = "ロード中…";
   results.style.display = "none";
 
   try {
-    const response = await fetch(`https://script.google.com/macros/s/AKfycbws_ZBbTcPVmcp0Lhr91B488Va3_weuZGjvYdHC5_G7oP5W-dF4-a2nTl_QNVV2cI-W/exec?name=${encodeURIComponent(name)}`);
-    const data = await response.json();
+    // **GAS URL をユーザー提供のものに変更**
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzaOlof18MGz6O8dSgHI905miJdPmzD7GkU1IQXvEu2jLXUwYbOV22szItzXsz4L-wb/exec";
 
+    // sheet パラメータを追加
+    const res = await fetch(
+      `${GAS_URL}?name=${encodeURIComponent(name)}&sheet=${encodeURIComponent(sheetName)}`
+    );
+
+    const data = await res.json();
     if (data.error) {
       status.textContent = data.error;
       return;
@@ -36,13 +51,9 @@ document.getElementById("search-button").addEventListener("click", async () => {
     status.textContent = "";
     results.style.display = "block";
 
-    // 集計期間
-    document.getElementById("period").textContent = `集計期間: 2025/8/1〜${new Date().toLocaleDateString()}`;
-
-    // 来店人数
+    // --- 既存の結果表示ロジックそのまま ---
+    document.getElementById("period").textContent = `集計期間: ${year}/${month}/1〜今日`;
     document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
-
-    // 会員No.と名前
     document.getElementById("member-info").textContent = `No. ${data["No."]}  名前 ${data["名前"]}`;
 
     // 右表
@@ -95,6 +106,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
   }
 });
 
+// 以下 createTable, createBarChart, createPieChart は既存のまま
 function createTable(id, rows, cols) {
   const table = document.getElementById(id);
   table.innerHTML = "";
