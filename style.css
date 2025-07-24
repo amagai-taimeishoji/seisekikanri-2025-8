@@ -69,6 +69,26 @@ h1 {
   font-size: 3.8vw;
 }
 
+#info-container {
+  width: 100%;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#period-visitor {
+  display: flex;
+  justify-content: space-between; /* 集計期間と来店人数を左右に配置 */
+  font-size: 4vw;
+  margin-bottom: 5px;
+}
+
+#member-info {
+  text-align: right; /* 名前とNo.を右寄せ */
+  font-size: 4vw;
+}
+
 /* テーブル共通 */
 .table {
   display: grid;
