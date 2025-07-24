@@ -110,24 +110,18 @@ function createTable(id, rows, cols) {
   });
 }
 
-let barChartInstance = null;
-let pieChartInstance = null;
-
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
 
-  // 既存のグラフを削除
-  if (barChartInstance) {
-    barChartInstance.destroy();
-  }
-
+  // labelsとscoresを非破壊で逆順に
   const labels = ["最新", "2", "3", "4", "5", "6", "7", "8", "9", "10"].slice().reverse();
-  const dataValues = scores.slice().map(v => (isNaN(v) ? 0 : Number(v))).reverse();
+  const dataValues = scores.slice().reverse();
 
-  // 絶対値の最大を計算
-  const absMax = Math.max(...dataValues.map(v => Math.abs(v))) || 10;
+  // 最小値・最大値を計算（マイナス対応）
+  const minValue = Math.min(...dataValues);
+  const maxValue = Math.max(...dataValues);
 
-  barChartInstance = new Chart(ctx, {
+  new Chart(ctx, {
     type: "bar",
     data: {
       labels: labels,
@@ -142,9 +136,9 @@ function createBarChart(scores) {
       plugins: { legend: { display: false } },
       scales: {
         y: {
-          min: -absMax,
-          max: absMax,
-          beginAtZero: true
+          beginAtZero: false,
+          suggestedMin: minValue - 10,  // 下に余裕を持たせる
+          suggestedMax: maxValue + 10
         }
       }
     }
@@ -153,13 +147,7 @@ function createBarChart(scores) {
 
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
-
-  // 既存のグラフを削除
-  if (pieChartInstance) {
-    pieChartInstance.destroy();
-  }
-
-  pieChartInstance = new Chart(ctx, {
+  new Chart(ctx, {
     type: "pie",
     data: {
       labels: ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
