@@ -6,7 +6,6 @@ let pieChartInstance = null;
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart");
   if (!ctx) return;
-  const chartCtx = ctx.getContext("2d");
   if (barChartInstance) barChartInstance.destroy();
 
   const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
@@ -17,13 +16,13 @@ function createBarChart(scores) {
   ];
 
   const colors = labels.map(label =>
-    label === "最新" ? "rgba(255, 206, 86, 1)" : "rgba(150, 100, 230, 0.9)"
+    label === "最新" ? "rgba(255, 206, 86, 1)" : "rgba(150, 100, 230, 1)"
   );
 
-  barChartInstance = new Chart(chartCtx, {
+  barChartInstance = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: labels,
+      labels,
       datasets: [{
         label: "スコア",
         data: reorderedScores.map(s => s || 0),
@@ -39,16 +38,6 @@ function createBarChart(scores) {
           beginAtZero: true,
           suggestedMin: Math.min(...reorderedScores, 0),
           suggestedMax: Math.max(...reorderedScores, 0),
-          ticks: {
-            color: "#333",
-            font: { size: 14 }
-          }
-        },
-        x: {
-          ticks: {
-            color: "#333",
-            font: { size: 14 }
-          }
         }
       }
     }
@@ -59,10 +48,9 @@ function createBarChart(scores) {
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart");
   if (!ctx) return;
-  const chartCtx = ctx.getContext("2d");
   if (pieChartInstance) pieChartInstance.destroy();
 
-  pieChartInstance = new Chart(chartCtx, {
+  pieChartInstance = new Chart(ctx, {
     type: "pie",
     data: {
       labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
@@ -74,10 +62,10 @@ function createPieChart(data) {
           data["よんちゃ率"] * 100
         ],
         backgroundColor: [
-          "rgba(230, 70, 70, 0.9)",   // トップ：濃いめ赤
-          "rgba(255, 140, 50, 0.9)",  // にちゃ：濃いめオレンジ
-          "rgba(70, 200, 100, 0.9)",  // さんちゃ：濃いめ緑
-          "rgba(60, 120, 230, 0.9)"   // よんちゃ：濃いめ青
+          "rgba(230, 70, 70, 1)",   // トップ：赤
+          "rgba(255, 140, 50, 1)",  // にちゃ：オレンジ
+          "rgba(70, 200, 100, 1)",  // さんちゃ：緑
+          "rgba(60, 120, 230, 1)"   // よんちゃ：青
         ]
       }]
     },
