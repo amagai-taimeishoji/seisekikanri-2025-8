@@ -185,8 +185,12 @@ h1 {
 }
 
 #status-message {
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 3.5vw;
   color: red;
   text-align: center;
+  width: 100%;
+  display: block;
+  white-space: normal;
+  word-break: break-word;
 }
