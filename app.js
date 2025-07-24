@@ -7,17 +7,21 @@ function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
   if (barChartInstance) barChartInstance.destroy();
 
-  // 左から10→…→2→最新
+  // ラベル: 左から10 → 2 → 最新
   const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
   const reorderedScores = [
     scores[8], scores[7], scores[6], scores[5],
     scores[4], scores[3], scores[2], scores[1],
-    scores[0], scores[9] // 最新スコア
+    scores[0], scores[9]
   ];
 
+  // 最新スコアは黄色、それ以外は少し濃い紫
   const colors = labels.map(label =>
-    label === "最新" ? "rgba(255, 206, 86, 1)" : "rgba(153, 102, 255, 0.9)"
+    label === "最新" ? "rgba(255, 206, 86, 0.9)" : "rgba(150, 120, 200, 0.9)"
   );
+
+  // 最大絶対値を計算して、Y軸をゼロ中心に
+  const maxAbsValue = Math.max(...reorderedScores.map(v => Math.abs(v || 0)));
 
   barChartInstance = new Chart(ctx, {
     type: "bar",
@@ -31,22 +35,27 @@ function createBarChart(scores) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: true, // 歪み防止
       plugins: { legend: { display: false } },
       scales: {
         y: {
-          beginAtZero: false,
-          suggestedMin: Math.min(...reorderedScores) - 10,
-          suggestedMax: Math.max(...reorderedScores) + 10
+          suggestedMin: -maxAbsValue,
+          suggestedMax: maxAbsValue,
+          beginAtZero: true,
+          ticks: {
+            stepSize: Math.ceil(maxAbsValue / 5)
+          }
         },
         x: {
-          ticks: { maxRotation: 0, minRotation: 0 } // ラベルを水平に
+          ticks: {
+            maxRotation: 0,
+            minRotation: 0
+          }
         }
       }
     }
   });
 }
-
 // 円グラフ
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
