@@ -163,6 +163,8 @@ h1 {
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
   border-collapse: collapse;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* グラフ */
