@@ -43,15 +43,13 @@ document.getElementById("search-button").addEventListener("click", async () => {
   const results = document.getElementById("results");
 
   if (!name) {
-    status.textContent = "名前を入力してねっ";
-    results.style.display = "none";
+    status.textContent = "名前を入力してください";
+    results.classList.remove("show");
     return;
   }
 
-  // 検索開始時（フェードアウト）
-status.textContent = "ロードチュ…♡";
-results.classList.remove("show");
-
+  status.textContent = "ロードチュ♡…";
+  results.classList.remove("show");
 
   try {
     const response = await fetch(`${API_URL}?name=${encodeURIComponent(name)}&year=${year}&month=${month}`);
@@ -66,24 +64,16 @@ results.classList.remove("show");
   return;
 }
 
-// 検索成功時（フェードイン）
-status.textContent = "";
-results.classList.add("show"); // これだけでOK
+    status.textContent = "";
+    results.classList.add("show");
 
-    // 集計期間
+    // 集計期間と来店人数
     document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
-
-    // 来店人数
     document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
 
-    // 会員No.と名前（4桁表記）
-    let memberNo = data["No."];
-    if (memberNo !== null && memberNo !== undefined) {
-      memberNo = String(memberNo).padStart(4, '0');
-    } else {
-      memberNo = "不明";
-    }
-    document.getElementById("member-info").textContent = `No. ${memberNo}  名前 ${data["名前"]}`;
+    // 会員No.と名前（4桁表示）
+    const formattedNo = String(data["No."]).padStart(4, "0");
+    document.getElementById("member-info").textContent = `No. ${formattedNo}  名前 ${data["名前"]}`;
 
     // 右表
     createTable("right-table", [
@@ -149,15 +139,15 @@ results.classList.add("show"); // これだけでOK
       ]
     ], 4);
 
-    // 棒グラフ
-    createBarChart([
-      data["2"], data["3"], data["4"], data["5"],
-      data["6"], data["7"], data["8"], data["9"],
-      data["10"], data["最新スコア"]
-    ]);
-
-    // 円グラフ
-    createPieChart(data);
+    // アニメーションが完了してからグラフを描画
+    setTimeout(() => {
+      createBarChart([
+        data["2"], data["3"], data["4"], data["5"],
+        data["6"], data["7"], data["8"], data["9"],
+        data["10"], data["最新スコア"]
+      ]);
+      createPieChart(data);
+    }, 300);
 
   } catch (error) {
     status.textContent = "通信エラーが発生しました";
@@ -191,3 +181,60 @@ function createTable(id, rows, cols) {
 // グラフインスタンス
 let barChartInstance = null;
 let pieChartInstance = null;
+
+function createBarChart(scores) {
+  const ctx = document.getElementById("bar-chart").getContext("2d");
+  if (barChartInstance) barChartInstance.destroy();
+
+  const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
+  const dataValues = [
+    scores[8], scores[7], scores[6], scores[5],
+    scores[4], scores[3], scores[2], scores[1],
+    scores[0], scores[9]
+  ].map(v => isNaN(Number(v)) ? 0 : Number(v));
+
+  const colors = Array(dataValues.length).fill("purple");
+  colors[colors.length - 1] = "yellow";
+
+  const absMax = Math.max(...dataValues.map(v => Math.abs(v))) || 10;
+
+  barChartInstance = new Chart(ctx, {
+    type: "bar",
+    data: { labels, datasets: [{ data: dataValues, backgroundColor: colors }] },
+    options: {
+      indexAxis: "x",
+      plugins: { legend: { display: false } },
+      scales: { y: { min: -absMax, max: absMax, beginAtZero: true } }
+    }
+  });
+}
+
+function createPieChart(data) {
+  const ctx = document.getElementById("pie-chart").getContext("2d");
+  if (pieChartInstance) pieChartInstance.destroy();
+
+  const pieValues = [
+    data["トップ率"],
+    data["にちゃ率"],
+    data["さんちゃ率"],
+    data["よんちゃ率"]
+  ].map(v => isNaN(Number(v)) ? 0 : Number(v));
+
+  pieChartInstance = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
+      datasets: [{ data: pieValues, backgroundColor: ["red", "orange", "green", "blue"] }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: "left",
+          labels: { boxWidth: 20, padding: 15 }
+        }
+      }
+    }
+  });
+}
