@@ -68,7 +68,12 @@ h1 {
 
 /* 結果表示エリア */
 #results {
-  text-align: center;
+  text-align: center; /* 中央寄せにする */
+}
+
+.table {
+  margin: 0 auto 15px auto; /* 左右自動マージンで中央寄せ */
+  width: 100%; /* 幅は100%に */
 }
 
 /* 集計期間・来店人数・名前 */
