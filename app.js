@@ -110,15 +110,24 @@ function createTable(id, rows, cols) {
   });
 }
 
+let barChartInstance = null;
+let pieChartInstance = null;
+
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
 
+  // 既存のグラフを削除
+  if (barChartInstance) {
+    barChartInstance.destroy();
+  }
+
   const labels = ["最新", "2", "3", "4", "5", "6", "7", "8", "9", "10"].slice().reverse();
-  const dataValues = scores.slice().map(Number).reverse(); // 数値に変換
+  const dataValues = scores.slice().map(v => (isNaN(v) ? 0 : Number(v))).reverse();
 
-  const absMax = Math.max(...dataValues.map(v => Math.abs(v))); // 絶対値の最大を計算
+  // 絶対値の最大を計算
+  const absMax = Math.max(...dataValues.map(v => Math.abs(v))) || 10;
 
-  new Chart(ctx, {
+  barChartInstance = new Chart(ctx, {
     type: "bar",
     data: {
       labels: labels,
@@ -144,7 +153,13 @@ function createBarChart(scores) {
 
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
-  new Chart(ctx, {
+
+  // 既存のグラフを削除
+  if (pieChartInstance) {
+    pieChartInstance.destroy();
+  }
+
+  pieChartInstance = new Chart(ctx, {
     type: "pie",
     data: {
       labels: ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
