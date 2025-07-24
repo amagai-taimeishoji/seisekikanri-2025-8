@@ -4,22 +4,27 @@ let pieChartInstance = null;
 
 // 棒グラフ
 function createBarChart(scores) {
-  const ctx = document.getElementById("bar-chart").getContext("2d");
+  const ctx = document.getElementById("bar-chart");
+  if (!ctx) {
+    console.error("bar-chart canvasが見つかりません");
+    return;
+  }
+  const chartCtx = ctx.getContext("2d");
   if (barChartInstance) barChartInstance.destroy();
 
-  // 左から10→…→2→最新
+  // 左から10 → ... → 2 → 最新
   const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
   const reorderedScores = [
     scores[8], scores[7], scores[6], scores[5],
     scores[4], scores[3], scores[2], scores[1],
-    scores[0], scores[9] // 最新スコア
+    scores[0], scores[9] // 最新
   ];
 
   const colors = labels.map(label =>
     label === "最新" ? "rgba(255, 206, 86, 0.8)" : "rgba(75, 192, 192, 0.6)"
   );
 
-  barChartInstance = new Chart(ctx, {
+  barChartInstance = new Chart(chartCtx, {
     type: "bar",
     data: {
       labels: labels,
@@ -39,10 +44,15 @@ function createBarChart(scores) {
 
 // 円グラフ
 function createPieChart(data) {
-  const ctx = document.getElementById("pie-chart").getContext("2d");
+  const ctx = document.getElementById("pie-chart");
+  if (!ctx) {
+    console.error("pie-chart canvasが見つかりません");
+    return;
+  }
+  const chartCtx = ctx.getContext("2d");
   if (pieChartInstance) pieChartInstance.destroy();
 
-  pieChartInstance = new Chart(ctx, {
+  pieChartInstance = new Chart(chartCtx, {
     type: "pie",
     data: {
       labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
@@ -59,12 +69,7 @@ function createPieChart(data) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'left', // 凡例を左に配置
-          labels: { boxWidth: 20, padding: 15 }
-        }
-      }
+      plugins: { legend: { position: 'left' } }
     }
   });
 }
