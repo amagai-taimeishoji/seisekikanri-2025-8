@@ -73,11 +73,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     // 右表
     createTable("right-table", [
       [
-        getDisplayLabel("累計半荘数"),
-        getDisplayLabel("総スコア"),
-        getDisplayLabel("総スコアランキング"),
-        getDisplayLabel("平均スコア"),
-        getDisplayLabel("平均スコアランキング")
+        "累計半荘数", "総スコア", "総スコアランキング", "平均スコア", "平均スコアランキング"
       ],
       [data["累計半荘数"], data["総スコア"], data["総スコアランキング"], data["平均スコア"], data["平均スコアランキング"]],
       ["最新スコア", "2", "3", "4", "5"],
@@ -89,10 +85,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     // 左表
     createTable("left-table", [
       [
-        getDisplayLabel("平均着順"),
-        getDisplayLabel("平均着順ランキング"),
-        getDisplayLabel("ラス回避率"),
-        getDisplayLabel("ラス回避率ランキング")
+        "平均着順", "平均着順ランキング", "ラス回避率", "ラス回避率ランキング"
       ],
       [data["平均着順"], data["平均着順ランキング"], data["ラス回避率"], data["ラス回避率ランキング"]],
       ["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"],
@@ -131,12 +124,12 @@ function createTable(id, rows, cols) {
       if (text === "" || text === null || text === undefined || (typeof text === "number" && isNaN(text))) {
         text = "データ不足";
       } else {
-        if (["平均スコア"].includes(headerText)) {
+        if (headerText === "平均スコア") {
           text = `${Number(text).toFixed(3)}pt`;
         } else if (headerText === "累計半荘数") {
           text = `${text}半荘`;
         } else if (["総スコア", "最新スコア", "2", "3", "4", "5", "6", "7", "8", "9", "10"].includes(headerText)) {
-  text = `${Number(text).toFixed(1)}pt`;
+          text = `${Number(text).toFixed(1)}pt`;
         } else if (["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"].includes(headerText)) {
           text = `${text}回`;
         } else if (headerText === "平均着順") {
@@ -161,4 +154,47 @@ function createTable(id, rows, cols) {
 let barChartInstance = null;
 let pieChartInstance = null;
 
-function createBarChart
+function createBarChart(scores) {
+  const ctx = document.getElementById("bar-chart").getContext("2d");
+  if (barChartInstance) barChartInstance.destroy();
+
+  const labels = ["最新", "2", "3", "4", "5", "6", "7", "8", "9", "10"].slice().reverse();
+  const dataValues = scores.slice().map(v => (isNaN(v) ? 0 : Number(v))).reverse();
+  const absMax = Math.max(...dataValues.map(v => Math.abs(v))) || 10;
+
+  barChartInstance = new Chart(ctx, {
+    type: "bar",
+    data: { labels, datasets: [{ data: dataValues, backgroundColor: "purple" }] },
+    options: {
+      indexAxis: "x",
+      plugins: { legend: { display: false } },
+      scales: { y: { min: -absMax, max: absMax, beginAtZero: true } }
+    }
+  });
+}
+
+function createPieChart(data) {
+  const ctx = document.getElementById("pie-chart").getContext("2d");
+  if (pieChartInstance) pieChartInstance.destroy();
+
+  pieChartInstance = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
+      datasets: [{
+        data: [data["トップ率"], data["にちゃ率"], data["さんちゃ率"], data["よんちゃ率"]],
+        backgroundColor: ["red", "orange", "green", "blue"]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: "left",
+          labels: { boxWidth: 20, padding: 15 }
+        }
+      }
+    }
+  });
+}
