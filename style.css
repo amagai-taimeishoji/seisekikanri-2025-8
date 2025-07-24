@@ -6,198 +6,18 @@ body {
   text-align: center;
 }
 
-/* タイトル */
 h1 {
   font-size: 5vw;
   font-weight: bold;
   margin-bottom: 20px;
-  line-height: 1.2;
   color: #333;
 }
 
-/* 検索エリア */
-#search-area {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px; /* 要素間の余白 */
-  margin-bottom: 20px;
-  flex-wrap: nowrap; /* 折り返さない */
-}
-
-#year-select, #month-select {
-  flex: 0 0 auto;
-  font-size: 3.5vw;
-  padding: 6px;
-}
-
-#name-input {
-  flex: 1;
-  min-width: 30%;
-  max-width: 40%;
-  padding: 8px;
-  font-size: 3.5vw;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-  box-sizing: border-box;
-}
-
-/* 検索ボタン */
-#search-button {
-  background: linear-gradient(45deg, #4caf50, #81c784);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-size: 3.5vw;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: transform 0.2s ease, background 0.3s ease;
-}
-#search-button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(45deg, #45a049, #66bb6a);
-}
-
-#status-message {
-  margin-top: 10px;
-  font-size: 3.5vw;
-  color: red;
-}
-
-/* 結果表示エリア */
-#results {
-  text-align: center;
-}
-
-/* 集計期間・来店人数・名前 */
-#info-container {
-  width: 100%;
-  padding: 5px 10px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
-#period-visitor {
-  display: flex;
-  justify-content: space-between; /* 集計期間と来店人数を左右に配置 */
-  font-size: 4vw;
-  margin-bottom: 5px;
-}
-
-#period {
-  text-align: left;
-  padding-left: 10px;
-}
-
-#visitor-count {
-  text-align: right;
-  padding-right: 30px;
-}
-
-#member-info {
-  text-align: left; /* 名前を左寄せ */
-  padding-left: 10px;
-  font-size: 4vw;
-  margin-top: 5px;
-}
-
-/* テーブル共通 */
-.table {
-  display: grid;
-  width: 100%;
-  grid-auto-rows: 10vw;
-  border-collapse: collapse;
-  margin-bottom: 15px;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: none; /* 影を消す */
-}
-
-.table div {
-  border: 0.5px solid #555;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  box-sizing: border-box;
-}
-
-/* ヘッダー */
-.header {
-  font-weight: bold;
-  background-color: #d0ebff;
-  font-size: 2.5vw;
-  text-align: center;
-  word-break: keep-all;
-  white-space: pre-line;
-  height: 10vw;
-}
-
-/* データ */
-.data {
-  background-color: white;
-  font-size: 3vw;
-  justify-content: flex-end;
-  text-align: right !important;
-  padding-right: 4px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: flex;
-  align-items: flex-end;
-}
-
-/* 左右のマージン削除 */
-#right-table, #left-table {
-  margin: 0 0 15px 0;
-  width: 100%;
-}
-
-#left-table {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border-collapse: collapse;
-}
-
-/* グラフ */
-#bar-chart,
-#pie-chart {
-  width: 90%;
-  max-width: 500px;
-  height: auto !important;
-  aspect-ratio: 1 / 1; /* 1:1の正方形を維持 */
-  display: block;
-  margin: 0 auto;
-}
-
-#bar-chart {
-  width: 100%;
-  max-width: 90vw;
-  margin-bottom: 0px;
-}
-
-#pie-chart {
-  width: 60%;
-  height: auto; /* アスペクト比維持 */
-  max-width: 90vw;
-  margin-top: -45px;
-  margin-bottom: 20px;
-}
-
 #search-area {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-}
-
-#bar-chart, #pie-chart {
-  width: 100% !important;
-  height: 300px !important; /* 高さを固定 */
 }
 
 #search-inputs {
@@ -207,6 +27,11 @@ h1 {
   align-items: center;
   gap: 5px;
   margin-bottom: 5px;
+}
+
+#year-select, #month-select, #name-input {
+  font-size: 3.5vw;
+  padding: 6px;
 }
 
 #name-input {
@@ -229,7 +54,6 @@ h1 {
   margin-left: 5px;
   transition: transform 0.2s ease, background 0.3s ease;
 }
-
 #search-button:hover {
   transform: scale(1.05);
   background: linear-gradient(45deg, #45a049, #66bb6a);
@@ -242,4 +66,75 @@ h1 {
   color: red;
   font-size: 3.5vw;
   margin-top: 10px;
+}
+
+#info-container {
+  width: 100%;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#period-visitor {
+  display: flex;
+  justify-content: space-between;
+  font-size: 4vw;
+  margin-bottom: 5px;
+}
+
+#member-info {
+  text-align: left;
+  padding-left: 10px;
+  font-size: 4vw;
+}
+
+.table {
+  display: grid;
+  width: 100%;
+  grid-auto-rows: 10vw;
+  margin-bottom: 15px;
+}
+
+.table div {
+  border: 0.5px solid #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+.header {
+  font-weight: bold;
+  background-color: #d0ebff;
+  font-size: 2.5vw;
+  text-align: center;
+  white-space: pre-line;
+}
+
+.data {
+  background-color: white;
+  font-size: 3vw;
+  justify-content: flex-end;
+  text-align: right;
+  padding-right: 4px;
+}
+
+#bar-chart,
+#pie-chart {
+  width: 90%;
+  max-width: 500px;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+#pie-chart {
+  width: 90%;
+  max-width: 500px;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  display: block;
+  margin: -40px auto 20px auto; /* ここで上に40px移動 */
 }
