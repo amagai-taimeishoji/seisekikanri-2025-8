@@ -72,7 +72,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     // 会員No.と名前
     document.getElementById("member-info").textContent = `No. ${data["No."]}  名前 ${data["名前"]}`;
 
-    // 右表
+// 右表
 createTable("right-table", [
   [
     getDisplayLabel("累計半荘数"),
@@ -82,16 +82,28 @@ createTable("right-table", [
     getDisplayLabel("平均スコアランキング")
   ],
   [
-    data["累計半荘数"],
-    data["総スコア"],
-    data["総スコアランキング"] ? `${data["総スコアランキング"]}位` : "",
-    data["平均スコア"] ? Number(data["平均スコア"]).toFixed(3) : "0.000",
-    data["平均スコアランキング"] ? `${data["平均スコアランキング"]}位` : ""
+    `${data["累計半荘数"]}半荘`,
+    `${Number(data["総スコア"]).toFixed(3)}pt`,
+    `${data["総スコアランキング"]}位`,
+    `${Number(data["平均スコア"]).toFixed(3)}pt`,
+    `${data["平均スコアランキング"]}位`
   ],
-  ["最新", "2", "3", "4", "5"],
-  [data["最新スコア"], data["2"], data["3"], data["4"], data["5"]],
+  ["最新スコア", "2", "3", "4", "5"],
+  [
+    `${Number(data["最新スコア"]).toFixed(3)}pt`,
+    `${Number(data["2"]).toFixed(3)}pt`,
+    `${Number(data["3"]).toFixed(3)}pt`,
+    `${Number(data["4"]).toFixed(3)}pt`,
+    `${Number(data["5"]).toFixed(3)}pt`
+  ],
   ["6", "7", "8", "9", "10"],
-  [data["6"], data["7"], data["8"], data["9"], data["10"]]
+  [
+    `${Number(data["6"]).toFixed(3)}pt`,
+    `${Number(data["7"]).toFixed(3)}pt`,
+    `${Number(data["8"]).toFixed(3)}pt`,
+    `${Number(data["9"]).toFixed(3)}pt`,
+    `${Number(data["10"]).toFixed(3)}pt`
+  ]
 ], 5);
 
 // 左表
@@ -103,13 +115,18 @@ createTable("left-table", [
     getDisplayLabel("ラス回避率ランキング")
   ],
   [
-    data["平均着順"] ? Number(data["平均着順"]).toFixed(3) : "0.000",
-    data["平均着順ランキング"] ? `${data["平均着順ランキング"]}位` : "",
-    data["ラス回避率"] ? `${(data["ラス回避率"] * 100).toFixed(3)}%` : "0.000%",
-    data["ラス回避率ランキング"] ? `${data["ラス回避率ランキング"]}位` : ""
+    `${Number(data["平均着順"]).toFixed(3)}着`,
+    `${data["平均着順ランキング"]}位`,
+    `${(data["ラス回避率"] * 100).toFixed(3)}%`,
+    `${data["ラス回避率ランキング"]}位`
   ],
   ["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"],
-  [data["トップの回数"], data["にちゃの回数"], data["さんちゃの回数"], data["よんちゃの回数"]],
+  [
+    `${data["トップの回数"]}回`,
+    `${data["にちゃの回数"]}回`,
+    `${data["さんちゃの回数"]}回`,
+    `${data["よんちゃの回数"]}回`
+  ],
   ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
   [
     `${(data["トップ率"] * 100).toFixed(3)}%`,
