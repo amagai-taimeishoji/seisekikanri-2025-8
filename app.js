@@ -43,12 +43,12 @@ document.getElementById("search-button").addEventListener("click", async () => {
   const results = document.getElementById("results");
 
   if (!name) {
-    status.textContent = "名前を入力してください";
+    status.textContent = "名前を入力してねっ";
     results.style.display = "none";
     return;
   }
 
-  status.textContent = "ロード、チュ♡…";
+  status.textContent = "ロード、チュ…♡";
   results.style.display = "none";
 
   try {
