@@ -6,92 +6,82 @@ body {
   text-align: center;
 }
 
+/* タイトル */
 h1 {
   font-size: 5vw;
   font-weight: bold;
   margin-bottom: 20px;
+  line-height: 1.2;
   color: #333;
 }
 
+/* 検索エリア */
 #search-area {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 6px; /* 要素間の余白 */
   margin-bottom: 20px;
+  flex-wrap: nowrap; /* 折り返さない */
 }
 
 #search-inputs {
   display: flex;
-  flex-direction: row; /* 横並び */
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 5px;
+  margin-bottom: 5px;
 }
 
-#search-area {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 6px !important;
-  flex-wrap: nowrap !important;
-}
-
-#search-inputs {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 6px !important;
-  flex-wrap: nowrap !important;
-}
-
-#name-input {
-  width: auto !important;
-  flex: 1 !important;
-  min-width: 30% !important;
-  max-width: 40% !important;
-}
-
-#year-select, #month-select, #name-input {
+#year-select, #month-select {
+  flex: 0 0 auto;
   font-size: 3.5vw;
   padding: 6px;
 }
 
 #name-input {
-  width: 40%;
-  padding: 10px;
-  font-size: 4vw;
+  flex: 1;
+  min-width: 30%;
+  max-width: 40%;
+  padding: 8px;
+  font-size: 3.5vw;
   border: 1px solid #ccc;
   border-radius: 6px;
   outline: none;
+  box-sizing: border-box;
 }
 
+/* 検索ボタン */
 #search-button {
   background: linear-gradient(45deg, #4caf50, #81c784);
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 12px 24px;
-  font-size: 4vw;
+  padding: 8px 16px;
+  font-size: 3.5vw;
   cursor: pointer;
-  margin-left: 5px;
+  white-space: nowrap;
   transition: transform 0.2s ease, background 0.3s ease;
 }
+
 #search-button:hover {
   transform: scale(1.05);
   background: linear-gradient(45deg, #45a049, #66bb6a);
 }
 
 #status-message {
-  display: block;
-  width: 100%;
-  text-align: center;
-  color: red;
-  font-size: 3.5vw;
   margin-top: 10px;
+  font-size: 3.5vw;
+  color: red;
 }
 
+/* 結果表示エリア */
+#results {
+  text-align: center;
+}
+
+/* 集計期間・来店人数・名前 */
 #info-container {
   width: 100%;
   padding: 5px 10px;
@@ -105,20 +95,35 @@ h1 {
   justify-content: space-between;
   font-size: 4vw;
   margin-bottom: 5px;
-  margin-right: 20px
+}
+
+#period {
+  text-align: left;
+  padding-left: 10px;
+}
+
+#visitor-count {
+  text-align: right;
+  padding-right: 30px;
 }
 
 #member-info {
   text-align: left;
   padding-left: 10px;
   font-size: 4vw;
+  margin-top: 5px;
 }
 
+/* テーブル */
 .table {
   display: grid;
   width: 100%;
   grid-auto-rows: 10vw;
+  border-collapse: collapse;
   margin-bottom: 15px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: none;
 }
 
 .table div {
@@ -127,6 +132,7 @@ h1 {
   align-items: center;
   justify-content: center;
   padding: 2px;
+  box-sizing: border-box;
 }
 
 .header {
@@ -134,38 +140,46 @@ h1 {
   background-color: #d0ebff;
   font-size: 2.5vw;
   text-align: center;
+  word-break: keep-all;
   white-space: pre-line;
+  height: 10vw;
 }
 
 .data {
   background-color: white;
   font-size: 3vw;
   justify-content: flex-end;
-  text-align: right;
+  text-align: right !important;
   padding-right: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: flex-end;
 }
 
-#bar-chart,
-#pie-chart {
-  width: 90%;
-  max-width: 500px;
-  height: auto !important;
-  display: block;
-  margin: 0 auto 20px auto;
+#right-table, #left-table {
+  margin: 0 0 15px 0;
+  width: 100%;
 }
 
+#left-table {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-collapse: collapse;
+}
+
+/* グラフ */
 #bar-chart {
-  width: 90%;
-  max-width: 600px;
-  height: auto !important;
-  display: block;
-  margin: 0 auto 20px auto;
+  width: 100%;
+  max-width: 90vw;
+  margin-bottom: 0px;
 }
 
 #pie-chart {
-  width: 90%;
-  max-width: 500px;
-  height: auto !important;
-  display: block;
-  margin: -40px auto 20px auto; /* ここで上に40px移動 */
+  width: 60%;
+  max-width: 90vw;
+  margin-top: -40px;
+  margin-bottom: 20px;
 }
