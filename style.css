@@ -69,7 +69,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 4vw;
+  font-size: 3vw;
   text-align: center;
   word-break: keep-all;
   white-space: pre-line; /* 8文字以上の項目を改行 */
