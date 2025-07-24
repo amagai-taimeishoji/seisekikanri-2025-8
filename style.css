@@ -154,8 +154,7 @@ h1 {
 
 /* 左右のマージン削除 */
 #right-table, #left-table {
-  margin: 0 0 15px 0;
-  width: 100%;
+  margin-top: 15px;
 }
 
 #left-table {
