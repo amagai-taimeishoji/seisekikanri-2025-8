@@ -71,10 +71,6 @@ h1 {
   text-align: center; /* 中央寄せにする */
 }
 
-.table {
-  margin: 0 auto 15px auto; /* 左右自動マージンで中央寄せ */
-  width: 100%; /* 幅は100%に */
-}
 
 /* 集計期間・来店人数・名前 */
 #info-container {
@@ -112,7 +108,8 @@ h1 {
 /* テーブル共通 */
 .table {
   display: grid;
-  width: 100%;
+  width: 90%; /* 100% → 90%にして余白確保 */
+  margin: 0 auto 15px auto; /* 左右自動マージンで中央寄せ */
   grid-auto-rows: 10vw;
   border-collapse: collapse;
   margin-bottom: 15px;
