@@ -80,7 +80,6 @@ h1 {
 .data {
   background-color: white; /* 数値セルは白 */
   font-size: 3vw; /* 数値の文字サイズ */
-  justify-content: flex-end; /* データは右寄せ */
   text-align: right;
   height: 10vw;
   width: 20vw;
@@ -112,4 +111,3 @@ h1 {
   width: 100%;
   border-collapse: collapse;
 }
-
