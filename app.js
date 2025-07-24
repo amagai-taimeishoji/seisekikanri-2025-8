@@ -1,4 +1,4 @@
-// グラフインスタンス
+// // グラフインスタンス
 let barChartInstance = null;
 let pieChartInstance = null;
 
@@ -7,21 +7,20 @@ function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
   if (barChartInstance) barChartInstance.destroy();
 
-  // ラベル: 左から10 → 2 → 最新
   const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
   const reorderedScores = [
     scores[8], scores[7], scores[6], scores[5],
     scores[4], scores[3], scores[2], scores[1],
-    scores[0], scores[9]
+    scores[0], scores[9] // 最新スコア
   ];
 
-  // 最新スコアは黄色、それ以外は少し濃い紫
+  // 色設定
   const colors = labels.map(label =>
-    label === "最新" ? "rgba(255, 206, 86, 0.9)" : "rgba(150, 120, 200, 0.9)"
+    label === "最新" ? "rgba(255, 221, 87, 1)" : "rgba(170, 140, 200, 1)"
   );
 
-  // 最大絶対値を計算して、Y軸をゼロ中心に
-  const maxAbsValue = Math.max(...reorderedScores.map(v => Math.abs(v || 0)));
+  // Y軸の最大値を計算（0を中心に上下対称）
+  const maxAbs = Math.max(...reorderedScores.map(s => Math.abs(s || 0))) || 10;
 
   barChartInstance = new Chart(ctx, {
     type: "bar",
@@ -35,27 +34,22 @@ function createBarChart(scores) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true, // 歪み防止
+      maintainAspectRatio: true,
       plugins: { legend: { display: false } },
       scales: {
         y: {
-          suggestedMin: -maxAbsValue,
-          suggestedMax: maxAbsValue,
-          beginAtZero: true,
-          ticks: {
-            stepSize: Math.ceil(maxAbsValue / 5)
-          }
+          min: -maxAbs,
+          max: maxAbs,
+          beginAtZero: true
         },
         x: {
-          ticks: {
-            maxRotation: 0,
-            minRotation: 0
-          }
+          ticks: { maxRotation: 0, minRotation: 0 }
         }
       }
     }
   });
 }
+
 // 円グラフ
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
@@ -73,10 +67,10 @@ function createPieChart(data) {
           data["よんちゃ率"] * 100
         ],
         backgroundColor: [
-          "rgba(255, 99, 132, 0.9)",   // トップ：濃い赤
-          "rgba(255, 159, 64, 0.9)",   // にちゃ：濃いオレンジ
-          "rgba(75, 192, 75, 0.9)",    // さんちゃ：濃い緑
-          "rgba(54, 162, 235, 0.9)"    // よんちゃ：濃い青
+          "rgba(255, 120, 120, 1)",  // トップ: 赤
+          "rgba(255, 170, 100, 1)",  // にちゃ: オレンジ
+          "rgba(120, 200, 120, 1)",  // さんちゃ: 緑
+          "rgba(100, 150, 255, 1)"   // よんちゃ: 青
         ]
       }]
     },
