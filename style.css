@@ -57,36 +57,40 @@ h1 {
   text-align: center;
 }
 
-/* 集計期間・来店人数・名前 */
-#period, #visitor-count, #member-info {
-  background-color: #f9f9f9;
-  padding: 8px 12px;
-  margin: 6px auto;
-  border-radius: 6px;
-  width: fit-content;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  font-weight: bold;
-  font-size: 3.8vw;
-}
-
+/* 情報コンテナ */
 #info-container {
   width: 100%;
-  padding: 5px 10px;
+  padding: 5px 0;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
 }
 
+/* 集計期間と来店人数を同じ行に */
 #period-visitor {
   display: flex;
-  justify-content: space-between; /* 集計期間と来店人数を左右に配置 */
+  justify-content: space-between;
+  align-items: center;
   font-size: 4vw;
   margin-bottom: 5px;
 }
 
+#period {
+  text-align: left;
+  padding-left: 10px;
+}
+
+#visitor-count {
+  text-align: right;
+  padding-right: 10px;
+}
+
 #member-info {
-  text-align: right; /* 名前とNo.を右寄せ */
+  text-align: left;
+  padding-left: 10px;
   font-size: 4vw;
+  margin-top: 5px;
+  font-weight: bold;
 }
 
 /* テーブル共通 */
