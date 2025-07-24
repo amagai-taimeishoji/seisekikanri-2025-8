@@ -172,6 +172,7 @@ h1 {
 
 #pie-chart {
   width: 60%;
+  height: auto; /* アスペクト比維持 */
   max-width: 90vw;
   margin-top: -45px;
   margin-bottom: 20px;
