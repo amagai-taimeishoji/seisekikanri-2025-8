@@ -48,8 +48,9 @@ document.getElementById("search-button").addEventListener("click", async () => {
     return;
   }
 
-  status.textContent = "ロードチュ♡…";
-  results.style.display = "none";
+  status.textContent = "ロードチュ…♡";
+results.classList.remove("show"); // フェードアウト
+results.style.display = "none";
 
   try {
     const response = await fetch(`${API_URL}?name=${encodeURIComponent(name)}&year=${year}&month=${month}`);
@@ -65,7 +66,8 @@ document.getElementById("search-button").addEventListener("click", async () => {
 }
 
     status.textContent = "";
-    results.style.display = "block";
+results.style.display = "block";
+setTimeout(() => results.classList.add("show"), 10); // フェードイン適用
 
     // 集計期間
     document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
