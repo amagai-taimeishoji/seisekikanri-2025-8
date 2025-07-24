@@ -1,25 +1,46 @@
-// ① ラベル変換マップ（そのまま）
+// Google Apps ScriptのURL
+const API_URL = "https://script.google.com/macros/s/AKfycby-JyuULrd8LD2CAoKYPR8z-CS58n6CdVBwx4YHGIDz-RWGcjw0N9mWUveCSSP1NAdK/exec";
+
+// ラベル変換マップ
 const displayLabels = {
   "総スコアランキング": "総スコア\nランキング",
   "平均スコアランキング": "平均スコア\nランキング",
   "平均着順ランキング": "平均着順\nランキング",
   "ラス回避率ランキング": "ラス回避率\nランキング"
 };
+
 function getDisplayLabel(key) {
   return displayLabels[key] || key;
 }
 
-// ② グラフインスタンス変数（そのまま）
-let barChartInstance = null;
-let pieChartInstance = null;
+// 年・月の選択肢を動的に作成
+const yearSelect = document.getElementById("year-select");
+const monthSelect = document.getElementById("month-select");
 
-// ③ 検索ボタンのイベントリスナ―内を修正
+const currentYear = new Date().getFullYear();
+for (let y = 2025; y <= currentYear + 1; y++) {
+  const option = document.createElement("option");
+  option.value = y;
+  option.textContent = y;
+  yearSelect.appendChild(option);
+}
+yearSelect.value = currentYear;
+
+for (let m = 1; m <= 12; m++) {
+  const option = document.createElement("option");
+  option.value = m;
+  option.textContent = `${m}月`;
+  monthSelect.appendChild(option);
+}
+monthSelect.value = new Date().getMonth() + 1;
+
+// イベントリスナー
 document.getElementById("search-button").addEventListener("click", async () => {
-  const name   = document.getElementById("name-input").value.trim();
-  const year   = document.getElementById("year-select").value;
-  const month  = document.getElementById("month-select").value;
+  const name = document.getElementById("name-input").value.trim();
+  const year = yearSelect.value;
+  const month = monthSelect.value;
   const status = document.getElementById("status-message");
-  const results= document.getElementById("results");
+  const results = document.getElementById("results");
 
   if (!name) {
     status.textContent = "名前を入力してください";
@@ -27,22 +48,13 @@ document.getElementById("search-button").addEventListener("click", async () => {
     return;
   }
 
-  // シート名を組み立て
-  const sheetName = `${year}年${month}月出力`;
-
   status.textContent = "ロード中…";
   results.style.display = "none";
 
   try {
-    // **GAS URL をユーザー提供のものに変更**
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbzaOlof18MGz6O8dSgHI905miJdPmzD7GkU1IQXvEu2jLXUwYbOV22szItzXsz4L-wb/exec";
+    const response = await fetch(`${API_URL}?name=${encodeURIComponent(name)}&year=${year}&month=${month}`);
+    const data = await response.json();
 
-    // sheet パラメータを追加
-    const res = await fetch(
-      `${GAS_URL}?name=${encodeURIComponent(name)}&sheet=${encodeURIComponent(sheetName)}`
-    );
-
-    const data = await res.json();
     if (data.error) {
       status.textContent = data.error;
       return;
@@ -51,9 +63,13 @@ document.getElementById("search-button").addEventListener("click", async () => {
     status.textContent = "";
     results.style.display = "block";
 
-    // --- 既存の結果表示ロジックそのまま ---
-    document.getElementById("period").textContent = `集計期間: ${year}/${month}/1〜今日`;
+    // 集計期間
+    document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
+
+    // 来店人数
     document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
+
+    // 会員No.と名前
     document.getElementById("member-info").textContent = `No. ${data["No."]}  名前 ${data["名前"]}`;
 
     // 右表
@@ -106,7 +122,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
   }
 });
 
-// 以下 createTable, createBarChart, createPieChart は既存のまま
+// 表作成
 function createTable(id, rows, cols) {
   const table = document.getElementById(id);
   table.innerHTML = "";
@@ -122,63 +138,38 @@ function createTable(id, rows, cols) {
   });
 }
 
+// グラフインスタンス
 let barChartInstance = null;
 let pieChartInstance = null;
 
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
-
-  // 既存のグラフを削除
-  if (barChartInstance) {
-    barChartInstance.destroy();
-  }
+  if (barChartInstance) barChartInstance.destroy();
 
   const labels = ["最新", "2", "3", "4", "5", "6", "7", "8", "9", "10"].slice().reverse();
   const dataValues = scores.slice().map(v => (isNaN(v) ? 0 : Number(v))).reverse();
-
-  // 絶対値の最大を計算
   const absMax = Math.max(...dataValues.map(v => Math.abs(v))) || 10;
 
   barChartInstance = new Chart(ctx, {
     type: "bar",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "スコア",
-        data: dataValues,
-        backgroundColor: dataValues.map((_, i) => i === dataValues.length - 1 ? "yellow" : "purple")
-      }]
-    },
+    data: { labels, datasets: [{ data: dataValues, backgroundColor: "purple" }] },
     options: {
       indexAxis: "x",
       plugins: { legend: { display: false } },
-      scales: {
-        y: {
-          min: -absMax,
-          max: absMax,
-          beginAtZero: true
-        }
-      }
+      scales: { y: { min: -absMax, max: absMax, beginAtZero: true } }
     }
   });
 }
 
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
-
-  // 既存のグラフを削除
-  if (pieChartInstance) {
-    pieChartInstance.destroy();
-  }
+  if (pieChartInstance) pieChartInstance.destroy();
 
   pieChartInstance = new Chart(ctx, {
     type: "pie",
     data: {
       labels: ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
-      datasets: [{
-        data: [data["トップ率"], data["にちゃ率"], data["さんちゃ率"], data["よんちゃ率"]],
-        backgroundColor: ["red", "orange", "green", "blue"]
-      }]
+      datasets: [{ data: [data["トップ率"], data["にちゃ率"], data["さんちゃ率"], data["よんちゃ率"]], backgroundColor: ["red", "orange", "green", "blue"] }]
     }
   });
 }
