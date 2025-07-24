@@ -127,7 +127,14 @@ function createBarChart(scores) {
     },
     options: {
       indexAxis: "x",
-      plugins: { legend: { display: false } }
+      plugins: { legend: { display: false } },
+      scales: {
+        y: {
+          beginAtZero: false, // マイナスも表示
+          suggestedMin: Math.min(...dataValues) - 10, // マイナス用に余白を確保
+          suggestedMax: Math.max(...dataValues) + 10
+        }
+      }
     }
   });
 }
