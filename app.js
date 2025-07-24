@@ -43,12 +43,12 @@ document.getElementById("search-button").addEventListener("click", async () => {
   const results = document.getElementById("results");
 
   if (!name) {
-    status.textContent = "名前を入力してねっ";
+    status.textContent = "名前を入力してください";
     results.style.display = "none";
     return;
   }
 
-  status.textContent = "ロード、チュ…♡";
+  status.textContent = "ロード中…";
   results.style.display = "none";
 
   try {
@@ -56,22 +56,29 @@ document.getElementById("search-button").addEventListener("click", async () => {
     const data = await response.json();
 
     if (data.error) {
-  if (data.error.includes("シート") && data.error.includes("見つかりません")) {
-    status.textContent = "選択した年月のデータは見つからないよっ";
-  } else {
-    status.textContent = data.error; // 他のエラーはそのまま表示
-  }
-  return;
-}
+      status.textContent = data.error;
+      return;
+    }
 
     status.textContent = "";
     results.style.display = "block";
 
+    // 集計期間
     document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
-    document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
-    const formattedNo = String(data["No."]).padStart(4, '0');
-    document.getElementById("member-info").textContent = `No. ${formattedNo}  名前 ${data["名前"]}`;
 
+    // 来店人数
+    document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
+
+    // 会員No.と名前（4桁表記）
+    let memberNo = data["No."];
+    if (memberNo !== null && memberNo !== undefined) {
+      memberNo = String(memberNo).padStart(4, '0');
+    } else {
+      memberNo = "不明";
+    }
+    document.getElementById("member-info").textContent = `No. ${memberNo}  名前 ${data["名前"]}`;
+
+    // 右表
     createTable("right-table", [
       [
         getDisplayLabel("累計半荘数"),
@@ -105,6 +112,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ], 5);
 
+    // 左表
     createTable("left-table", [
       [
         getDisplayLabel("平均着順"),
@@ -134,12 +142,14 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ], 4);
 
+    // 棒グラフ
     createBarChart([
       data["2"], data["3"], data["4"], data["5"],
       data["6"], data["7"], data["8"], data["9"],
       data["10"], data["最新スコア"]
     ]);
 
+    // 円グラフ
     createPieChart(data);
 
   } catch (error) {
@@ -147,7 +157,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
   }
 });
 
-// スコア表示フォーマット
+// スコア表示フォーマット（NaN対応）
 function formatScore(value) {
   if (value === null || value === undefined || isNaN(value)) {
     return "データ不足";
@@ -174,56 +184,3 @@ function createTable(id, rows, cols) {
 // グラフインスタンス
 let barChartInstance = null;
 let pieChartInstance = null;
-
-function createBarChart(scores) {
-  const ctx = document.getElementById("bar-chart").getContext("2d");
-  if (barChartInstance) barChartInstance.destroy();
-
-  const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
-  const dataValues = [
-    scores[8], scores[7], scores[6], scores[5], scores[4],
-    scores[3], scores[2], scores[1], scores[0], scores[9]
-  ].map(v => isNaN(Number(v)) ? 0 : Number(v));
-
-  const colors = Array(dataValues.length).fill("purple");
-  colors[colors.length - 1] = "yellow";
-
-  const absMax = Math.max(...dataValues.map(v => Math.abs(v))) || 10;
-
-  barChartInstance = new Chart(ctx, {
-    type: "bar",
-    data: { labels, datasets: [{ data: dataValues, backgroundColor: colors }] },
-    options: {
-      indexAxis: "x",
-      plugins: { legend: { display: false } },
-      scales: { y: { min: -absMax, max: absMax, beginAtZero: true } }
-    }
-  });
-}
-
-function createPieChart(data) {
-  const ctx = document.getElementById("pie-chart").getContext("2d");
-  if (pieChartInstance) pieChartInstance.destroy();
-
-  const pieValues = [
-    data["トップ率"], data["にちゃ率"], data["さんちゃ率"], data["よんちゃ率"]
-  ].map(v => isNaN(Number(v)) ? 0 : Number(v));
-
-  pieChartInstance = new Chart(ctx, {
-    type: "pie",
-    data: {
-      labels: ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
-      datasets: [{ data: pieValues, backgroundColor: ["red", "orange", "green", "blue"] }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: {
-        legend: {
-          position: "left",
-          labels: { boxWidth: 20, padding: 15 }
-        }
-      }
-    }
-  });
-}
