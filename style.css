@@ -154,20 +154,19 @@ h1 {
 
 /* 左右のマージン削除 */
 #left-table, #right-table {
-  margin-top: 15px;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  width: auto; /* 幅を自動にして中央揃え */
+  width: 100%;
+  max-width: 90vw;  /* 画面の90%以内に */
+  margin: 0 auto 15px auto; /* 上下15px、左右中央寄せ */
 }
 
 #left-table {
   display: grid;
-  grid-template-columns: repeat(4, 20vw); /* 列幅を固定 */
+  grid-template-columns: repeat(4, 1fr); /* 均等4列 */
 }
 
 #right-table {
   display: grid;
-  grid-template-columns: repeat(5, 20vw); /* 列幅を固定 */
+  grid-template-columns: repeat(5, 1fr); /* 均等5列 */
 }
 
 /* グラフ */
