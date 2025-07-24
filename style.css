@@ -88,6 +88,9 @@ h1 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  align-items: flex-end;
+}
 }
 
 
