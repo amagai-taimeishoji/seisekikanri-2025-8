@@ -184,6 +184,11 @@ h1 {
   margin-bottom: 20px;
 }
 
+#bar-chart, #pie-chart {
+  width: 100% !important;
+  height: 300px !important; /* 高さを固定 */
+}
+
 #search-inputs {
   display: flex;
   flex-direction: row;
