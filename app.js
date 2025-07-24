@@ -34,7 +34,7 @@ for (let m = 1; m <= 12; m++) {
 }
 monthSelect.value = new Date().getMonth() + 1;
 
-// 検索ボタンイベント
+// イベントリスナー
 document.getElementById("search-button").addEventListener("click", async () => {
   const name = document.getElementById("name-input").value.trim();
   const year = yearSelect.value;
@@ -65,34 +65,76 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
     // 集計期間
     document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
+
     // 来店人数
     document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
+
     // 会員No.と名前
     document.getElementById("member-info").textContent = `No. ${data["No."]}  名前 ${data["名前"]}`;
 
-    // 右表
-    createTable("right-table", [
-      [
-        "累計半荘数", "総スコア", "総スコアランキング", "平均スコア", "平均スコアランキング"
-      ],
-      [data["累計半荘数"], data["総スコア"], data["総スコアランキング"], data["平均スコア"], data["平均スコアランキング"]],
-      ["最新スコア", "2", "3", "4", "5"],
-      [data["最新スコア"], data["2"], data["3"], data["4"], data["5"]],
-      ["6", "7", "8", "9", "10"],
-      [data["6"], data["7"], data["8"], data["9"], data["10"]]
-    ], 5);
+// 右表
+createTable("right-table", [
+  [
+    getDisplayLabel("累計半荘数"),
+    getDisplayLabel("総スコア"),
+    getDisplayLabel("総スコアランキング"),
+    getDisplayLabel("平均スコア"),
+    getDisplayLabel("平均スコアランキング")
+  ],
+  [
+    `${data["累計半荘数"]}半荘`,
+    `${Number(data["総スコア"]).toFixed(3)}pt`,
+    `${data["総スコアランキング"]}位`,
+    `${Number(data["平均スコア"]).toFixed(3)}pt`,
+    `${data["平均スコアランキング"]}位`
+  ],
+  ["最新スコア", "2", "3", "4", "5"],
+  [
+    `${Number(data["最新スコア"]).toFixed(3)}pt`,
+    `${Number(data["2"]).toFixed(3)}pt`,
+    `${Number(data["3"]).toFixed(3)}pt`,
+    `${Number(data["4"]).toFixed(3)}pt`,
+    `${Number(data["5"]).toFixed(3)}pt`
+  ],
+  ["6", "7", "8", "9", "10"],
+  [
+    `${Number(data["6"]).toFixed(3)}pt`,
+    `${Number(data["7"]).toFixed(3)}pt`,
+    `${Number(data["8"]).toFixed(3)}pt`,
+    `${Number(data["9"]).toFixed(3)}pt`,
+    `${Number(data["10"]).toFixed(3)}pt`
+  ]
+], 5);
 
-    // 左表
-    createTable("left-table", [
-      [
-        "平均着順", "平均着順ランキング", "ラス回避率", "ラス回避率ランキング"
-      ],
-      [data["平均着順"], data["平均着順ランキング"], data["ラス回避率"], data["ラス回避率ランキング"]],
-      ["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"],
-      [data["トップの回数"], data["にちゃの回数"], data["さんちゃの回数"], data["よんちゃの回数"]],
-      ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
-      [data["トップ率"], data["にちゃ率"], data["さんちゃ率"], data["よんちゃ率"]]
-    ], 4);
+// 左表
+createTable("left-table", [
+  [
+    getDisplayLabel("平均着順"),
+    getDisplayLabel("平均着順ランキング"),
+    getDisplayLabel("ラス回避率"),
+    getDisplayLabel("ラス回避率ランキング")
+  ],
+  [
+    `${Number(data["平均着順"]).toFixed(3)}着`,
+    `${data["平均着順ランキング"]}位`,
+    `${(data["ラス回避率"] * 100).toFixed(3)}%`,
+    `${data["ラス回避率ランキング"]}位`
+  ],
+  ["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"],
+  [
+    `${data["トップの回数"]}回`,
+    `${data["にちゃの回数"]}回`,
+    `${data["さんちゃの回数"]}回`,
+    `${data["よんちゃの回数"]}回`
+  ],
+  ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
+  [
+    `${(data["トップ率"] * 100).toFixed(3)}%`,
+    `${(data["にちゃ率"] * 100).toFixed(3)}%`,
+    `${(data["さんちゃ率"] * 100).toFixed(3)}%`,
+    `${(data["よんちゃ率"] * 100).toFixed(3)}%`
+  ]
+], 4);
 
     // 棒グラフ
     createBarChart([
@@ -108,49 +150,23 @@ document.getElementById("search-button").addEventListener("click", async () => {
   }
 });
 
-// 表作成（単位付与・データ不足判定付き）
+// 表作成
 function createTable(id, rows, cols) {
   const table = document.getElementById(id);
   table.innerHTML = "";
   table.style.gridTemplateColumns = `repeat(${cols}, 20vw)`;
 
   rows.forEach((row, rowIndex) => {
-    row.forEach((cell, colIndex) => {
+    row.forEach(cell => {
       const div = document.createElement("div");
-      const headerText = rows[0][colIndex];
-      let text = cell;
-
-      // データ不足判定
-      if (text === "" || text === null || text === undefined || (typeof text === "number" && isNaN(text))) {
-        text = "データ不足";
-      } else {
-        if (headerText === "平均スコア") {
-          text = `${Number(text).toFixed(3)}pt`;
-        } else if (headerText === "累計半荘数") {
-          text = `${text}半荘`;
-        } else if (["総スコア", "最新スコア", "2", "3", "4", "5", "6", "7", "8", "9", "10"].includes(headerText)) {
-          text = `${Number(text).toFixed(1)}pt`;
-        } else if (["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"].includes(headerText)) {
-          text = `${text}回`;
-        } else if (headerText === "平均着順") {
-          text = `${Number(text).toFixed(3)}着`;
-        } else if (["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"].includes(headerText)) {
-          text = `${(text * 100).toFixed(3)}%`;
-        } else if (headerText.includes("ランキング")) {
-          text = `${text}位`;
-        }
-      }
-
-      div.textContent = text;
+      div.textContent = cell;
       div.className = rowIndex % 2 === 0 ? "header" : "data";
-      div.style.textAlign = "right";
-      div.style.verticalAlign = "bottom";
       table.appendChild(div);
     });
   });
 }
 
-// グラフ管理
+// グラフインスタンス
 let barChartInstance = null;
 let pieChartInstance = null;
 
@@ -182,17 +198,25 @@ function createPieChart(data) {
     data: {
       labels: ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
       datasets: [{
-        data: [data["トップ率"], data["にちゃ率"], data["さんちゃ率"], data["よんちゃ率"]],
+        data: [
+          data["トップ率"],
+          data["にちゃ率"],
+          data["さんちゃ率"],
+          data["よんちゃ率"]
+        ],
         backgroundColor: ["red", "orange", "green", "blue"]
       }]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: true, // ← true に戻す
       plugins: {
         legend: {
-          position: "left",
-          labels: { boxWidth: 20, padding: 15 }
+          position: "left", // 凡例を左側に
+          labels: {
+            boxWidth: 20,
+            padding: 15
+          }
         }
       }
     }
