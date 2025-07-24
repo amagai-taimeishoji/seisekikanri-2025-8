@@ -101,10 +101,10 @@ document.getElementById("search-button").addEventListener("click", async () => {
       [data["トップの回数"], data["にちゃの回数"], data["さんちゃの回数"], data["よんちゃの回数"]],
       ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
       [
-        `${(data["トップ率"] * 100).toFixed(1)}%`,
-        `${(data["にちゃ率"] * 100).toFixed(1)}%`,
-        `${(data["さんちゃ率"] * 100).toFixed(1)}%`,
-        `${(data["よんちゃ率"] * 100).toFixed(1)}%`
+        `${(data["トップ率"] * 100).toFixed(3)}%`,
+        `${(data["にちゃ率"] * 100).toFixed(3)}%`,
+        `${(data["さんちゃ率"] * 100).toFixed(3)}%`,
+        `${(data["よんちゃ率"] * 100).toFixed(3)}%`
       ]
     ], 4);
 
