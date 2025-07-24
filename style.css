@@ -164,6 +164,13 @@ h1 {
 }
 
 /* グラフ */
+#bar-chart, #pie-chart {
+  width: 90%;
+  height: auto !important;
+  max-width: 600px;
+  aspect-ratio: 1 / 1; /* 正方形を維持 */
+}
+
 #bar-chart {
   width: 100%;
   max-width: 90vw;
