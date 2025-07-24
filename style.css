@@ -28,6 +28,31 @@ h1 {
   gap: 5px;
 }
 
+#search-area {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-wrap: nowrap !important;
+}
+
+#search-inputs {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-wrap: nowrap !important;
+}
+
+#name-input {
+  width: auto !important;
+  flex: 1 !important;
+  min-width: 30% !important;
+  max-width: 40% !important;
+}
+
 #year-select, #month-select, #name-input {
   font-size: 3.5vw;
   padding: 6px;
