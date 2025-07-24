@@ -63,16 +63,10 @@ document.getElementById("search-button").addEventListener("click", async () => {
     status.textContent = "";
     results.style.display = "block";
 
-    // 集計期間
     document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
-
-    // 来店人数
     document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
-
-    // 会員No.と名前
     document.getElementById("member-info").textContent = `No. ${data["No."]}  名前 ${data["名前"]}`;
 
-    // 右表
     createTable("right-table", [
       [
         getDisplayLabel("累計半荘数"),
@@ -106,7 +100,6 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ], 5);
 
-    // 左表
     createTable("left-table", [
       [
         getDisplayLabel("平均着順"),
@@ -136,14 +129,12 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ], 4);
 
-    // 棒グラフ
     createBarChart([
       data["2"], data["3"], data["4"], data["5"],
       data["6"], data["7"], data["8"], data["9"],
       data["10"], data["最新スコア"]
     ]);
 
-    // 円グラフ
     createPieChart(data);
 
   } catch (error) {
@@ -151,7 +142,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
   }
 });
 
-// スコア表示フォーマット（NaN対応）
+// スコア表示フォーマット
 function formatScore(value) {
   if (value === null || value === undefined || isNaN(value)) {
     return "データ不足";
@@ -170,13 +161,6 @@ function createTable(id, rows, cols) {
       const div = document.createElement("div");
       div.textContent = cell;
       div.className = rowIndex % 2 === 0 ? "header" : "data";
-
-      if (rowIndex % 2 === 0) {
-        // ヘッダー行：中央寄せ
-        div.style.textAlign = "center";
-        div.style.verticalAlign = "middle";
-      }
-
       table.appendChild(div);
     });
   });
@@ -190,25 +174,11 @@ function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
   if (barChartInstance) barChartInstance.destroy();
 
-  // ラベルを逆順に設定：左が古い10 → 右が最新
   const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
-
-  // scoresもラベルに合わせて逆順に
   const dataValues = [
-    scores[8], // 10
-    scores[7], // 9
-    scores[6], // 8
-    scores[5], // 7
-    scores[4], // 6
-    scores[3], // 5
-    scores[2], // 4
-    scores[1], // 3
-    scores[0], // 2
-    scores[9]  // 最新
-  ].map(v => {
-    const num = Number(v);
-    return isNaN(num) ? 0 : num;
-  });
+    scores[8], scores[7], scores[6], scores[5], scores[4],
+    scores[3], scores[2], scores[1], scores[0], scores[9]
+  ].map(v => isNaN(Number(v)) ? 0 : Number(v));
 
   const colors = Array(dataValues.length).fill("purple");
   colors[colors.length - 1] = "yellow";
@@ -231,14 +201,8 @@ function createPieChart(data) {
   if (pieChartInstance) pieChartInstance.destroy();
 
   const pieValues = [
-    data["トップ率"],
-    data["にちゃ率"],
-    data["さんちゃ率"],
-    data["よんちゃ率"]
-  ].map(v => {
-    const num = Number(v);
-    return isNaN(num) ? 0 : num;
-  });
+    data["トップ率"], data["にちゃ率"], data["さんちゃ率"], data["よんちゃ率"]
+  ].map(v => isNaN(Number(v)) ? 0 : Number(v));
 
   pieChartInstance = new Chart(ctx, {
     type: "pie",
