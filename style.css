@@ -220,8 +220,10 @@ h1 {
 }
 
 #status-message {
+  display: block;
+  width: 100%;
+  text-align: center;
   color: red;
   font-size: 3.5vw;
-  margin-top: 5px;
-  text-align: center;
+  margin-top: 10px;
 }
