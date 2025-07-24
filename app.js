@@ -112,8 +112,14 @@ function createTable(id, rows, cols) {
 
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
-  const labels = ["最新", "2", "3", "4", "5", "6", "7", "8", "9", "10"].reverse();
-  const dataValues = scores.reverse();
+
+  // labelsとscoresを非破壊で逆順に
+  const labels = ["最新", "2", "3", "4", "5", "6", "7", "8", "9", "10"].slice().reverse();
+  const dataValues = scores.slice().reverse();
+
+  // 最小値・最大値を計算（マイナス対応）
+  const minValue = Math.min(...dataValues);
+  const maxValue = Math.max(...dataValues);
 
   new Chart(ctx, {
     type: "bar",
@@ -130,9 +136,9 @@ function createBarChart(scores) {
       plugins: { legend: { display: false } },
       scales: {
         y: {
-          beginAtZero: false, // マイナスも表示
-          suggestedMin: Math.min(...dataValues) - 10, // マイナス用に余白を確保
-          suggestedMax: Math.max(...dataValues) + 10
+          beginAtZero: false,
+          suggestedMin: minValue - 10,  // 下に余裕を持たせる
+          suggestedMax: maxValue + 10
         }
       }
     }
