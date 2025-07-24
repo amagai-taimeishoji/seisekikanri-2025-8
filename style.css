@@ -15,20 +15,17 @@ h1 {
 
 #search-area {
   display: flex;
-  flex-direction: row; /* ← 横並びに修正 */
   justify-content: center;
   align-items: center;
-  gap: 6px;
   margin-bottom: 20px;
 }
 
 #search-inputs {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* 横並び */
   justify-content: center;
   align-items: center;
   gap: 5px;
-  margin-bottom: 5px;
 }
 
 #year-select, #month-select, #name-input {
