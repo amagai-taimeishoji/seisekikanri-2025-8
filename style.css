@@ -114,6 +114,5 @@ h1 {
 }
 
 #right-table {
-  margin-top: 10px; /* 上側に10pxの余白 */
+  margin-bottom: 15px; /* 右表の下に15pxの隙間 */
 }
-
