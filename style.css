@@ -47,32 +47,26 @@ h1 {
 .table {
   display: grid;
   width: 100%;
-  grid-auto-rows: 10vw; /* 行の高さを固定 */
+  grid-auto-rows: 10vw;
   border-collapse: collapse;
 }
 
-
-
 .table div {
   border: 1px solid #999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 2px;
   box-sizing: border-box;
 }
 
-
 .header {
   font-weight: bold;
-  background-color: lightblue; /* 項目セルは水色 */
+  background-color: lightblue;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 2.5vw;
   text-align: center;
   word-break: keep-all;
-  white-space: pre-line; /* 8文字以上の項目を改行 */
+  white-space: pre-line;
   height: 10vw;
   width: 20vw;
 }
@@ -81,18 +75,17 @@ h1 {
   background-color: white;
   font-size: 3vw;
   display: flex;
-  justify-content: flex-end; /* 横方向の右寄せ */
-  align-items: flex-end;     /* 縦方向の下寄せ */
+  justify-content: flex-end; /* 横方向：右寄せ */
+  align-items: flex-end;     /* 縦方向：下寄せ */
   text-align: right;
   height: 10vw;
   width: 20vw;
-  padding-right: 4px;
+  padding: 0 4px 2px 0; /* 右下に余白 */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* グラフの幅を表と揃える */
 #bar-chart {
   width: 100%;
   max-width: 90vw;
@@ -108,13 +101,13 @@ h1 {
 
 #left-table {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4列を均等幅に */
-  gap: 0; /* 列と列の間の隙間をなくす */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 15px;
 }
 
 #right-table {
-  margin-bottom: 15px; /* 右表の下に15pxの隙間 */
+  margin-bottom: 15px;
 }
