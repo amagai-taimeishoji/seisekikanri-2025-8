@@ -175,10 +175,6 @@ function createTable(id, rows, cols) {
         // ヘッダー行：中央寄せ
         div.style.textAlign = "center";
         div.style.verticalAlign = "middle";
-      } else {
-        // データ行：右下寄せ
-        div.style.textAlign = "right";
-        div.style.verticalAlign = "bottom";
       }
 
       table.appendChild(div);
