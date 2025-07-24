@@ -169,7 +169,28 @@ function createPieChart(data) {
     type: "pie",
     data: {
       labels: ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
-      datasets: [{ data: [data["トップ率"], data["にちゃ率"], data["さんちゃ率"], data["よんちゃ率"]], backgroundColor: ["red", "orange", "green", "blue"] }]
+      datasets: [{
+        data: [
+          data["トップ率"],
+          data["にちゃ率"],
+          data["さんちゃ率"],
+          data["よんちゃ率"]
+        ],
+        backgroundColor: ["red", "orange", "green", "blue"]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "left", // ←凡例を左に配置
+          labels: {
+            boxWidth: 20,
+            padding: 15
+          }
+        }
+      }
     }
   });
 }
