@@ -68,9 +68,8 @@ h1 {
 
 /* 結果表示エリア */
 #results {
-  text-align: center; /* 中央寄せにする */
+  text-align: center;
 }
-
 
 /* 集計期間・来店人数・名前 */
 #info-container {
@@ -108,8 +107,7 @@ h1 {
 /* テーブル共通 */
 .table {
   display: grid;
-  width: 90%; /* 100% → 90%にして余白確保 */
-  margin: 0 auto 15px auto; /* 左右自動マージンで中央寄せ */
+  width: 100%;
   grid-auto-rows: 10vw;
   border-collapse: collapse;
   margin-bottom: 15px;
@@ -153,20 +151,16 @@ h1 {
 }
 
 /* 左右のマージン削除 */
-#left-table, #right-table {
+#right-table, #left-table {
+  margin: 0 0 15px 0;
   width: 100%;
-  max-width: 90vw;  /* 画面の90%以内に */
-  margin: 0 auto 15px auto; /* 上下15px、左右中央寄せ */
 }
 
 #left-table {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 均等4列 */
-}
-
-#right-table {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 均等5列 */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-collapse: collapse;
 }
 
 /* グラフ */
