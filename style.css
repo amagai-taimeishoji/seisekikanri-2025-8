@@ -1,0 +1,114 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0px;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+h1 {
+  font-size: 5vw;
+  font-weight: bold;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+#search-area {
+  margin-bottom: 20px;
+}
+
+#name-input {
+  width: 60%;
+  padding: 10px;
+  font-size: 4vw;
+}
+
+#search-button {
+  padding: 10px 20px;
+  font-size: 4vw;
+  margin-left: 5px;
+}
+
+#status-message {
+  margin-top: 10px;
+  font-size: 3.5vw;
+  color: red;
+}
+
+#results {
+  text-align: left;
+}
+
+#period, #visitor-count, #member-info {
+  font-size: 4vw;
+  margin: 10px 0;
+}
+
+.table {
+  display: grid;
+  width: 100%;
+  grid-auto-rows: 10vw; /* 行の高さを固定 */
+  border-collapse: collapse;
+}
+
+
+
+.table div {
+  border: 1px solid #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+
+.header {
+  font-weight: bold;
+  background-color: lightblue; /* 項目セルは水色 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4vw;
+  text-align: center;
+  word-break: keep-all;
+  white-space: pre-line; /* 8文字以上の項目を改行 */
+  height: 10vw;
+  width: 20vw;
+}
+
+.data {
+  background-color: white; /* 数値セルは白 */
+  font-size: 3vw; /* 数値の文字サイズ */
+  text-align: right;
+  height: 10vw;
+  width: 20vw;
+  padding-right: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+
+/* グラフの幅を表と揃える */
+#bar-chart {
+  width: 100%;
+  max-width: 90vw;
+  margin-bottom: 20px;
+}
+
+#pie-chart {
+  width: 60%;
+  max-width: 90vw;
+  margin-bottom: 20px;
+}
+
+#left-table {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4列を均等幅に */
+  gap: 0; /* 列と列の間の隙間をなくす */
+  width: 100%;
+  border-collapse: collapse;
+}
+

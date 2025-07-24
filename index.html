@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>まぁじゃんぱらだいす</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>まぁじゃんぱらだいす<br>ノーレートフリー個人成績2025年8月</h1>
+
+  <div id="search-area">
+    <input type="text" id="name-input" placeholder="名前">
+    <button id="search-button">検索</button>
+    <p id="status-message"></p>
+  </div>
+
+  <div id="results" style="display: none;">
+    <p id="period"></p>
+    <p id="visitor-count"></p>
+    <p id="member-info"></p>
+    <div id="right-table" class="table"></div>
+    <div id="left-table" class="table"></div>
+    <canvas id="bar-chart"></canvas>
+    <canvas id="pie-chart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
