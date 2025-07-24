@@ -105,9 +105,13 @@ h1 {
   gap: 0;
   width: 100%;
   border-collapse: collapse;
+  margin-left: 5px;
+  margin-right: 5px;
   margin-bottom: 15px;
 }
 
 #right-table {
+  margin-left: 5px;
+  margin-right: 5px;
   margin-bottom: 15px;
 }
