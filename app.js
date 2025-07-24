@@ -96,14 +96,19 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
     // 左表
     createTable("left-table", [
-      [
-        getDisplayLabel("平均着順"),
-        getDisplayLabel("平均着順ランキング"),
-        getDisplayLabel("ラス回避率"),
-        getDisplayLabel("ラス回避率ランキング")
-      ],
-      [data["平均着順"], data["平均着順ランキング"], data["ラス回避率"], data["ラス回避率ランキング"]],
-      ["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"],
+  [
+    getDisplayLabel("平均着順"),
+    getDisplayLabel("平均着順ランキング"),
+    getDisplayLabel("ラス回避率"),
+    getDisplayLabel("ラス回避率ランキング")
+  ],
+  [
+    data["平均着順"] ? Number(data["平均着順"]).toFixed(3) : "0.000",
+    data["平均着順ランキング"],
+    data["ラス回避率"] ? Number(data["ラス回避率"]).toFixed(3) : "0.000",
+    data["ラス回避率ランキング"]
+  ],
+  ["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"],
       [data["トップの回数"], data["にちゃの回数"], data["さんちゃの回数"], data["よんちゃの回数"]],
       ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
       [
