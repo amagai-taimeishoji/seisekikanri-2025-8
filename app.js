@@ -59,7 +59,12 @@ function createPieChart(data) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { position: 'left' } }
+      plugins: {
+        legend: {
+          position: 'left', // 凡例を左に配置
+          labels: { boxWidth: 20, padding: 15 }
+        }
+      }
     }
   });
 }
@@ -119,9 +124,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
   try {
     const response = await fetch(`${API_URL}?name=${encodeURIComponent(name)}&year=${year}&month=${month}`);
-
     if (!response.ok) throw new Error(`HTTPエラー: ${response.status}`);
-
     const data = await response.json();
     if (!data || typeof data !== "object") throw new Error("不正なデータ形式");
 
@@ -136,12 +139,9 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
     status.textContent = "";
     results.style.display = "block";
-    
-    // 集計期間
+
     document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
     document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
-
-    // 会員No.と名前（4桁表記）
     let memberNo = data["No."] ? String(data["No."]).padStart(4, '0') : "不明";
     document.getElementById("member-info").textContent = `No. ${memberNo}  名前 ${data["名前"]}`;
 
