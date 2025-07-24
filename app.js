@@ -131,10 +131,12 @@ function createTable(id, rows, cols) {
       if (text === "" || text === null || text === undefined || (typeof text === "number" && isNaN(text))) {
         text = "データ不足";
       } else {
-        if (["総スコア", "平均スコア", "最新スコア", "2", "3", "4", "5", "6", "7", "8", "9", "10"].includes(headerText)) {
+        if (["平均スコア"].includes(headerText)) {
           text = `${Number(text).toFixed(3)}pt`;
         } else if (headerText === "累計半荘数") {
           text = `${text}半荘`;
+        } else if (["総スコア", "最新スコア", "2", "3", "4", "5", "6", "7", "8", "9", "10"].includes(headerText)) {
+  text = `${Number(text).toFixed(1)}pt`;
         } else if (["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"].includes(headerText)) {
           text = `${text}回`;
         } else if (headerText === "平均着順") {
