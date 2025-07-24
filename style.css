@@ -40,8 +40,10 @@ h1 {
 }
 
 #period, #visitor-count, #member-info {
-  font-size: 4vw;
+  font-size: 4.5vw;
   margin: 10px 0;
+  padding-left: 15px; /* 内側に寄せる */
+  text-align: left;   /* 左寄せを維持 */
 }
 
 .table {
