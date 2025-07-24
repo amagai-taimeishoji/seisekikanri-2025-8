@@ -53,20 +53,29 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
   try {
     const response = await fetch(`${API_URL}?name=${encodeURIComponent(name)}&year=${year}&month=${month}`);
+
+    if (!response.ok) {
+      throw new Error(`HTTPエラー: ${response.status}`);
+    }
+
     const data = await response.json();
 
+    if (!data || typeof data !== "object") {
+      throw new Error("不正なデータ形式");
+    }
+
     if (data.error) {
-  if (data.error.includes("シート") && data.error.includes("見つかりません")) {
-    status.textContent = "選択した年月のデータは見つからないよっ";
-  } else {
-    status.textContent = data.error; // 他のエラーはそのまま表示
-  }
-  return;
-}
+      if (data.error.includes("シート") && data.error.includes("見つかりません")) {
+        status.textContent = "選択した年月のデータは見つからないよっ";
+      } else {
+        status.textContent = `エラー: ${data.error}`;
+      }
+      return;
+    }
 
     status.textContent = "";
     results.style.display = "block";
-
+    
     // 集計期間
     document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
 
@@ -157,7 +166,8 @@ document.getElementById("search-button").addEventListener("click", async () => {
     createPieChart(data);
 
   } catch (error) {
-    status.textContent = "通信エラーだよっ";
+    console.error("Fetchエラー:", error);
+    status.textContent = `通信エラーだよっ (${error.message})`;
   }
 });
 
