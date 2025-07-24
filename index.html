@@ -17,15 +17,21 @@
     <p id="status-message"></p>
   </div>
 
-  <div id="results" style="display: none;">
-    <p id="period"></p>
-    <p id="visitor-count"></p>
-    <p id="member-info"></p>
-    <div id="right-table" class="table"></div>
-    <div id="left-table" class="table"></div>
-    <canvas id="bar-chart"></canvas>
-    <canvas id="pie-chart"></canvas>
+ <div id="results" style="display: none;">
+  <div id="info-container">
+    <div id="period-visitor">
+      <span id="period"></span>
+      <span id="visitor-count"></span>
+    </div>
+    <div id="member-info"></div>
   </div>
+
+  <div id="left-table" class="table"></div>
+  <div id="right-table" class="table"></div>
+
+  <canvas id="bar-chart"></canvas>
+  <canvas id="pie-chart"></canvas>
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
