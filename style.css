@@ -177,6 +177,13 @@ h1 {
   margin-bottom: 20px;
 }
 
+#search-area {
+  display: flex;
+  flex-direction: column; /* 子要素を縦並びに */
+  align-items: center;    /* 中央寄せ */
+  margin-bottom: 20px;
+}
+
 #status-message {
   display: block;
   margin-top: 10px; /* 検索エリアの下に余白 */
