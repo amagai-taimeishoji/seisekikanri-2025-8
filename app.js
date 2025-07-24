@@ -137,18 +137,75 @@ document.getElementById("search-button").addEventListener("click", async () => {
     ], 4);
 
     // 棒グラフ
-    createBarChart([
-      data["最新スコア"], data["2"], data["3"], data["4"], data["5"],
-      data["6"], data["7"], data["8"], data["9"], data["10"]
-    ]);
+    function createBarChart(scores) {
+  const ctx = document.getElementById("bar-chart").getContext("2d");
+  if (barChartInstance) barChartInstance.destroy();
 
+  // 順番を変えず、最新スコアが右端に来るようにラベルを定義
+  const labels = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "最新"];
+
+  // NaNや非数値の場合は0に変換
+  const dataValues = scores.map(v => {
+    const num = Number(v);
+    return isNaN(num) ? 0 : num;
+  });
+
+  // 色の配列を作成：最後のバーだけ黄色、それ以外は紫
+  const colors = Array(dataValues.length).fill("purple");
+  colors[colors.length - 1] = "yellow";
+
+  const absMax = Math.max(...dataValues.map(v => Math.abs(v))) || 10;
+
+  barChartInstance = new Chart(ctx, {
+    type: "bar",
+    data: { 
+      labels, 
+      datasets: [{ data: dataValues, backgroundColor: colors }] 
+    },
+    options: {
+      indexAxis: "x",
+      plugins: { legend: { display: false } },
+      scales: { y: { min: -absMax, max: absMax, beginAtZero: true } }
+    }
+  });
+}
     // 円グラフ
-    createPieChart(data);
+    function createPieChart(data) {
+  const ctx = document.getElementById("pie-chart").getContext("2d");
+  if (pieChartInstance) pieChartInstance.destroy();
 
-  } catch (error) {
-    status.textContent = "通信エラーが発生しました";
-  }
-});
+  // NaNや非数値を0に変換
+  const pieValues = [
+    data["トップ率"],
+    data["にちゃ率"],
+    data["さんちゃ率"],
+    data["よんちゃ率"]
+  ].map(v => {
+    const num = Number(v);
+    return isNaN(num) ? 0 : num;
+  });
+
+  pieChartInstance = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
+      datasets: [{
+        data: pieValues,
+        backgroundColor: ["red", "orange", "green", "blue"]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: "left",
+          labels: { boxWidth: 20, padding: 15 }
+        }
+      }
+    }
+  });
+}
 
 // スコア表示フォーマット（NaN対応）
 function formatScore(value) {
