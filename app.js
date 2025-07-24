@@ -105,7 +105,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
   [
     data["平均着順"] ? Number(data["平均着順"]).toFixed(3) : "0.000",
     data["平均着順ランキング"],
-    data["ラス回避率"] ? Number(data["ラス回避率"]).toFixed(3) : "0.000",
+    data["ラス回避率"] ? `${(data["ラス回避率"] * 100).toFixed(3)}%` : "0.000%",
     data["ラス回避率ランキング"]
   ],
   ["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"],
