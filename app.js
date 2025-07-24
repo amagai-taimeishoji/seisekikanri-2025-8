@@ -181,10 +181,10 @@ function createPieChart(data) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: true, // ← true に戻す
       plugins: {
         legend: {
-          position: "left", // ←凡例を左に配置
+          position: "left", // 凡例を左側に
           labels: {
             boxWidth: 20,
             padding: 15
