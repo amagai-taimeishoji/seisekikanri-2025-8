@@ -113,6 +113,7 @@ h1 {
   margin-bottom: 15px;
   border-radius: 4px;
   overflow: hidden;
+  box-shadow: none; /* 影を消す */
 }
 
 .table div {
