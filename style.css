@@ -2,6 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0px;
+  background: none !important;
   background-color: #f4f4f4;
   text-align: center;
 }
