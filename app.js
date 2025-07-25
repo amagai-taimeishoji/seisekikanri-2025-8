@@ -133,7 +133,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     return;
   }
 
-  status.textContent = "ロードチュ…♡";
+  status.textContent = "ロード、チュ…♡";
   results.style.display = "none";
 
   try {
