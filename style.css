@@ -2,7 +2,8 @@ body {
   font-family: 'Noto Sans JP', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #f0f4f8, #ffffff);
+  background: none !important;
+  background-color: 	#F0F8FF !important;
   text-align: center;
 }
 
