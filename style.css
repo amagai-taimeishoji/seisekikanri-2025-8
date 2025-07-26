@@ -169,7 +169,7 @@ h1 {
 
 #right-table,
 #left-table {
-  margin-left: 10vw;  /* 左に10vwの余白を追加 */
+  margin-left: 5vw;  /* 左に10vwの余白を追加 */
   margin-right: auto; /* 右側は自動で詰める */
   width: auto;        /* 内容に合わせて幅を調整 */
   justify-content: start; /* グリッドの内容を左寄せ */
