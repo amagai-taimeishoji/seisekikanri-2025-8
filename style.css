@@ -69,7 +69,7 @@ h3 {
 .box15{
   padding: 0.5em 1em;
     margin-bottom: 20px !important;
-    margin-top: 20px  !important;
+    margin-top: -20px  !important;
     max-width: 80vw;
     width: 80vw; /* 幅をそろえる */
     height: 5vh; /* 高さをそろえる */
@@ -159,7 +159,7 @@ h3 {
 /* 結果表示エリア */
 #results {
   text-align: center;
-  height: 150vh;        /* 画面の高さに固定 */
+  height: 200vh;        /* 画面の高さに固定 */
   overflow-y: hidden;     /* 内容が多いときは縦スクロール */
   margin: 0;
   padding: 0;
