@@ -197,6 +197,7 @@ h1 {
   margin-right: auto;  /* 右詰め */
   margin-top: -40px;
   margin-bottom: 20px;
+  margin-left: 10px; /* 凡例と円グラフの間を10px */
 }
 
 #bar-chart,
