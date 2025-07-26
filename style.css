@@ -36,9 +36,9 @@ h3 {
     padding: 0.5em 1em;
     margin-bottom: 5px;
     margin-top: 40px ;
-    max-width: 80vw;
-    width: 80vw; /* 幅をそろえる */
-    height: 3vh; /* 高さをそろえる */
+    max-width: 82vw;
+    width: 82vw; /* 幅をそろえる */
+    height: 2vh; /* 高さをそろえる */
     display: flex;
     justify-content: center;
     align-items: center; /* 縦方向中央揃え */
@@ -70,9 +70,9 @@ h3 {
   padding: 0.5em 1em;
     margin-bottom: 20px !important;
     margin-top: -20px  !important;
-    max-width: 80vw;
-    width: 80vw; /* 幅をそろえる */
-    height: 3vh; /* 高さをそろえる */
+    max-width: 82vw;
+    width: 82vw; /* 幅をそろえる */
+    height: 2vh; /* 高さをそろえる */
     display: flex;
     justify-content: center;
     align-items: center; /* 縦方向中央揃え */
