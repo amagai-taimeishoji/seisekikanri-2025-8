@@ -76,10 +76,10 @@ function createPieChart(data) {
       plugins: {
         legend: {
           position: 'left',
-          labels: { padding: 10 } // 凡例と円グラフの間隔を10pxに設定
+          labels: { padding: 10 }
         }
       },
-      layout: { padding: { right: 10 } } // グラフ右側の余白
+      layout: { padding: { right: 10 } }
     }
   });
 }
