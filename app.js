@@ -70,20 +70,28 @@ function createPieChart(data) {
         ]
       }]
     },
-    
-  options: {
-  responsive: true,
-  maintainAspectRatio: true,
-  plugins: {
-    legend: {
-      display: true,
-      position: 'left',
-      labels: {
-        boxWidth: 20,
-        padding: 20
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'left',
+          labels: {
+            boxWidth: 20,
+            padding: 20
+          }
+        }
+      },
+      layout: {
+        padding: {
+          left: 50 // グラフ自体を右に50px移動
+        }
       }
     }
-  },
+  });
+}
+
   layout: {
     padding: {
       left: 50 // グラフ自体を右に50px移動
