@@ -193,7 +193,7 @@ h1 {
   display: block;
   width: 80%;          /* サイズは維持 */
   max-width: calc(90vw - 5vw); /* 左余白分を引く */
-  margin-left: 5vw;    /* 左に5vwの余白 */
+  margin-left: 3vw;    /* 左の余白 */
   margin-right: auto;  /* 右詰め */
   margin-top: -40px;
   margin-bottom: 20px;
@@ -202,6 +202,6 @@ h1 {
 #bar-chart,
 #pie-chart {
   display: block;
-  margin-left: 5vw;  /* 左だけ5vwの余白 */
+  margin-left: 3vw;  /* 左だけ5vwの余白 */
   margin-right: auto; /* 右は自動で詰める */
 }
