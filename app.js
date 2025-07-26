@@ -17,10 +17,9 @@ function createBarChart(scores) {
     label === "最新" ? "rgba(255, 206, 86, 0.9)" : "rgba(186, 140, 255, 0.7)"
   );
 
-  // 最大値・最小値を計算し、ゼロを中心にする
   const maxVal = Math.max(...reorderedScores.map(s => s || 0));
   const minVal = Math.min(...reorderedScores.map(s => s || 0));
-  const maxAbs = Math.max(Math.abs(maxVal), Math.abs(minVal)) * 1.1; // 10%余白
+  const maxAbs = Math.max(Math.abs(maxVal), Math.abs(minVal)) * 1.1;
 
   barChartInstance = new Chart(ctx, {
     type: "bar",
@@ -39,37 +38,52 @@ function createBarChart(scores) {
       plugins: { legend: { display: false } },
       scales: {
         y: {
-          suggestedMin: -maxAbs,
-          suggestedMax: maxAbs,
-          ticks: {
-            stepSize: Math.ceil(maxAbs / 5)
-          }
+          min: -maxAbs,  // 0を中央に
+          max: maxAbs,
+          ticks: { stepSize: Math.ceil(maxAbs / 5) }
         }
       }
     }
   });
 }
 
-pieChartInstance = new Chart(ctx, {
-  type: "pie",
-  data: {
-    labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
-    datasets: [{
-      data: [
-        data["トップ率"] * 100,
-        data["にちゃ率"] * 100,
-        data["さんちゃ率"] * 100,
-        data["よんちゃ率"] * 100
-      ],
-      backgroundColor: [
-        "rgba(255, 120, 120, 1)",  // トップ: 赤
-        "rgba(255, 170, 100, 1)",  // にちゃ: オレンジ
-        "rgba(120, 200, 120, 1)",  // さんちゃ: 緑
-        "rgba(100, 150, 255, 1)"   // よんちゃ: 青
-      ]
-    }]
-  },
+function createPieChart(data) {
+  const ctx = document.getElementById("pie-chart").getContext("2d");
+  if (pieChartInstance) pieChartInstance.destroy();
+
+  pieChartInstance = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
+      datasets: [{
+        data: [
+          data["トップ率"] * 100,
+          data["にちゃ率"] * 100,
+          data["さんちゃ率"] * 100,
+          data["よんちゃ率"] * 100
+        ],
+        backgroundColor: [
+          "rgba(255, 120, 120, 1)",
+          "rgba(255, 170, 100, 1)",
+          "rgba(120, 200, 120, 1)",
+          "rgba(100, 150, 255, 1)"
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: 'left',
+          labels: { padding: 10 } // 凡例と円グラフの間隔
+        }
+      },
+      layout: { padding: { right: 10 } }
+    }
+  });
 }
+
   options: {
     responsive: true,
     maintainAspectRatio: true,
