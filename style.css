@@ -5,6 +5,8 @@ body {
   background: none !important;
   background-color: 	#F0F8FF !important;
   text-align: center;
+  width: 100vw;
+  height: 200vh;
 }
 
 /* タイトル */
