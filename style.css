@@ -35,10 +35,10 @@ h3 {
 .box15, .box16, .box17 {
     padding: 0.5em 1em;
     margin-bottom: 5px;
-    margin-top: 40px !important;
+    margin-top: 40px ;
     max-width: 80vw;
     width: 80vw; /* 幅をそろえる */
-    height: 8vh; /* 高さをそろえる */
+    height: 5vh; /* 高さをそろえる */
     display: flex;
     justify-content: center;
     align-items: center; /* 縦方向中央揃え */
@@ -65,7 +65,10 @@ h3 {
     padding: 0;
     text-align: center; /* テキストも中央 */
 }
-
+.box15,{
+  margin-top: 10px !important;
+  }
+  
 /* 検索エリア */
 #search-area {
   display: flex;
