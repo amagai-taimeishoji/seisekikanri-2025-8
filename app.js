@@ -247,7 +247,7 @@ function formatScore(value) {
 function createTable(id, rows, cols) {
   const table = document.getElementById(id);
   table.innerHTML = "";
-  table.style.gridTemplateColumns = `repeat(${cols}, 20vw)`;
+  table.style.gridTemplateColumns = `repeat(${cols}, 18vw)`;
 
   rows.forEach((row, rowIndex) => {
     row.forEach(cell => {
