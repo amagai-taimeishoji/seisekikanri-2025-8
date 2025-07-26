@@ -83,21 +83,18 @@ function createPieChart(data) {
         }
       },
       layout: {
-        padding: {
-          left: 0,
-          right: 0
-        }
+        padding: { left: 0, right: 0 }
       }
     },
     plugins: [{
       id: 'movePieChart',
-      beforeDraw(chart) {
-        const { ctx, chartArea } = chart;
+      beforeDatasetsDraw(chart) {
+        const { ctx } = chart;
         ctx.save();
-        ctx.translate(50, 0); // グラフ本体だけを右に50px移動
+        ctx.translate(50, 0); // 描画直前にグラフ本体を右に移動
       },
-      afterDraw(chart) {
-        chart.ctx.restore();
+      afterDatasetsDraw(chart) {
+        chart.ctx.restore(); // グラフ描画が終わったら元に戻す
       }
     }]
   });
