@@ -67,8 +67,9 @@ h1 {
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 8px 16px;
+  margin:auto
   font-size: 3.5vw;
+  width: 12vw;
   cursor: pointer;
   white-space: nowrap;
   transition: transform 0.2s ease, background 0.3s ease;
