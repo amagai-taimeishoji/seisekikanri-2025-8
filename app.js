@@ -46,6 +46,7 @@ function createBarChart(scores) {
       }
     }
   });
+}
 
 // 円グラフ
 function createPieChart(data) {
