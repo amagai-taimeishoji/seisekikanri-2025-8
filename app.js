@@ -72,11 +72,10 @@ function createPieChart(data) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: true,
-          position: 'left',
+          position: 'left', // 凡例は左に固定
           labels: {
             boxWidth: 20,
             padding: 20
@@ -85,13 +84,24 @@ function createPieChart(data) {
       },
       layout: {
         padding: {
-          left: 50 // グラフ自体を右に50px移動
+          left: 0,
+          right: 0
         }
       }
-    }
+    },
+    plugins: [{
+      id: 'movePieChart',
+      beforeDraw(chart) {
+        const { ctx, chartArea } = chart;
+        ctx.save();
+        ctx.translate(50, 0); // グラフ本体だけを右に50px移動
+      },
+      afterDraw(chart) {
+        chart.ctx.restore();
+      }
+    }]
   });
 }
-
 
 // 以降の処理（API呼び出し、テーブル生成など）はこれまでと同じ
 
