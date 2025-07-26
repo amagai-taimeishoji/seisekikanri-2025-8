@@ -76,32 +76,13 @@ function createPieChart(data) {
       plugins: {
         legend: {
           position: 'left',
-          labels: { padding: 10 } // 凡例と円グラフの間隔
+          labels: { padding: 10 } // 凡例と円グラフの間隔を10pxに設定
         }
       },
-      layout: { padding: { right: 10 } }
+      layout: { padding: { right: 10 } } // グラフ右側の余白
     }
   });
 }
-
-  options: {
-    responsive: true,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: {
-        position: 'left',
-        labels: {
-          padding: 10 // 凡例とグラフの間隔を10pxに設定
-        }
-      }
-    },
-    layout: {
-      padding: {
-        right: 10 // 円グラフ全体の右側に10pxの余白
-      }
-    }
-  }
-});
 
 // 以降の処理（API呼び出し、テーブル生成など）はこれまでと同じ
 
