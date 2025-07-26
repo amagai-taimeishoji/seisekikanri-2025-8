@@ -72,31 +72,18 @@ function createPieChart(data) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       plugins: {
         legend: {
-          position: 'left', // 凡例は左に固定
+          display: true,
+          position: 'left',
           labels: {
             boxWidth: 20,
             padding: 20
           }
         }
-      },
-      layout: {
-        padding: { left: 0, right: 0 }
       }
-    },
-    plugins: [{
-      id: 'movePieChart',
-      beforeDatasetsDraw(chart) {
-        const { ctx } = chart;
-        ctx.save();
-        ctx.translate(50, 0); // 描画直前にグラフ本体を右に移動
-      },
-      afterDatasetsDraw(chart) {
-        chart.ctx.restore(); // グラフ描画が終わったら元に戻す
-      }
-    }]
+    }
   });
 }
 
