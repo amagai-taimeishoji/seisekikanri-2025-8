@@ -17,7 +17,7 @@ function createBarChart(scores) {
     label === "最新" ? "rgba(255, 206, 86, 0.9)" : "rgba(186, 140, 255, 0.7)"
   );
 
-  // 最大値・最小値を計算し、ゼロを中心に余白を追加
+  // 最大値・最小値を計算し、ゼロを中心にする
   const maxVal = Math.max(...reorderedScores.map(s => s || 0));
   const minVal = Math.min(...reorderedScores.map(s => s || 0));
   const maxAbs = Math.max(Math.abs(maxVal), Math.abs(minVal)) * 1.1; // 10%余白
@@ -39,8 +39,8 @@ function createBarChart(scores) {
       plugins: { legend: { display: false } },
       scales: {
         y: {
-          min: -maxAbs,
-          max: maxAbs,
+          suggestedMin: -maxAbs,
+          suggestedMax: maxAbs,
           ticks: {
             stepSize: Math.ceil(maxAbs / 5)
           }
