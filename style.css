@@ -68,8 +68,8 @@ h3 {
 
 .box15{
   padding: 0.5em 1em;
-    margin-bottom: 20px;
-    margin-top: 20px ;
+    margin-bottom: 20px !important;
+    margin-top: 20px  !important;
     max-width: 80vw;
     width: 80vw; /* 幅をそろえる */
     height: 5vh; /* 高さをそろえる */
