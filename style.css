@@ -88,7 +88,6 @@ h1 {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  align-items: center;
 }
 
 /* 集計期間・来店人数・名前 */
@@ -169,9 +168,8 @@ h1 {
 }
 
 #right-table, #left-table {
-  margin: 0 0 15px 0 auto;
+  margin: 0 0 15px 0;
   width: 90%;
-  justify-content: center;
 }
 
 #left-table {
@@ -193,11 +191,4 @@ h1 {
   max-width: 90vw;
   margin-top: -40px;
   margin-bottom: 20px;
-}
-
-/* グラフも中央に */
-#bar-chart,
-#pie-chart {
-  display: block;
-  margin-right: auto;
 }
