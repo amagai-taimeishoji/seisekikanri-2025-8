@@ -157,7 +157,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     document.getElementById("period").textContent = `集計期間: ${year}年${month}月`;
     document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
     let memberNo = data["No."] ? String(data["No."]).padStart(4, '0') : "不明";
-    document.getElementById("member-info").textContent = `No. ${memberNo}  "" ${data["名前"]}`;
+    document.getElementById("member-info").textContent = `No. ${memberNo}   ${data["名前"]}`;
 
     // 右表
     createTable("right-table", [
