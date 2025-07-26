@@ -50,37 +50,43 @@ function createBarChart(scores) {
   });
 }
 
-// 円グラフ
-function createPieChart(data) {
-  const ctx = document.getElementById("pie-chart").getContext("2d");
-  if (pieChartInstance) pieChartInstance.destroy();
-
-  pieChartInstance = new Chart(ctx, {
-    type: "pie",
-    data: {
-      labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
-      datasets: [{
-        data: [
-          data["トップ率"] * 100,
-          data["にちゃ率"] * 100,
-          data["さんちゃ率"] * 100,
-          data["よんちゃ率"] * 100
-        ],
-        backgroundColor: [
-          "rgba(255, 120, 120, 1)",  // トップ: 赤
-          "rgba(255, 170, 100, 1)",  // にちゃ: オレンジ
-          "rgba(120, 200, 120, 1)",  // さんちゃ: 緑
-          "rgba(100, 150, 255, 1)"   // よんちゃ: 青
-        ]
-      }]
+pieChartInstance = new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
+    datasets: [{
+      data: [
+        data["トップ率"] * 100,
+        data["にちゃ率"] * 100,
+        data["さんちゃ率"] * 100,
+        data["よんちゃ率"] * 100
+      ],
+      backgroundColor: [
+        "rgba(255, 120, 120, 1)",  // トップ: 赤
+        "rgba(255, 170, 100, 1)",  // にちゃ: オレンジ
+        "rgba(120, 200, 120, 1)",  // さんちゃ: 緑
+        "rgba(100, 150, 255, 1)"   // よんちゃ: 青
+      ]
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        position: 'left',
+        labels: {
+          padding: 10 // 凡例とグラフの間隔を10pxに設定
+        }
+      }
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: { legend: { position: 'left' } }
+    layout: {
+      padding: {
+        right: 10 // 円グラフ全体の右側に10pxの余白
+      }
     }
-  });
-}
+  }
+});
 
 // 以降の処理（API呼び出し、テーブル生成など）はこれまでと同じ
 
