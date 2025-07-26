@@ -202,6 +202,6 @@ h1 {
 #bar-chart,
 #pie-chart {
   display: block;
-  margin-left: 3vw;  /* 左だけ5vwの余白 */
+  margin-left: 5vw;  /* 左だけ5vwの余白 */
   margin-right: auto; /* 右は自動で詰める */
 }
