@@ -80,6 +80,11 @@ h1 {
 /* 結果表示エリア */
 #results {
   text-align: center;
+  height: 100vh;        /* 画面の高さに固定 */
+  overflow-y: auto;     /* 内容が多いときは縦スクロール */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* 集計期間・来店人数・名前 */
