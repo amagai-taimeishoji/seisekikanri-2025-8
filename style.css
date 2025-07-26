@@ -51,7 +51,6 @@ h1 {
 
 #name-input {
   flex: 1;
-  height: 5vh;
   min-width: 25%;
   max-width: 35%;
   padding: 8px;
@@ -68,11 +67,8 @@ h1 {
   color: white;
   border: none;
   border-radius: 8px;
-  margin:auto
+  padding: 8px 16px;
   font-size: 3.5vw;
-  width: 12vw;
-  height: 5vh;
-  
   cursor: pointer;
   white-space: nowrap;
   transition: transform 0.2s ease, background 0.3s ease;
