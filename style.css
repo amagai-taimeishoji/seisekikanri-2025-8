@@ -83,7 +83,7 @@ h1 {
 #results {
   text-align: center;
   height: 150vh;        /* 画面の高さに固定 */
-  overflow-y: auto;     /* 内容が多いときは縦スクロール */
+  overflow-y: hidden;     /* 内容が多いときは縦スクロール */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
