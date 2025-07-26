@@ -70,18 +70,25 @@ function createPieChart(data) {
         ]
       }]
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: {
-        legend: {
-          position: 'left',
-          labels: { padding: 10 }
-        }
-      },
-      layout: { padding: { right: 10 } }
+    
+  options: {
+  responsive: true,
+  maintainAspectRatio: true,
+  plugins: {
+    legend: {
+      display: true,
+      position: 'left',
+      labels: {
+        boxWidth: 20,
+        padding: 20
+      }
     }
-  });
+  },
+  layout: {
+    padding: {
+      left: 50 // グラフ自体を右に50px移動
+    }
+  }
 }
 
 // 以降の処理（API呼び出し、テーブル生成など）はこれまでと同じ
