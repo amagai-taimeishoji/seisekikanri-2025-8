@@ -38,7 +38,7 @@ h3 {
     margin-top: 40px ;
     max-width: 80vw;
     width: 80vw; /* 幅をそろえる */
-    height: 5vh; /* 高さをそろえる */
+    height: 3vh; /* 高さをそろえる */
     display: flex;
     justify-content: center;
     align-items: center; /* 縦方向中央揃え */
@@ -72,7 +72,7 @@ h3 {
     margin-top: -20px  !important;
     max-width: 80vw;
     width: 80vw; /* 幅をそろえる */
-    height: 5vh; /* 高さをそろえる */
+    height: 3vh; /* 高さをそろえる */
     display: flex;
     justify-content: center;
     align-items: center; /* 縦方向中央揃え */
