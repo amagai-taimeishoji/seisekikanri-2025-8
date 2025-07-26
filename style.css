@@ -191,7 +191,7 @@ h1 {
 
 #pie-chart {
   display: block;
-  width: 80vw;          /* サイズは維持 */
+  width: 90vw;          /* サイズは維持 */
   max-width: calc(90vw - 5vw); /* 左余白分を引く */
   margin-left: 5vw   !important;   /* 左の余白 */
   margin-right: auto;  /* 右詰め */
