@@ -78,8 +78,8 @@ function createPieChart(data) {
           display: true,
           position: 'left',
           labels: {
-            boxWidth: 50,
-            padding: 40
+            boxWidth: 40,
+            padding: 20
           }
         }
       }
