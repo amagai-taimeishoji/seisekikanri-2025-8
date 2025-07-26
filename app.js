@@ -92,12 +92,6 @@ function createPieChart(data) {
   });
 }
 
-  layout: {
-    padding: {
-      left: 50 // グラフ自体を右に50px移動
-    }
-  }
-}
 
 // 以降の処理（API呼び出し、テーブル生成など）はこれまでと同じ
 
