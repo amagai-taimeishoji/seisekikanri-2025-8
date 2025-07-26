@@ -17,7 +17,7 @@ function createBarChart(scores) {
     label === "最新" ? "rgba(255, 206, 86, 0.9)" : "rgba(186, 140, 255, 0.7)"
   );
 
-  // 最大値・最小値を計算し、ゼロを中心にする
+   // 最大値・最小値を計算し、ゼロを中心にする
   const maxVal = Math.max(...reorderedScores.map(s => s || 0));
   const minVal = Math.min(...reorderedScores.map(s => s || 0));
   const maxAbs = Math.max(Math.abs(maxVal), Math.abs(minVal));
@@ -39,15 +39,13 @@ function createBarChart(scores) {
       plugins: { legend: { display: false } },
       scales: {
         y: {
-          min: -maxAbs,
-          max: maxAbs,
-          beginAtZero: true,
-          ticks: { stepSize: Math.ceil(maxAbs / 5) }
+          min: -maxAbs, // ゼロを中心に
+          max: maxAbs,  // 対称に設定
+          beginAtZero: true
         }
       }
     }
   });
-}
 
 // 円グラフ
 function createPieChart(data) {
