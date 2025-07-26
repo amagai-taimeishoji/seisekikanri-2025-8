@@ -195,3 +195,10 @@ h1 {
   margin-top: -40px;
   margin-bottom: 20px;
 }
+
+#bar-chart,
+#pie-chart {
+  display: block;
+  margin-left: 5vw;  /* 左だけ5vwの余白 */
+  margin-right: auto; /* 右は自動で詰める */
+}
