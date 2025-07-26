@@ -25,6 +25,7 @@ h1 {
   flex-direction: column; /* 縦並びにする */
   align-items: center;
   margin-bottom: 20px;
+  justify-content: center;
 }
 
 #search-inputs {
