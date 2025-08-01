@@ -239,7 +239,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
 
   } catch (error) {
     console.error("Fetchエラー:", error);
-    status.textContent = `通信エラーだよっ (${error.message})`;
+    status.textContent = `成績更新チュ♡今は見れません (${error.message})`;
   }
 });
 
