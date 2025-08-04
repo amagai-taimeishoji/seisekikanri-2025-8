@@ -10,6 +10,24 @@ function getDisplayLabel(key) {
   return displayLabels[key] || key;
 }
 
+// ページ読み込み時に年・月プルダウンの初期値を「今日」に合わせる
+window.addEventListener('DOMContentLoaded', () => {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1;
+
+  const yearSelect = document.getElementById("year-select");
+  const monthSelect = document.getElementById("month-select");
+
+  for (const option of yearSelect.options) {
+    option.selected = (Number(option.value) === currentYear);
+  }
+
+  for (const option of monthSelect.options) {
+    option.selected = (Number(option.value) === currentMonth);
+  }
+});
+
 document.getElementById("search-button").addEventListener("click", async () => {
   const name = document.getElementById("name-input").value.trim();
   const status = document.getElementById("status-message");
@@ -36,19 +54,23 @@ document.getElementById("search-button").addEventListener("click", async () => {
     status.textContent = "";
     results.style.display = "block";
 
-   // 集計期間（開始日: 年/月/1 00:00）
-const now = new Date();
-const year = now.getFullYear();
-const month = now.getMonth() + 1; // 月は0始まりなので+1
-const startDate = `${year}/${String(month).padStart(2, '0')}/1 00:00`;
-const lastUpdated = data["最終更新"] || new Date().toLocaleString();
+    // 年・月プルダウンの値を取得
+    const yearSelect = document.getElementById("year-select");
+    const monthSelect = document.getElementById("month-select");
+    const selectedYear = yearSelect.value;
+    const selectedMonth = monthSelect.value;
 
-document.getElementById("period").textContent = `集計期間: ${startDate} 〜 ${lastUpdated}`;
+    // 集計期間開始日をyyyy/mm/1 00:00形式で作成
+    const startDate = `${selectedYear}/${String(selectedMonth).padStart(2, "0")}/1 00:00`;
+    const lastUpdated = data["最終更新"] || new Date().toLocaleString();
 
-// 来店人数（左寄せ）
-const visitorEl = document.getElementById("visitor-count");
-visitorEl.textContent = `来店人数: ${data["来店人数"] || "不明"}`;
-visitorEl.style.textAlign = "left";
+    document.getElementById("period").textContent = `集計期間: ${startDate} 〜 ${lastUpdated}`;
+
+    // 来店人数（左寄せ）
+    const visitorEl = document.getElementById("visitor-count");
+    visitorEl.textContent = `来店人数: ${data["来店人数"] || "不明"}`;
+    visitorEl.style.textAlign = "left";
+
     // 会員No.と名前
     document.getElementById("member-info").textContent = `No. ${data["No."]}  名前 ${data["名前"]}`;
 
@@ -120,11 +142,9 @@ function createTable(id, rows, cols) {
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
 
-  // labelsとscoresを非破壊で逆順に
   const labels = ["最新", "2", "3", "4", "5", "6", "7", "8", "9", "10"].slice().reverse();
   const dataValues = scores.slice().reverse();
 
-  // 最小値・最大値を計算（マイナス対応）
   const minValue = Math.min(...dataValues);
   const maxValue = Math.max(...dataValues);
 
@@ -144,7 +164,7 @@ function createBarChart(scores) {
       scales: {
         y: {
           beginAtZero: false,
-          suggestedMin: minValue - 10,  // 下に余裕を持たせる
+          suggestedMin: minValue - 10,
           suggestedMax: maxValue + 10
         }
       }
