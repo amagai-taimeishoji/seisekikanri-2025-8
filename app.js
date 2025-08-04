@@ -1,4 +1,4 @@
-// // グラフインスタンス
+// グラフインスタンス
 let barChartInstance = null;
 let pieChartInstance = null;
 
@@ -38,7 +38,7 @@ function createBarChart(scores) {
       plugins: { legend: { display: false } },
       scales: {
         y: {
-          min: -maxAbs,  // 0を中央に
+          min: -maxAbs,
           max: maxAbs,
           ticks: { stepSize: Math.ceil(maxAbs / 5) }
         }
@@ -87,8 +87,6 @@ function createPieChart(data) {
   });
 }
 
-// 以降の処理（API呼び出し、テーブル生成など）はこれまでと同じ
-
 // Google Apps ScriptのURL
 const API_URL = "https://script.google.com/macros/s/AKfycby-JyuULrd8LD2CAoKYPR8z-CS58n6CdVBwx4YHGIDz-RWGcjw0N9mWUveCSSP1NAdK/exec";
 
@@ -104,11 +102,13 @@ function getDisplayLabel(key) {
   return displayLabels[key] || key;
 }
 
-// 年・月の選択肢を動的に作成
+// 年・月の選択肢生成
 const yearSelect = document.getElementById("year-select");
 const monthSelect = document.getElementById("month-select");
 
 const currentYear = new Date().getFullYear();
+const currentMonth = new Date().getMonth() + 1;
+
 for (let y = 2025; y <= currentYear + 1; y++) {
   const option = document.createElement("option");
   option.value = y;
@@ -123,7 +123,7 @@ for (let m = 1; m <= 12; m++) {
   option.textContent = `${m}月`;
   monthSelect.appendChild(option);
 }
-monthSelect.value = new Date().getMonth() + 1;
+monthSelect.value = currentMonth;
 
 // イベントリスナー
 document.getElementById("search-button").addEventListener("click", async () => {
@@ -146,14 +146,11 @@ document.getElementById("search-button").addEventListener("click", async () => {
     const response = await fetch(`${API_URL}?name=${encodeURIComponent(name)}&year=${year}&month=${month}`);
     if (!response.ok) throw new Error(`HTTPエラー: ${response.status}`);
     const data = await response.json();
-    if (!data || typeof data !== "object") throw new Error("不正なデータ形式");
 
     if (data.error) {
-      if (data.error.includes("シート") && data.error.includes("見つかりません")) {
-        status.textContent = "選択した年月のデータは見つからないよっ";
-      } else {
-        status.textContent = `エラー: ${data.error}`;
-      }
+      status.textContent = data.error.includes("見つかりません")
+        ? "選択した年月のデータは見つからないよっ"
+        : `エラー: ${data.error}`;
       return;
     }
 
@@ -164,10 +161,11 @@ document.getElementById("search-button").addEventListener("click", async () => {
     const lastUpdated = data["最終更新"] || "不明";
     document.getElementById("period").textContent = `集計期間: ${startDate} 〜 ${lastUpdated}`;
     document.getElementById("visitor-count").textContent = `集計人数: ${data["集計人数"] || "不明"}`;
+
     let memberNo = data["No."] ? String(data["No."]).padStart(4, '0') : "不明";
     document.getElementById("member-info").textContent = `No. ${memberNo}   ${data["名前"]}`;
 
-    // 右表
+    // 表
     createTable("right-table", [
       [
         getDisplayLabel("累計半荘数"),
@@ -201,7 +199,6 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ], 5);
 
-    // 左表
     createTable("left-table", [
       [
         getDisplayLabel("平均着順"),
@@ -231,12 +228,12 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ], 4);
 
-    // グラフ描画
     createBarChart([
       data["2"], data["3"], data["4"], data["5"],
       data["6"], data["7"], data["8"], data["9"],
       data["10"], data["最新スコア"]
     ]);
+
     createPieChart(data);
 
   } catch (error) {
@@ -245,13 +242,11 @@ document.getElementById("search-button").addEventListener("click", async () => {
   }
 });
 
-// スコア表示フォーマット（NaN対応）
 function formatScore(value) {
   if (value === null || value === undefined || isNaN(value)) return "データ不足";
   return `${Number(value).toFixed(1)}pt`;
 }
 
-// 表作成
 function createTable(id, rows, cols) {
   const table = document.getElementById(id);
   table.innerHTML = "";
