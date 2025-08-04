@@ -36,12 +36,19 @@ document.getElementById("search-button").addEventListener("click", async () => {
     status.textContent = "";
     results.style.display = "block";
 
-    // 集計期間
-    document.getElementById("period").textContent = `集計期間: 2025/8/1〜${new Date().toLocaleDateString()}`;
+   // 集計期間（開始日: 年/月/1 00:00）
+const now = new Date();
+const year = now.getFullYear();
+const month = now.getMonth() + 1; // 月は0始まりなので+1
+const startDate = `${year}/${String(month).padStart(2, '0')}/1 00:00`;
+const lastUpdated = data["最終更新"] || new Date().toLocaleString();
 
-    // 来店人数
-    document.getElementById("visitor-count").textContent = `来店人数: ${data["来店人数"] || "不明"}`;
+document.getElementById("period").textContent = `集計期間: ${startDate} 〜 ${lastUpdated}`;
 
+// 来店人数（左寄せ）
+const visitorEl = document.getElementById("visitor-count");
+visitorEl.textContent = `来店人数: ${data["来店人数"] || "不明"}`;
+visitorEl.style.textAlign = "left";
     // 会員No.と名前
     document.getElementById("member-info").textContent = `No. ${data["No."]}  名前 ${data["名前"]}`;
 
