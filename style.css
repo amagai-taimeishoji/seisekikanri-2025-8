@@ -187,6 +187,7 @@ h3 {
 /* 集計期間 */
 #period {
   text-align: left;
+  font-size: 3.5vw;
   margin-bottom: 3px;
 }
 
