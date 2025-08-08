@@ -185,11 +185,11 @@ document.getElementById("search-button").addEventListener("click", async () => {
     createTable("ranking-table", [
       ["累計半荘数\nランキング", "総スコア\nランキング", "最高スコア\nランキング", "平均スコア\nランキング", "平均着順\nランキング"],
       [
-        `${(data["累計半荘数ランキング"]).toFixed(0)}位`,
-        `${(data["総スコアランキング"]).toFixed(0)}位`,
-        `${(data["最高スコアランキング"]).toFixed(0)}位`,
-        `${(data["平均スコアランキング"]).toFixed(0)}位`,
-        `${(data["平均着順ランキング"]).toFixed(0)}位`
+        `${data["累計半荘数ランキング"]}位`,
+        `${data["総スコアランキング"]}位`,
+        `${data["最高スコアランキング"]}位`,
+        `${data["平均スコアランキング"]}位`,
+        `${data["平均着順ランキング"])}位`
       ]
     ], 5);
 
