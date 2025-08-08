@@ -1,3 +1,4 @@
+/* --- 元のCSS --- */
 body {
   font-family: 'Noto Sans JP', sans-serif;
   margin: 0 auto; 
@@ -11,90 +12,45 @@ body {
 }
 
 /* グラフタイトル */
-h1 {
+h1, h2, h3 {
   font-size: 4vw;
   font-weight: bold;
   line-height: 1.2;
   color: #333;
 }
 
-h2 {
-  font-size: 4vw;
-  font-weight: bold;
-  line-height: 1.2;
-  color: #333;
-}
-
-h3 {
-  font-size: 4vw;
-  font-weight: bold;
-  line-height: 1.2;
-  color: #333;
-}
-
-.box16, .box17 {
-    padding: 0.5em 1em;
-    margin-bottom: 5px;
-    margin-top: 40px ;
-    max-width: 82vw;
-    width: 82vw; /* 幅をそろえる */
-    height: 2vh; /* 高さをそろえる */
-    display: flex;
-    justify-content: center;
-    align-items: center; /* 縦方向中央揃え */
-    background: -webkit-repeating-linear-gradient(
-        -45deg,
-        #f0f8ff,
-        #f0f8ff 3px,
-        #e9f4ff 3px,
-        #e9f4ff 7px
-    );
-    background: repeating-linear-gradient(
-        -45deg,
-        #f0f8ff,
-        #f0f8ff 3px,
-        #e9f4ff 3px,
-        #e9f4ff 7px
-    );
-    margin-left: auto;
-    margin-right: auto; /* 中央揃え */
-}
-
-.box15 p, .box16 p, .box17 p {
-    margin: 0;
-    padding: 0;
-    text-align: center; /* テキストも中央 */
-}
-
-.box15{
+.box15, .box16, .box17, .box18 {
   padding: 0.5em 1em;
-    margin-bottom: 20px !important;
-    margin-top: -20px  !important;
-    max-width: 82vw;
-    width: 82vw; /* 幅をそろえる */
-    height: 2vh; /* 高さをそろえる */
-    display: flex;
-    justify-content: center;
-    align-items: center; /* 縦方向中央揃え */
-    background: -webkit-repeating-linear-gradient(
-        -45deg,
-        #f0f8ff,
-        #f0f8ff 3px,
-        #e9f4ff 3px,
-        #e9f4ff 7px
-    );
-    background: repeating-linear-gradient(
-        -45deg,
-        #f0f8ff,
-        #f0f8ff 3px,
-        #e9f4ff 3px,
-        #e9f4ff 7px
-    );
-    margin-left: auto;
-    margin-right: auto; /* 中央揃え */
+  max-width: 82vw;
+  width: 82vw; /* 幅をそろえる */
+  height: 2vh; /* 高さをそろえる */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 縦方向中央揃え */
+  background: repeating-linear-gradient(
+      -45deg,
+      #f0f8ff,
+      #f0f8ff 3px,
+      #e9f4ff 3px,
+      #e9f4ff 7px
+  );
+  margin-left: auto;
+  margin-right: auto; /* 中央揃え */
+  margin-bottom: 5px;
+  margin-top: 40px;
+}
+.box15 {
+  margin-top: -20px !important;
+  margin-bottom: 20px !important;
 }
 
-  
+/* ヘッダー内のp要素中央揃え */
+.box15 p, .box16 p, .box17 p, .box18 p {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
 /* 検索エリア */
 #search-area {
   display: flex;
@@ -155,7 +111,6 @@ h3 {
   background: linear-gradient(45deg, #45a049, #66bb6a);
 }
 
-
 /* 結果表示エリア */
 #results {
   text-align: center;
@@ -177,8 +132,8 @@ h3 {
 
 #period-visitor {
   display: flex;
-  flex-direction: column; /* ← ここを column に変更 */
-  align-items: flex-start; /* ← 左寄せ */
+  flex-direction: column; /* 縦並び */
+  align-items: flex-start; /* 左寄せ */
   font-size: 4vw;
   margin-bottom: 5px;
   padding-left: 10px;
@@ -191,7 +146,7 @@ h3 {
   margin-bottom: 3px;
 }
 
-/* 集計人数（下に左寄せ） */
+/* 集計人数（左寄せ） */
 #visitor-count.left-align-under {
   text-align: left;
   font-size: 3.5vw;
@@ -248,17 +203,28 @@ h3 {
   align-items: flex-end;
 }
 
+/* テーブルの個別配置 */
 #right-table,
-#left-table {
-  margin-left: 5vw;  /* 左に10vwの余白を追加 */
-  margin-right: auto; /* 右側は自動で詰める */
-  width: auto;        /* 内容に合わせて幅を調整 */
-  justify-content: start; /* グリッドの内容を左寄せ */
+#left-table,
+#mid-table {
+  margin-left: 5vw;
+  margin-right: auto;
+  width: auto;
+  justify-content: start;
 }
 
+/* 既存の左テーブルは4列固定 */
 #left-table {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-collapse: collapse;
+}
+
+/* 新規中間テーブルは5列固定 */
+#mid-table {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 0;
   border-collapse: collapse;
 }
@@ -272,10 +238,10 @@ h3 {
 
 #pie-chart {
   display: block;
-  width: 85vw;          /* サイズは維持 */
-  max-width: calc(90vw - 5vw); /* 左余白分を引く */
-  margin-left: 10vw   !important;   /* 左の余白 */
-  margin-right: auto;  /* 右詰め */
+  width: 85vw;
+  max-width: calc(90vw - 5vw);
+  margin-left: 10vw !important;
+  margin-right: auto;
   margin-top: -40px;
   margin-bottom: 20px;
 }
@@ -283,6 +249,6 @@ h3 {
 #bar-chart,
 #pie-chart {
   display: block;
-  margin-left: 5vw;  /* 左だけ5vwの余白 */
-  margin-right: auto; /* 右は自動で詰める */
+  margin-left: 5vw;
+  margin-right: auto;
 }
