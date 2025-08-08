@@ -210,7 +210,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ["最新", "2", "3", "4", "5"],
       [
        formatScore(data["最新スコア"]).toFixed(1)}pt,
-        `${Number(data["2"]).toFixed(1)}pt`,
+       formatScore(data["2"]).toFixed(1)}pt,
         `${Number(data["3"]).toFixed(1)}pt`,
         `${Number(data["4"]).toFixed(1)}pt`,
         `${Number(data["5"]).toFixed(1)}pt`
