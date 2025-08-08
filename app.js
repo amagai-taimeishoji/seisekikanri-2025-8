@@ -187,7 +187,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
       [
         formatRank(data["累計半荘数ランキング"]),
          formatRank(data["総スコアランキング"]),
-         formatRank(data["累計半荘数ランキング"]),
+         formatRank(data["最高スコアランキング"]),
         formatRank(data["平均スコアランキング"]),
         formatRank(data["平均着順ランキング"])
       ]
