@@ -207,21 +207,21 @@ document.getElementById("search-button").addEventListener("click", async () => {
     
 // 表3：10半荘スコア（4段）
     createTable("tenhan-table", [
-      ["最新", "2", "3", "4", "5"],
+        ["最新スコア", "2", "3", "4", "5"],
       [
-       formatScore(data["最新スコア"]).toFixed(1)}pt,
-       formatScore(data["2"]).toFixed(1)}pt,
-        `${Number(data["3"]).toFixed(1)}pt`,
-        `${Number(data["4"]).toFixed(1)}pt`,
-        `${Number(data["5"]).toFixed(1)}pt`
+        formatScore(data["最新スコア"]),
+        formatScore(data["2"]),
+        formatScore(data["3"]),
+        formatScore(data["4"]),
+        formatScore(data["5"])
       ],
       ["6", "7", "8", "9", "10"],
       [
-        `${Number(data["6"]).toFixed(1)}pt`,
-        `${Number(data["7"]).toFixed(1)}pt`,
-        `${Number(data["8"]).toFixed(1)}pt`,
-        `${Number(data["9"]).toFixed(1)}pt`,
-        `${Number(data["10"]).toFixed(1)}pt`
+        formatScore(data["6"]),
+        formatScore(data["7"]),
+        formatScore(data["8"]),
+        formatScore(data["9"]),
+        formatScore(data["10"])
       ]
     ], 5);
     
