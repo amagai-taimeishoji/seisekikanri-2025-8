@@ -169,6 +169,9 @@ h1, h2, h3 {
   border-radius: 4px;
   overflow: hidden;
   box-shadow: none;
+  margin-left: 5vw;  /* 左に10vwの余白を追加 */
+  margin-right: auto; /* 右側は自動で詰める */
+  justify-content: start; /* グリッドの内容を左寄せ */
 }
 
 .table div {
