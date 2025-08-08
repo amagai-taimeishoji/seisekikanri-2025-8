@@ -86,7 +86,7 @@ function createPieChart(data) {
           position: 'left',
           labels: {
             boxWidth: 40,
-            padding: 20,
+            padding: 10,
             generateLabels: (chart) => {
               const original = Chart.overrides.pie.plugins.legend.labels.generateLabels;
               const labels = original.call(this, chart);
