@@ -185,11 +185,11 @@ document.getElementById("search-button").addEventListener("click", async () => {
     createTable("ranking-table", [
       ["累計半荘数\nランキング", "総スコア\nランキング", "最高スコア\nランキング", "平均スコア\nランキング", "平均着順\nランキング"],
       [
-        `${data["累計半荘数ランキング"]}位`,
-         `${data["総スコアランキング"]}位`,
-          `${data["累計半荘数ランキング"]}位`,
-          `${data["平均スコアランキング"]}位`,
-          `${data["平均着順ランキング"]}位`,
+        formatRank(data["累計半荘数ランキング"]),
+         formatRank(data["総スコアランキング"]),
+         formatRank(data["累計半荘数ランキング"]),
+        formatRank(data["平均スコアランキング"]),
+        formatRank(data["平均着順ランキング"])
       ]
     ], 5);
 
@@ -246,6 +246,11 @@ document.getElementById("search-button").addEventListener("click", async () => {
 function formatScore(value) {
   if (value === null || value === undefined || isNaN(value)) return "データ不足";
   return `${Number(value).toFixed(1)}pt`;
+}
+
+function formatRank(value) {
+  if (value === null || value === undefined || isNaN(value)) return "データなし";
+  return `${Number(value).toFixed(0)}位`;
 }
 
 function createTable(id, rows, cols) {
