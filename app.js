@@ -54,19 +54,19 @@ function createPieChart(data) {
   pieChartInstance = new Chart(ctx, {
     type: "pie",
     data: {
-      labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
+      labels: ["1着率", "1.5着率", "2着率", "2.5着率", "3着率", "3.5着率", "4着率"],
       datasets: [{
         data: [
-          data["トップ率"] * 100,
-          data["にちゃ率"] * 100,
-          data["さんちゃ率"] * 100,
-          data["よんちゃ率"] * 100
+          data["1着率"] * 100,
+          data["1.5着率"] * 100,
+          data["2着率"] * 100,
+          data["2.5着率"] * 100,
+          data["3着率"] * 100,
+          data["3.5着率"] * 100,
+          data["4着率"] * 100
         ],
         backgroundColor: [
-          "rgba(255, 120, 120, 1)",
-          "rgba(255, 170, 100, 1)",
-          "rgba(120, 200, 120, 1)",
-          "rgba(100, 150, 255, 1)"
+          "red", "orange", "yellow", "yellowgreen", "green", "teal", "blue"
         ]
       }]
     },
@@ -79,7 +79,15 @@ function createPieChart(data) {
           position: 'left',
           labels: {
             boxWidth: 40,
-            padding: 20
+            padding: 20,
+            generateLabels: (chart) => {
+              const original = Chart.overrides.pie.plugins.legend.labels.generateLabels;
+              const labels = original.call(this, chart);
+              labels.forEach((label, i) => {
+                label.text += ` ${(chart.data.datasets[0].data[i]).toFixed(3)}%`;
+              });
+              return labels;
+            }
           }
         }
       }
@@ -87,20 +95,7 @@ function createPieChart(data) {
   });
 }
 
-// Google Apps ScriptのURL
 const API_URL = "https://script.google.com/macros/s/AKfycby-JyuULrd8LD2CAoKYPR8z-CS58n6CdVBwx4YHGIDz-RWGcjw0N9mWUveCSSP1NAdK/exec";
-
-// ラベル変換マップ
-const displayLabels = {
-  "総スコアランキング": "総スコア\nランキング",
-  "平均スコアランキング": "平均スコア\nランキング",
-  "平均着順ランキング": "平均着順\nランキング",
-  "ラス回避率ランキング": "ラス回避率\nランキング"
-};
-
-function getDisplayLabel(key) {
-  return displayLabels[key] || key;
-}
 
 // 年・月の選択肢生成
 const yearSelect = document.getElementById("year-select");
@@ -126,6 +121,7 @@ for (let m = 1; m <= 12; m++) {
 monthSelect.value = currentMonth;
 
 // イベントリスナー
+
 document.getElementById("search-button").addEventListener("click", async () => {
   const name = document.getElementById("name-input").value.trim();
   const year = yearSelect.value;
@@ -165,75 +161,58 @@ document.getElementById("search-button").addEventListener("click", async () => {
     let memberNo = data["No."] ? String(data["No."]).padStart(4, '0') : "不明";
     document.getElementById("member-info").textContent = `No. ${memberNo}   ${data["名前"]}`;
 
-    // 表
-    createTable("right-table", [
+    // 表1：ランキング
+    createTable("ranking-table", [
+      ["累計半荘数\nランキング", "総スコア\nランキング", "最高スコア\nランキング", "平均スコア\nランキング", "平均着順\nランキング"],
       [
-        getDisplayLabel("累計半荘数"),
-        getDisplayLabel("総スコア"),
-        getDisplayLabel("総スコアランキング"),
-        getDisplayLabel("平均スコア"),
-        getDisplayLabel("平均スコアランキング")
-      ],
-      [
-        `${data["累計半荘数"]}半荘`,
-        `${Number(data["総スコア"]).toFixed(1)}pt`,
-        `${data["総スコアランキング"]}位`,
-        `${Number(data["平均スコア"]).toFixed(3)}pt`,
-        `${data["平均スコアランキング"]}位`
-      ],
-      ["最新スコア", "2", "3", "4", "5"],
-      [
-        formatScore(data["最新スコア"]),
-        formatScore(data["2"]),
-        formatScore(data["3"]),
-        formatScore(data["4"]),
-        formatScore(data["5"])
-      ],
-      ["6", "7", "8", "9", "10"],
-      [
-        formatScore(data["6"]),
-        formatScore(data["7"]),
-        formatScore(data["8"]),
-        formatScore(data["9"]),
-        formatScore(data["10"])
+        `${Number(data["累計半荘数ランキング"]).toFixed(0)}位`,
+        `${Number(data["総スコアランキング"]).toFixed(0)}位`,
+        `${Number(data["最高スコアランキング"]).toFixed(0)}位`,
+        `${Number(data["平均スコアランキング"]).toFixed(0)}位`,
+        `${Number(data["平均着順ランキング"]).toFixed(0)}位`
       ]
     ], 5);
 
-    createTable("left-table", [
+    // 表2：スコアデータ
+    createTable("scoredata-table", [
+      ["累計半荘数", "総スコア", "最高スコア", "平均スコア", "平均着順"],
       [
-        getDisplayLabel("平均着順"),
-        getDisplayLabel("平均着順ランキング"),
-        getDisplayLabel("ラス回避率"),
-        getDisplayLabel("ラス回避率ランキング")
-      ],
-      [
-        `${Number(data["平均着順"]).toFixed(3)}着`,
-        `${data["平均着順ランキング"]}位`,
-        `${(data["ラス回避率"] * 100).toFixed(3)}%`,
-        `${data["ラス回避率ランキング"]}位`
-      ],
-      ["トップの回数", "にちゃの回数", "さんちゃの回数", "よんちゃの回数"],
-      [
-        `${data["トップの回数"]}回`,
-        `${data["にちゃの回数"]}回`,
-        `${data["さんちゃの回数"]}回`,
-        `${data["よんちゃの回数"]}回`
-      ],
-      ["トップ率", "にちゃ率", "さんちゃ率", "よんちゃ率"],
-      [
-        `${(data["トップ率"] * 100).toFixed(3)}%`,
-        `${(data["にちゃ率"] * 100).toFixed(3)}%`,
-        `${(data["さんちゃ率"] * 100).toFixed(3)}%`,
-        `${(data["よんちゃ率"] * 100).toFixed(3)}%`
+        `${Number(data["累計半荘数"]).toFixed(0)}半荘`,
+        `${Number(data["総スコア"]).toFixed(3)}pt`,
+        `${Number(data["最高スコア"]).toFixed(3)}pt`,
+        `${Number(data["平均スコア"]).toFixed(3)}pt`,
+        `${Number(data["平均着順"]).toFixed(3)}位`
       ]
-    ], 4);
+    ], 5);
 
+    // 表3：10半荘スコア（4段）
+    createTable("tenhan-table", [
+      ["最新", "2", "3", "4", "5"],
+      [
+        `${Number(data["最新スコア"]).toFixed(1)}pt`,
+        `${Number(data["2"]).toFixed(1)}pt`,
+        `${Number(data["3"]).toFixed(1)}pt`,
+        `${Number(data["4"]).toFixed(1)}pt`,
+        `${Number(data["5"]).toFixed(1)}pt`
+      ],
+      ["6", "7", "8", "9", "10"],
+      [
+        `${Number(data["6"]).toFixed(1)}pt`,
+        `${Number(data["7"]).toFixed(1)}pt`,
+        `${Number(data["8"]).toFixed(1)}pt`,
+        `${Number(data["9"]).toFixed(1)}pt`,
+        `${Number(data["10"]).toFixed(1)}pt`
+      ]
+    ], 5);
+
+    // 棒グラフ
     createBarChart([
       data["2"], data["3"], data["4"], data["5"],
       data["6"], data["7"], data["8"], data["9"],
       data["10"], data["最新スコア"]
     ]);
 
+    // 円グラフ
     createPieChart(data);
 
   } catch (error) {
@@ -241,23 +220,3 @@ document.getElementById("search-button").addEventListener("click", async () => {
     status.textContent = `成績更新チュ♡今は見れません (${error.message})`;
   }
 });
-
-function formatScore(value) {
-  if (value === null || value === undefined || isNaN(value)) return "データ不足";
-  return `${Number(value).toFixed(1)}pt`;
-}
-
-function createTable(id, rows, cols) {
-  const table = document.getElementById(id);
-  table.innerHTML = "";
-  table.style.gridTemplateColumns = `repeat(${cols}, 18vw)`;
-
-  rows.forEach((row, rowIndex) => {
-    row.forEach(cell => {
-      const div = document.createElement("div");
-      div.textContent = cell;
-      div.className = rowIndex % 2 === 0 ? "header" : "data";
-      table.appendChild(div);
-    });
-  });
-}
