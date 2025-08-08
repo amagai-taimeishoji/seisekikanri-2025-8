@@ -203,31 +203,7 @@ h1, h2, h3 {
   align-items: flex-end;
 }
 
-/* テーブルの個別配置 */
-#right-table,
-#left-table,
-#mid-table {
-  margin-left: 5vw;
-  margin-right: auto;
-  width: auto;
-  justify-content: start;
-}
 
-/* 既存の左テーブルは4列固定 */
-#left-table {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border-collapse: collapse;
-}
-
-/* 新規中間テーブルは5列固定 */
-#mid-table {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-  border-collapse: collapse;
-}
 
 /* グラフ */
 #bar-chart {
