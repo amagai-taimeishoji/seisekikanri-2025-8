@@ -47,6 +47,7 @@ function createBarChart(scores) {
   });
 }
 
+
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
   if (pieChartInstance) pieChartInstance.destroy();
@@ -54,19 +55,19 @@ function createPieChart(data) {
   pieChartInstance = new Chart(ctx, {
     type: "pie",
     data: {
-      labels: ["トップ", "にちゃ", "さんちゃ", "よんちゃ"],
+      labels: ["1着率", "1.5着率", "2着率", "2.5着率", "3着率", "3.5着率", "4着率"],
       datasets: [{
         data: [
-          data["トップ率"] * 100,
-          data["にちゃ率"] * 100,
-          data["さんちゃ率"] * 100,
-          data["よんちゃ率"] * 100
+          data["1着率"] * 100,
+          data["1.5着率"] * 100,
+          data["2着率"] * 100,
+          data["2.5着率"] * 100,
+          data["3着率"] * 100,
+          data["3.5着率"] * 100,
+          data["4着率"] * 100
         ],
         backgroundColor: [
-          "rgba(255, 120, 120, 1)",
-          "rgba(255, 170, 100, 1)",
-          "rgba(120, 200, 120, 1)",
-          "rgba(100, 150, 255, 1)"
+          "red", "orange", "yellow", "yellowgreen", "green", "teal", "blue"
         ]
       }]
     },
@@ -79,7 +80,15 @@ function createPieChart(data) {
           position: 'left',
           labels: {
             boxWidth: 40,
-            padding: 20
+            padding: 20,
+            generateLabels: (chart) => {
+              const original = Chart.overrides.pie.plugins.legend.labels.generateLabels;
+              const labels = original.call(this, chart);
+              labels.forEach((label, i) => {
+                label.text += ` ${(chart.data.datasets[0].data[i]).toFixed(3)}%`;
+              });
+              return labels;
+            }
           }
         }
       }
