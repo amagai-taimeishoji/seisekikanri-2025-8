@@ -189,6 +189,26 @@ document.getElementById("search-button").addEventListener("click", async () => {
         `${Number(data["平均着順"]).toFixed(3)}位`
       ]
     ], 5);
+    
+      // 表3:10半荘のスコア
+    createTable("tenhan-table", [
+          ["最新スコア", "2", "3", "4", "5"],
+      [
+        formatScore(data["最新スコア"]),
+        formatScore(data["2"]),
+        formatScore(data["3"]),
+        formatScore(data["4"]),
+        formatScore(data["5"])
+      ],
+      ["6", "7", "8", "9", "10"],
+      [
+        formatScore(data["6"]),
+        formatScore(data["7"]),
+        formatScore(data["8"]),
+        formatScore(data["9"]),
+        formatScore(data["10"])
+      ]
+    ], 5);
 
     // 棒グラフ用配列
     createBarChart([
