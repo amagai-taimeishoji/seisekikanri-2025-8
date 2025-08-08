@@ -192,7 +192,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     
       // 表3:10半荘のスコア
     createTable("tenhan-table", [
-          ["最新スコア", "2", "3", "4", "5"],
+        ["最新スコア", "2", "3", "4", "5"],
       [
         formatScore(data["最新スコア"]),
         formatScore(data["2"]),
