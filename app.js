@@ -1,4 +1,4 @@
-const API_URL = "YOUR_API_ENDPOINT"; // APIのURLに置き換え
+const API_URL = "https://script.google.com/macros/s/AKfycby-JyuULrd8LD2CAoKYPR8z-CS58n6CdVBwx4YHGIDz-RWGcjw0N9mWUveCSSP1NAdK/exec"; // APIのURLに置き換え
 
 // 年月セレクト初期化
 const yearSelect = document.getElementById("year-select");
