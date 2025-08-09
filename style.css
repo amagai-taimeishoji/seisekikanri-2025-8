@@ -40,7 +40,9 @@ h1, h2, h3 {
   margin-top: 20px;
 }
 
-box18 {margin-bottom: 5px !important;
+box18 {
+  margin-bottom: 5px !important;
+  margin-top: 10px !important;
 }
 /* ヘッダー内のp要素中央揃え */
 .box15 p, .box16 p, .box17 p, .box18 p {
