@@ -212,7 +212,7 @@ box18 {
 #bar-chart {
   width: 100%;
   max-width: 90vw;
-  margin-bottom: 0px;
+  margin-bottom: -10px !important;
 }
 
 #pie-chart {
@@ -221,7 +221,7 @@ box18 {
   max-width: calc(90vw - 5vw);
   margin-left: 10vw !important;
   margin-right: auto;
-  margin-top: -40px;
+  margin-top: -50px !important;
   margin-bottom: 20px;
 }
 
