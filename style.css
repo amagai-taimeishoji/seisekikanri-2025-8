@@ -37,7 +37,7 @@ h1, h2, h3 {
   margin-left: auto;
   margin-right: auto; /* 中央揃え */
   margin-bottom: 10px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 box18 {margin-bottom: 5px !important;
@@ -122,7 +122,7 @@ box18 {margin-bottom: 5px !important;
 /* 集計期間・来店人数・名前 */
 #info-container {
   width: 90%;
-  padding: 5px 10px;
+  padding: -5px 10px -5px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
