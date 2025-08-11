@@ -67,7 +67,7 @@ function createPieChart(data) {
           data["4着率"] * 100
         ],
             backgroundColor: [
-          "rgba(255, 153, 153, 1)",
+          "rgba(204, 102, 102, 1)",
           "rgba(255, 187, 153, 1)",
           "rgba(255, 255, 153, 1)",
           "rgba(204, 255, 153, 1)",
