@@ -149,7 +149,7 @@ box18 {
 /* 集計人数（左寄せ） */
 #visitor-count.left-align-under {
   text-align: left;
-  font-size: 4vw !important;
+  font-size: 5vw !important;
 }
 
 #member-info {
