@@ -106,8 +106,8 @@ h1, h2, h3 {
   box-sizing: border-box;
 }
 
-.no-border {
-  border: none !important;
+.empty-cell {
+  border: none !important; /* 空白セルだけ枠線を消す */
 }
 
 #info-container {
