@@ -1,29 +1,54 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>まぁじゃんぱらだいす</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>まぁじゃんぱらだいすノーレートフリー個人成績</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>まぁじゃんぱらだいす<br>ノーレートフリー個人成績2025年8月</h1>
-
   <div id="search-area">
-    <input type="text" id="name-input" placeholder="名前">
-    <button id="search-button">検索</button>
+    <div id="search-inputs">
+      <select id="year-select"></select>
+      <select id="month-select"></select>
+      <input type="text" id="name-input" placeholder="名前を入力してねっ" />
+      <button id="search-button">検索</button>
+    </div>
     <p id="status-message"></p>
   </div>
 
   <div id="results" style="display: none;">
-    <p id="period"></p>
-    <p id="visitor-count"></p>
-    <p id="member-info"></p>
-    <div id="right-table" class="table"></div>
-    <div id="left-table" class="table"></div>
+    <div id="info-container">
+    <div id="period-visitor">
+  <div id="period"></div>
+  <div id="visitor-count" class="left-align-under"></div>
+</div>
+      <div id="member-info"></div>
+    </div>
+
+   <!-- ランキング -->
+    <div class="box15"><h3>ランキング</h3></div>
+    <div id="ranking-table" class="table"></div>
+
+    <!-- スコアデータ -->
+    <div class="box16"><h3>スコアデータ</h3></div>
+    <div id="scoredata-table" class="table"></div>
+
+    <!-- 10半荘のスコア -->
+    <div class="box17"><h3>10半荘のスコア</h3></div>
+    <div id="tenhan-table" class="table"></div>
     <canvas id="bar-chart"></canvas>
+
+    <!-- 着順データ -->
+    <div class="box18"><h3>着順データ</h3></div>
     <canvas id="pie-chart"></canvas>
   </div>
+
+　<!-- 円グラフ下に着順回数表 -->
+<div id="rank-count-tables">
+  <div id="rank-count-main"></div> <!-- 1着〜4着 -->
+  <div id="rank-count-half"></div> <!-- 1.5着〜3.5着 -->
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
