@@ -106,6 +106,10 @@ h1, h2, h3 {
   box-sizing: border-box;
 }
 
+.no-border {
+  border: none !important;
+}
+
 #info-container {
   width: 90%;
   padding: -5px 10px -5px;
