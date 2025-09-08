@@ -128,7 +128,7 @@ monthSelect.value = currentMonth;
 
 // 検索ボタン
 document.getElementById("search-button").addEventListener("click", async () => {
-  const name = document.getElementById("name-input").value.trim();
+  const name = document.getElementById("name-input")?.value?.trim() || "";
   const year = yearSelect.value;
   const month = monthSelect.value;
   const status = document.getElementById("status-message");
@@ -220,20 +220,15 @@ document.getElementById("search-button").addEventListener("click", async () => {
     // 円グラフ
     createPieChart(data);
 
-    // 表4：1着〜4着回数
-    const mainRankData = [
+    // 表4：着順回数（4行まとめ）
+    const rankCountData = [
       ["1着の回数", "2着の回数", "3着の回数", "4着の回数"],
       [
         `${data["1着の回数"] || 0}回`,
         `${data["2着の回数"] || 0}回`,
         `${data["3着の回数"] || 0}回`,
         `${data["4着の回数"] || 0}回`
-      ]
-    ];
-    createTable("rank-count-main", mainRankData, 4);
-
-    // 表5：1.5着〜3.5着回数
-    const halfRankData = [
+      ],
       ["1.5着の回数", "2.5着の回数", "3.5着の回数"],
       [
         `${data["1.5着の回数"] || 0}回`,
@@ -241,7 +236,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
         `${data["3.5着の回数"] || 0}回`
       ]
     ];
-    createTable("rank-count-half", halfRankData, 3);
+    createTable("rank-count-table", rankCountData, 4);
 
   } catch (error) {
     console.error("Fetchエラー:", error);
@@ -262,7 +257,14 @@ function formatRank(value) {
 function createTable(id, rows, cols) {
   const table = document.getElementById(id);
   table.innerHTML = "";
-  table.style.gridTemplateColumns = `repeat(${cols}, 18vw)`;
+
+  // 1セルの幅を固定（22vw）
+  const cellWidth = "22vw";
+  table.style.display = "grid";
+  table.style.gridTemplateColumns = `repeat(${cols}, ${cellWidth})`;
+  table.style.justifyContent = "start"; // 左寄せ
+  table.style.marginLeft = "5vw";       // 左に余白
+  table.style.marginRight = "auto";
 
   rows.forEach((row, rowIndex) => {
     row.forEach(cell => {
