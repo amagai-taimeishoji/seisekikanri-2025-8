@@ -1,61 +1,181 @@
+/* --- 元のCSS --- */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0px;
+  font-family: 'Noto Sans JP', sans-serif;
+  margin: 0 auto; 
+  padding: 0;
   background: none !important;
-  background-color: #f4f4f4;
+  background-color: 	#FFFFFF !important;
+  text-align: center;
+  max-width: 100%; 
+  height: 200vh;
+  overflow-x: hidden; 
+}
+
+/* グラフタイトル */
+h1, h2, h3 {
+  font-size: 4vw;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #333;
+}
+
+.box15, .box16, .box17, .box18 {
+  padding: 0.5em 1em;
+  max-width: 82vw;
+  width: 82vw; /* 幅をそろえる */
+  height: 3vh; /* 高さをそろえる */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 縦方向中央揃え */
+  background: repeating-linear-gradient(
+      -45deg,
+      #f0f8ff,
+      #f0f8ff 3px,
+      #e9f4ff 3px,
+      #e9f4ff 7px
+  );
+  margin-left: auto;
+  margin-right: auto; /* 中央揃え */
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+box18 {
+  margin-bottom: 15px !important;
+  margin-top: 10px !important;
+}
+/* ヘッダー内のp要素中央揃え */
+.box15 p, .box16 p, .box17 p, .box18 p {
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
 
-h1 {
-  font-size: 5vw;
-  font-weight: bold;
-  margin-bottom: 20px;
-  line-height: 1.2;
-}
-
+/* 検索エリア */
 #search-area {
+  display: flex;
+  flex-direction: column; /* 縦並びにする */
+  align-items: center;
   margin-bottom: 20px;
 }
 
-#name-input {
-  width: 60%;
-  padding: 10px;
-  font-size: 4vw;
-}
-
-#search-button {
-  padding: 10px 20px;
-  font-size: 4vw;
-  margin-left: 5px;
+#search-inputs {
+  display: flex;
+  flex-direction: row; /* 横並び */
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
 }
 
 #status-message {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 3.5vw;
   color: red;
+  text-align: center;
 }
 
+#year-select, #month-select {
+  flex: 0 0 auto;
+  font-size: 3.5vw;
+  padding: 6px;
+}
+
+#name-input {
+  flex: 1;
+  min-width: 30%;
+  max-width: 40%;
+  padding: 8px;
+  font-size: 3.5vw;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* 検索ボタン */
+#search-button {
+  background: linear-gradient(45deg, #4caf50, #81c784);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 3.5vw;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#search-button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #45a049, #66bb6a);
+}
+
+/* 結果表示エリア */
 #results {
+  text-align: center;
+  height: 200vh;        /* 画面の高さに固定 */
+  overflow-y: hidden;     /* 内容が多いときは縦スクロール */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 集計期間・来店人数・名前 */
+#info-container {
+  width: 90%;
+  padding: -5px 10px -5px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#period-visitor {
+  display: flex;
+  flex-direction: column; /* 縦並び */
+  align-items: flex-start; /* 左寄せ */
+  font-size: 5vw;
+  margin-bottom: 5px;
+  padding-left: 10px;
+}
+
+/* 集計期間 */
+#period {
   text-align: left;
+  font-size: 3.5vw;
+  margin-bottom: 3px;
 }
 
-#period, #visitor-count, #member-info {
-  font-size: 4vw;
-  margin: 10px 0;
+/* 集計人数（左寄せ） */
+#visitor-count.left-align-under {
+  text-align: left;
+  font-size: 5vw !important;
 }
 
+#member-info {
+  text-align: left;
+  padding: 5px 10px;
+  font-size: 5vw;
+  margin-top: 5px;
+}
+
+/* テーブル */
 .table {
   display: grid;
-  width: 100%;
-  grid-auto-rows: 10vw; /* 行の高さを固定 */
+  width: 90%;
+  grid-auto-rows: 9vw;
   border-collapse: collapse;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: none;
+  margin-left: 5vw;  /* 左に10vwの余白を追加 */
+  margin-right: auto; /* 右側は自動で詰める */
+  justify-content: start; /* グリッドの内容を左寄せ */
 }
 
-
-
 .table div {
-  border: 1px solid #999;
+  border: 0.5px solid #555;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,57 +183,51 @@ h1 {
   box-sizing: border-box;
 }
 
-
 .header {
   font-weight: bold;
-  background-color: lightblue; /* 項目セルは水色 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 3vw;
+  background-color: #d0ebff;
+  font-size: 2.5vw;
   text-align: center;
   word-break: keep-all;
-  white-space: pre-line; /* 8文字以上の項目を改行 */
+  white-space: pre-line;
   height: 10vw;
-  width: 20vw;
 }
 
 .data {
-  background-color: white; /* 数値セルは白 */
-  font-size: 3vw; /* 数値の文字サイズ */
-  text-align: right;
-  height: 10vw;
-  width: 20vw;
+  background-color: white;
+  font-size: 3vw;
+  justify-content: flex-end;
+  text-align: right !important;
   padding-right: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  align-items: flex-end;
 }
 
 
 
-/* グラフの幅を表と揃える */
+/* グラフ */
 #bar-chart {
   width: 100%;
   max-width: 90vw;
-  margin-bottom: 20px;
+  margin-bottom: -10px !important;
 }
 
 #pie-chart {
-  #pie-chart {
   display: block;
-  width: 60%;          /* サイズは維持 */
-  max-width: calc(90vw - 5vw); /* 左余白分を引く */
-  margin-left: 5vw;    /* 左に5vwの余白 */
-  margin-right: auto;  /* 右詰め */
-  margin-top: -40px;
+  width: 85vw;
+  max-width: calc(90vw - 5vw);
+  margin-left: 10vw !important;
+  margin-right: auto;
+  margin-top: -60px !important;
   margin-bottom: 20px;
 }
 
-#left-table {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4列を均等幅に */
-  gap: 0; /* 列と列の間の隙間をなくす */
-  width: 100%;
-  border-collapse: collapse;
+#bar-chart,
+#pie-chart {
+  display: block;
+  margin-left: 5vw;
+  margin-right: auto;
 }
