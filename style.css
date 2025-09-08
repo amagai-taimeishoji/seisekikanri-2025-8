@@ -108,6 +108,7 @@ h1, h2, h3 {
 
 .empty-cell {
   border: none !important; /* 空白セルだけ枠線を消す */
+  background: none !important;
 }
 
 #info-container {
