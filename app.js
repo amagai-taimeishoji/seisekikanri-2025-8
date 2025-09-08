@@ -1,7 +1,8 @@
-// グラフインスタンス
+// ====================== グラフインスタンス管理 ======================
 let barChartInstance = null;
 let pieChartInstance = null;
 
+// 棒グラフ作成
 function createBarChart(scores) {
   const ctx = document.getElementById("bar-chart").getContext("2d");
   if (barChartInstance) barChartInstance.destroy();
@@ -47,6 +48,7 @@ function createBarChart(scores) {
   });
 }
 
+// 円グラフ作成
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
   if (pieChartInstance) pieChartInstance.destroy();
@@ -101,15 +103,16 @@ function createPieChart(data) {
   });
 }
 
-// Google Apps ScriptのURL
+// ====================== Google Apps Script API URL ======================
 const API_URL = "https://script.google.com/macros/s/AKfycby-JyuULrd8LD2CAoKYPR8z-CS58n6CdVBwx4YHGIDz-RWGcjw0N9mWUveCSSP1NAdK/exec";
 
-// 年・月選択肢生成
+// ====================== セレクト生成 ======================
 const yearSelect = document.getElementById("year-select");
 const monthSelect = document.getElementById("month-select");
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth() + 1;
 
+// 年セレクト
 for (let y = 2025; y <= currentYear + 1; y++) {
   const option = document.createElement("option");
   option.value = y;
@@ -118,6 +121,7 @@ for (let y = 2025; y <= currentYear + 1; y++) {
 }
 yearSelect.value = currentYear;
 
+// 月セレクト
 for (let m = 1; m <= 12; m++) {
   const option = document.createElement("option");
   option.value = m;
@@ -126,7 +130,7 @@ for (let m = 1; m <= 12; m++) {
 }
 monthSelect.value = currentMonth;
 
-// 検索ボタン
+// ====================== 検索ボタン ======================
 document.getElementById("search-button").addEventListener("click", async () => {
   const name = document.getElementById("name-input")?.value?.trim() || "";
   const year = yearSelect.value;
@@ -158,6 +162,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     status.textContent = "";
     results.style.display = "block";
 
+    // 集計情報
     const startDate = `${year}/${String(month).padStart(2, '0')}/1 00:00`;
     const lastUpdated = data["最終更新"] || "不明";
     document.getElementById("period").textContent = `集計期間: ${startDate} 〜 ${lastUpdated}`;
@@ -166,7 +171,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     let memberNo = data["No."] ? String(data["No."]).padStart(4, '0') : "不明";
     document.getElementById("member-info").textContent = `No. ${memberNo}   ${data["名前"]}`;
 
-    // 表1：ランキング
+    // ランキング表
     createTable("ranking-table", [
       ["累計半荘数\nランキング", "総スコア\nランキング", "最高スコア\nランキング", "平均スコア\nランキング", "平均着順\nランキング"],
       [
@@ -178,7 +183,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ], 5);
 
-    // 表2：スコアデータ
+    // スコアデータ表
     createTable("scoredata-table", [
       ["累計半荘数", "総スコア", "最高スコア", "平均スコア", "平均着順"],
       [
@@ -190,7 +195,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ], 5);
 
-    // 表3：10半荘スコア
+    // 10半荘スコア表
     createTable("tenhan-table", [
       ["最新スコア", "2", "3", "4", "5"],
       [
@@ -220,7 +225,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     // 円グラフ
     createPieChart(data);
 
-    // 表4：着順回数（4行まとめ）
+    // 着順回数表（4列 + 3列混在）
     const rankCountData = [
       ["1着の回数", "2着の回数", "3着の回数", "4着の回数"],
       [
@@ -244,6 +249,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
   }
 });
 
+// ====================== ユーティリティ ======================
 function formatScore(value) {
   if (value === null || value === undefined || isNaN(value)) return "データ不足";
   return `${Number(value).toFixed(1)}pt`;
@@ -258,12 +264,11 @@ function createTable(id, rows, cols) {
   const table = document.getElementById(id);
   table.innerHTML = "";
 
-  // 1セルの幅を固定（22vw）
   const cellWidth = "22vw";
   table.style.display = "grid";
   table.style.gridTemplateColumns = `repeat(${cols}, ${cellWidth})`;
-  table.style.justifyContent = "start"; // 左寄せ
-  table.style.marginLeft = "5vw";       // 左に余白
+  table.style.justifyContent = "start";
+  table.style.marginLeft = "5vw";
   table.style.marginRight = "auto";
 
   rows.forEach((row, rowIndex) => {
