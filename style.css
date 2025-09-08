@@ -1,10 +1,7 @@
-/* 既存CSSはそのまま */
-
 body {
   font-family: 'Noto Sans JP', sans-serif;
   margin: 0 auto; 
   padding: 0;
-  background: none !important;
   background-color: #FFFFFF !important;
   text-align: center;
   max-width: 100%; 
@@ -38,12 +35,6 @@ h1, h2, h3 {
   margin-right: auto;
   margin-bottom: 10px;
   margin-top: 20px;
-}
-
-.box15 p, .box16 p, .box17 p, .box18 p {
-  margin: 0;
-  padding: 0;
-  text-align: center;
 }
 
 #search-area {
@@ -130,25 +121,10 @@ h1, h2, h3 {
   padding-left: 10px;
 }
 
-#period {
-  text-align: left;
-  font-size: 3.5vw;
-  margin-bottom: 3px;
-}
+#period { text-align: left; font-size: 3.5vw; margin-bottom: 3px; }
+#visitor-count.left-align-under { text-align: left; font-size: 5vw !important; }
+#member-info { text-align: left; padding: 5px 10px; font-size: 5vw; margin-top: 5px; }
 
-#visitor-count.left-align-under {
-  text-align: left;
-  font-size: 5vw !important;
-}
-
-#member-info {
-  text-align: left;
-  padding: 5px 10px;
-  font-size: 5vw;
-  margin-top: 5px;
-}
-
-/* 表共通 */
 .table {
   display: grid;
   width: 90%;
@@ -157,9 +133,9 @@ h1, h2, h3 {
   margin-bottom: 15px;
   border-radius: 4px;
   overflow: hidden;
-  justify-content: start;
   margin-left: 5vw;
   margin-right: auto;
+  justify-content: start;
 }
 
 .table div {
@@ -176,81 +152,20 @@ h1, h2, h3 {
   background-color: #d0ebff;
   font-size: 2.5vw;
   text-align: center;
-  word-break: keep-all;
   white-space: pre-line;
-  height: 10vw;
 }
 
 .data {
-  background-color: white;
-  font-size: 3vw;
-  justify-content: flex-end;
-  text-align: right !important;
-  padding-right: 4px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: flex;
-  align-items: flex-end;
-}
-
-/* グラフ */
-#bar-chart {
-  width: 100%;
-  max-width: 90vw;
-  margin-bottom: -10px !important;
-}
-
-#pie-chart {
-  display: block;
-  width: 85vw;
-  max-width: calc(90vw - 5vw);
-  margin-left: 10vw !important;
-  margin-right: auto;
-  margin-top: -60px !important;
-  margin-bottom: 20px;
-}
-
-/* 着順回数表 */
-#rank-count-table {
-  display: grid;
-  width: 90%;
-  grid-auto-rows: 9vw;
-  border-collapse: collapse;
-  border-radius: 4px;
-  overflow: hidden;
-  justify-content: start;
-  margin-left: 5vw;
-  margin-bottom: 20px;
-}
-
-#rank-count-table div {
-  border: 0.5px solid #555;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  box-sizing: border-box;
-}
-
-#rank-count-table .header {
-  font-weight: bold;
-  background-color: #d0ebff;
-  font-size: 2.5vw;
-  text-align: center;
-  white-space: pre-line;
-  height: 10vw;
-}
-
-#rank-count-table .data {
   background-color: white;
   font-size: 3vw;
   justify-content: flex-start;
   text-align: left !important;
   padding-left: 4px;
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
+
+#bar-chart { width: 100%; max-width: 90vw; margin-bottom: -10px !important; }
+#pie-chart { display: block; width: 85vw; max-width: calc(90vw - 5vw); margin-left: 10vw !important; margin-right: auto; margin-top: -60px !important; margin-bottom: 20px; }
