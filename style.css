@@ -1,17 +1,17 @@
-/* --- 元のCSS --- */
+/* 既存CSSはそのまま */
+
 body {
   font-family: 'Noto Sans JP', sans-serif;
   margin: 0 auto; 
   padding: 0;
   background: none !important;
-  background-color: 	#FFFFFF !important;
+  background-color: #FFFFFF !important;
   text-align: center;
   max-width: 100%; 
   height: 200vh;
   overflow-x: hidden; 
 }
 
-/* グラフタイトル */
 h1, h2, h3 {
   font-size: 4vw;
   font-weight: bold;
@@ -22,11 +22,11 @@ h1, h2, h3 {
 .box15, .box16, .box17, .box18 {
   padding: 0.5em 1em;
   max-width: 82vw;
-  width: 82vw; /* 幅をそろえる */
-  height: 3vh; /* 高さをそろえる */
+  width: 82vw;
+  height: 3vh;
   display: flex;
   justify-content: center;
-  align-items: center; /* 縦方向中央揃え */
+  align-items: center;
   background: repeating-linear-gradient(
       -45deg,
       #f0f8ff,
@@ -35,33 +35,27 @@ h1, h2, h3 {
       #e9f4ff 7px
   );
   margin-left: auto;
-  margin-right: auto; /* 中央揃え */
+  margin-right: auto;
   margin-bottom: 10px;
   margin-top: 20px;
 }
 
-box18 {
-  margin-bottom: 15px !important;
-  margin-top: 10px !important;
-}
-/* ヘッダー内のp要素中央揃え */
 .box15 p, .box16 p, .box17 p, .box18 p {
   margin: 0;
   padding: 0;
   text-align: center;
 }
 
-/* 検索エリア */
 #search-area {
   display: flex;
-  flex-direction: column; /* 縦並びにする */
+  flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
 }
 
 #search-inputs {
   display: flex;
-  flex-direction: row; /* 横並び */
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 5px;
@@ -93,7 +87,6 @@ box18 {
   box-sizing: border-box;
 }
 
-/* 検索ボタン */
 #search-button {
   background: linear-gradient(45deg, #4caf50, #81c784);
   color: white;
@@ -111,17 +104,15 @@ box18 {
   background: linear-gradient(45deg, #45a049, #66bb6a);
 }
 
-/* 結果表示エリア */
 #results {
   text-align: center;
-  height: 200vh;        /* 画面の高さに固定 */
-  overflow-y: hidden;     /* 内容が多いときは縦スクロール */
+  height: 200vh;
+  overflow-y: hidden;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* 集計期間・来店人数・名前 */
 #info-container {
   width: 90%;
   padding: -5px 10px -5px;
@@ -132,21 +123,19 @@ box18 {
 
 #period-visitor {
   display: flex;
-  flex-direction: column; /* 縦並び */
-  align-items: flex-start; /* 左寄せ */
+  flex-direction: column;
+  align-items: flex-start;
   font-size: 5vw;
   margin-bottom: 5px;
   padding-left: 10px;
 }
 
-/* 集計期間 */
 #period {
   text-align: left;
   font-size: 3.5vw;
   margin-bottom: 3px;
 }
 
-/* 集計人数（左寄せ） */
 #visitor-count.left-align-under {
   text-align: left;
   font-size: 5vw !important;
@@ -159,7 +148,7 @@ box18 {
   margin-top: 5px;
 }
 
-/* テーブル */
+/* 表共通 */
 .table {
   display: grid;
   width: 90%;
@@ -168,10 +157,9 @@ box18 {
   margin-bottom: 15px;
   border-radius: 4px;
   overflow: hidden;
-  box-shadow: none;
-  margin-left: 5vw;  /* 左に10vwの余白を追加 */
-  margin-right: auto; /* 右側は自動で詰める */
-  justify-content: start; /* グリッドの内容を左寄せ */
+  justify-content: start;
+  margin-left: 5vw;
+  margin-right: auto;
 }
 
 .table div {
@@ -206,8 +194,6 @@ box18 {
   align-items: flex-end;
 }
 
-
-
 /* グラフ */
 #bar-chart {
   width: 100%;
@@ -225,9 +211,46 @@ box18 {
   margin-bottom: 20px;
 }
 
-#bar-chart,
-#pie-chart {
-  display: block;
+/* 着順回数表 */
+#rank-count-table {
+  display: grid;
+  width: 90%;
+  grid-auto-rows: 9vw;
+  border-collapse: collapse;
+  border-radius: 4px;
+  overflow: hidden;
+  justify-content: start;
   margin-left: 5vw;
-  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+#rank-count-table div {
+  border: 0.5px solid #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+#rank-count-table .header {
+  font-weight: bold;
+  background-color: #d0ebff;
+  font-size: 2.5vw;
+  text-align: center;
+  white-space: pre-line;
+  height: 10vw;
+}
+
+#rank-count-table .data {
+  background-color: white;
+  font-size: 3vw;
+  justify-content: flex-start;
+  text-align: left !important;
+  padding-left: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: flex-end;
 }
