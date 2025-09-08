@@ -47,7 +47,6 @@ function createBarChart(scores) {
   });
 }
 
-
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
   if (pieChartInstance) pieChartInstance.destroy();
@@ -66,7 +65,7 @@ function createPieChart(data) {
           data["3.5着率"] * 100,
           data["4着率"] * 100
         ],
-            backgroundColor: [
+        backgroundColor: [
           "rgba(240, 122, 122, 1)",
           "rgba(240, 158, 109, 1)",
           "rgba(240, 217, 109, 1)",
@@ -74,7 +73,7 @@ function createPieChart(data) {
           "rgba(109, 194, 122, 1)",
           "rgba(109, 194, 181, 1)",
           "rgba(109, 158, 217, 1)"
-            ]
+        ]
       }]
     },
     options: {
@@ -105,23 +104,9 @@ function createPieChart(data) {
 // Google Apps ScriptのURL
 const API_URL = "https://script.google.com/macros/s/AKfycby-JyuULrd8LD2CAoKYPR8z-CS58n6CdVBwx4YHGIDz-RWGcjw0N9mWUveCSSP1NAdK/exec";
 
-// ラベル変換マップ
-const displayLabels = {
-  "総スコアランキング": "総スコア\nランキング",
-  "平均スコアランキング": "平均スコア\nランキング",
-  "平均着順ランキング": "平均着順\nランキング",
-  "累計半荘数ランキング": "累計半荘数\nランキング",
-  "最高スコアランキング": "最高スコア\nランキング"
-};
-
-function getDisplayLabel(key) {
-  return displayLabels[key] || key;
-}
-
-// 年・月の選択肢生成
+// 年・月選択肢生成
 const yearSelect = document.getElementById("year-select");
 const monthSelect = document.getElementById("month-select");
-
 const currentYear = new Date().getFullYear();
 const currentMonth = new Date().getMonth() + 1;
 
@@ -141,7 +126,7 @@ for (let m = 1; m <= 12; m++) {
 }
 monthSelect.value = currentMonth;
 
-// イベントリスナー
+// 検索ボタン
 document.getElementById("search-button").addEventListener("click", async () => {
   const name = document.getElementById("name-input").value.trim();
   const year = yearSelect.value;
@@ -181,13 +166,13 @@ document.getElementById("search-button").addEventListener("click", async () => {
     let memberNo = data["No."] ? String(data["No."]).padStart(4, '0') : "不明";
     document.getElementById("member-info").textContent = `No. ${memberNo}   ${data["名前"]}`;
 
-// 表1：ランキング
+    // 表1：ランキング
     createTable("ranking-table", [
       ["累計半荘数\nランキング", "総スコア\nランキング", "最高スコア\nランキング", "平均スコア\nランキング", "平均着順\nランキング"],
       [
         formatRank(data["累計半荘数ランキング"]),
-         formatRank(data["総スコアランキング"]),
-         formatRank(data["最高スコアランキング"]),
+        formatRank(data["総スコアランキング"]),
+        formatRank(data["最高スコアランキング"]),
         formatRank(data["平均スコアランキング"]),
         formatRank(data["平均着順ランキング"])
       ]
@@ -204,10 +189,10 @@ document.getElementById("search-button").addEventListener("click", async () => {
         `${Number(data["平均着順"]).toFixed(3)}位`
       ]
     ], 5);
-    
-// 表3：10半荘スコア（4段）
+
+    // 表3：10半荘スコア
     createTable("tenhan-table", [
-        ["最新スコア", "2", "3", "4", "5"],
+      ["最新スコア", "2", "3", "4", "5"],
       [
         formatScore(data["最新スコア"]),
         formatScore(data["2"]),
@@ -224,31 +209,8 @@ document.getElementById("search-button").addEventListener("click", async () => {
         formatScore(data["10"])
       ]
     ], 5);
-    
-    // 表4：1着〜4着回数
-const mainRankData = [
-  ["1着の回数", "2着の回数", "3着の回数", "4着の回数"],
-  [
-    `${data["1着の回数"] || 0}回`,
-    `${data["2着の回数"] || 0}回`,
-    `${data["3着の回数"] || 0}回`,
-    `${data["4着の回数"] || 0}回`
-  ]
-];
-createTable("rank-count-main", mainRankData, 4);
 
-// 表5：1.5着〜3.5着回数
-const halfRankData = [
-  ["1.5着の回数", "2.5着の回数", "3.5着の回数"],
-  [
-    `${data["1.5着の回数"] || 0}回`,
-    `${data["2.5着の回数"] || 0}回`,
-    `${data["3.5着の回数"] || 0}回`
-  ]
-];
-createTable("rank-count-half", halfRankData, 3);
-
-    // 棒グラフ用配列
+    // 棒グラフ
     createBarChart([
       data["2"], data["3"], data["4"], data["5"],
       data["6"], data["7"], data["8"], data["9"],
@@ -256,8 +218,30 @@ createTable("rank-count-half", halfRankData, 3);
     ]);
 
     // 円グラフ
-
     createPieChart(data);
+
+    // 表4：1着〜4着回数
+    const mainRankData = [
+      ["1着の回数", "2着の回数", "3着の回数", "4着の回数"],
+      [
+        `${data["1着の回数"] || 0}回`,
+        `${data["2着の回数"] || 0}回`,
+        `${data["3着の回数"] || 0}回`,
+        `${data["4着の回数"] || 0}回`
+      ]
+    ];
+    createTable("rank-count-main", mainRankData, 4);
+
+    // 表5：1.5着〜3.5着回数
+    const halfRankData = [
+      ["1.5着の回数", "2.5着の回数", "3.5着の回数"],
+      [
+        `${data["1.5着の回数"] || 0}回`,
+        `${data["2.5着の回数"] || 0}回`,
+        `${data["3.5着の回数"] || 0}回`
+      ]
+    ];
+    createTable("rank-count-half", halfRankData, 3);
 
   } catch (error) {
     console.error("Fetchエラー:", error);
