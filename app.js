@@ -69,7 +69,16 @@ document.getElementById("search-button").addEventListener("click",async()=>{
     createTable("ranking-table",[["累計半荘数\nランキング","総スコア\nランキング","最高スコア\nランキング","平均スコア\nランキング","平均着順\nランキング"],[formatRank(data["累計半荘数ランキング"]),formatRank(data["総スコアランキング"]),formatRank(data["最高スコアランキング"]),formatRank(data["平均スコアランキング"]),formatRank(data["平均着順ランキング"])]],5);
     createTable("scoredata-table",[["累計半荘数","総スコア","最高スコア","平均スコア","平均着順"],[`${Number(data["累計半荘数"]).toFixed(0)}半荘`,`${Number(data["総スコア"]).toFixed(1)}pt`,`${Number(data["最高スコア"]).toFixed(1)}pt`,`${Number(data["平均スコア"]).toFixed(3)}pt`,`${Number(data["平均着順"]).toFixed(3)}位`]],5);
     createTable("tenhan-table",[["最新スコア","2","3","4","5"],[formatScore(data["最新スコア"]),formatScore(data["2"]),formatScore(data["3"]),formatScore(data["4"]),formatScore(data["5"])],["6","7","8","9","10"],[formatScore(data["6"]),formatScore(data["7"]),formatScore(data["8"]),formatScore(data["9"]),formatScore(data["10"])]],5);
-    createTable("rank-count-table",[["1着の回数","2着の回数","3着の回数","4着の回数"],[`${data["1着の回数"]||0}回`,`${data["2着の回数"]||0}回`,`${data["3着の回数"]||0}回`,`${data["4着の回数"]||0}回`],["1.5着の回数","2.5着の回数","3.5着の回数"],[`${data["1.5着の回数"]||0}回`,`${data["2.5着の回数"]||0}回`,`${data["3.5着の回数"]||0}回`]],4);
+    createTable("rank-count-table", [
+  // 1行目: 1着～4着ヘッダー
+  ["1着の回数","2着の回数","3着の回数","4着の回数"],
+  // 2行目: データ
+  [`${data["1着の回数"]||0}回`, `${data["2着の回数"]||0}回`, `${data["3着の回数"]||0}回`, `${data["4着の回数"]||0}回`],
+  // 3行目: 1.5着～3.5着ヘッダー
+  ["1.5着の回数","2.5着の回数","3.5着の回数"],
+  // 4行目: データ
+  [`${data["1.5着の回数"]||0}回`, `${data["2.5着の回数"]||0}回`, `${data["3.5着の回数"]||0}回`]
+], null); // cols を null にして行ごとに自動調整
 
     createBarChart([data["2"],data["3"],data["4"],data["5"],data["6"],data["7"],data["8"],data["9"],data["10"],data["最新スコア"]]);
     createPieChart(data);
@@ -80,15 +89,18 @@ document.getElementById("search-button").addEventListener("click",async()=>{
 function formatScore(value){if(value===null||value===undefined||isNaN(value)) return "データ不足";return `${Number(value).toFixed(1)}pt`;}
 function formatRank(value){if(value===null||value===undefined||isNaN(value)) return "データなし";return `${Number(value).toFixed(0)}位`;}
 
-function createTable(id,rows,cols){
-  const table=document.getElementById(id);
-  table.innerHTML="";
-  table.style.gridTemplateColumns=`repeat(${cols},18vw)`;
-  rows.forEach((row,rowIndex)=>{
-    row.forEach(cell=>{
-      const div=document.createElement("div");
-      div.textContent=cell;
-      div.className=rowIndex%2===0?"header":"data";
+function createTable(id, rows, cols) {
+  const table = document.getElementById(id);
+  table.innerHTML = "";
+  if (cols) table.style.gridTemplateColumns = `repeat(${cols}, 18vw)`;
+
+  rows.forEach(row => {
+    const rowCols = row.length;
+    if (!cols) table.style.gridTemplateColumns = `repeat(${rowCols}, 18vw)`;
+    row.forEach((cell, i) => {
+      const div = document.createElement("div");
+      div.textContent = cell;
+      div.className = row === rows[0] || row === rows[2] ? "header" : "data";
       table.appendChild(div);
     });
   });
