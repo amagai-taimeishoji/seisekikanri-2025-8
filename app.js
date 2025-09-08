@@ -228,16 +228,22 @@ document.getElementById("search-button").addEventListener("click",async()=>{
 function formatScore(v){return v==null||isNaN(v)?"データ不足":`${Number(v).toFixed(1)}pt`}
 function formatRank(v){return v==null||isNaN(v)?"データなし":`${Number(v).toFixed(0)}位`}
 
-function createTable(id,rows,cols){
-  const table=document.getElementById(id);
-  table.innerHTML="";
-  table.style.gridTemplateColumns=`repeat(${cols},18vw)`;
-  rows.forEach((row,rowIndex)=>{
-    row.forEach(cell=>{
-      const div=document.createElement("div");
-      div.textContent=cell;
-      if(cell==="") div.className="empty-cell";
-      else div.className=rowIndex%2===0?"header":"data";
+function createRankCountTable(id, rows, cols) {
+  const table = document.getElementById(id);
+  table.innerHTML = "";
+  table.style.gridTemplateColumns = `repeat(${cols}, 18vw)`;
+
+  rows.forEach((row, rowIndex) => {
+    row.forEach((cell, colIndex) => {
+      const div = document.createElement("div");
+      div.textContent = cell;
+      div.className = rowIndex % 2 === 0 ? "header" : "data";
+
+      // 4行目4列目なら枠線を消す
+      if (rowIndex === 3 && colIndex === 3) {
+        div.classList.add("no-border");
+      }
+
       table.appendChild(div);
     });
   });
