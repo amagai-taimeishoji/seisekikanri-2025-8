@@ -120,6 +120,7 @@ h1, h2, h3 {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
+  padding-left: 20px !important;
 }
 
 #period-visitor {
@@ -128,7 +129,7 @@ h1, h2, h3 {
   align-items: flex-start;
   font-size: 5vw;
   margin-bottom: 5px;
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 #period {
