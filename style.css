@@ -63,9 +63,12 @@ h1, h2, h3 {
 }
 
 #year-select, #month-select {
-  flex: 0 0 auto;
-  font-size: 3.5vw;
-  padding: 6px;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: all 0.2s;
 }
 
 #name-input {
