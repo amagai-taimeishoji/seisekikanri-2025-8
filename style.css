@@ -116,12 +116,11 @@ h1, h2, h3 {
 
 #info-container {
   width: 90%;
-  padding: -5px -5px;
   margin-bottom: 10px;
   margin-top: 0px !important;
   display: flex;
   flex-direction: column;
-  padding-left: 8px !important;
+  padding-left: 10px !important;
 }
 
 #period-visitor {
@@ -130,7 +129,7 @@ h1, h2, h3 {
   align-items: flex-start;
   font-size: 5vw;
   margin-bottom: 5px;
-  padding-left: 20px;
+  padding-left: 10px;
 }
 
 #period {
