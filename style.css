@@ -222,7 +222,8 @@ h1, h2, h3 {
 }
   .setumei p1 {
   font-size: 3vw;   /* スマホなら画面幅に応じたサイズ */
-  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
   text-align: left;
   margin-left: 5vw;
   margin-bottom: 30px;
