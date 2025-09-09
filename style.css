@@ -205,7 +205,7 @@ h1, h2, h3 {
 #bar-chart {
   width: 100%;
   max-width: 90vw;
-  margin-bottom: 0px !important;
+  margin-bottom: 15px !important;
 }
 
 #pie-chart {
