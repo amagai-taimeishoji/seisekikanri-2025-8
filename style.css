@@ -223,5 +223,7 @@ h1, h2, h3 {
   .setumei p1 {
   font-size: 3vw;   /* スマホなら画面幅に応じたサイズ */
   text-align: left;
+  margin-left: 5vw;
   margin-bottom: 30px;
+  margin-top: -20px !important;
 }
