@@ -116,7 +116,7 @@ h1, h2, h3 {
 
 #info-container {
   width: 90%;
-  padding: -5px 10px -5px;
+  padding: -5px -5px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
