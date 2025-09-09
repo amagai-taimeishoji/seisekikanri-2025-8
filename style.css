@@ -118,9 +118,10 @@ h1, h2, h3 {
   width: 90%;
   padding: -5px -5px;
   margin-bottom: 10px;
+  margin-top: -10px !important;
   display: flex;
   flex-direction: column;
-  padding-left: 10px !important;
+  padding-left: 8px !important;
 }
 
 #period-visitor {
