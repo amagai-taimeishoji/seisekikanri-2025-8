@@ -240,7 +240,7 @@ function renderSengetsuTable(data) {
   for (let col of cols) {
     const num = col.value;
     if (!isFinite(num)) {
-      html += `<div class="data">データ不足</div>`;
+      html += `<div class="data">-</div>`;
       continue;
     }
 
