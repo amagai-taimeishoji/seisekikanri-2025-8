@@ -1,52 +1,8 @@
 "use strict";
 
-let barChartInstance = null;
+
 let pieChartInstance = null;
 
-function createBarChart(scores) {
-  const ctx = document.getElementById("bar-chart").getContext("2d");
-  if (barChartInstance) barChartInstance.destroy();
-
-  const labels = ["10", "9", "8", "7", "6", "5", "4", "3", "2", "最新"];
-  const reorderedScores = [
-    scores[8], scores[7], scores[6], scores[5],
-    scores[4], scores[3], scores[2], scores[1],
-    scores[0], scores[9]
-  ];
-
-  const colors = labels.map(label =>
-    label === "最新" ? "rgba(255, 206, 86, 0.9)" : "rgba(186, 140, 255, 0.7)"
-  );
-
-  const maxVal = Math.max(...reorderedScores.map(s => s || 0));
-  const minVal = Math.min(...reorderedScores.map(s => s || 0));
-  const maxAbs = Math.max(Math.abs(maxVal), Math.abs(minVal)) * 1.1;
-
-  barChartInstance = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "スコア",
-        data: reorderedScores.map(s => s || 0),
-        backgroundColor: colors
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      layout: { padding: { top: 20, bottom: 20 } },
-      plugins: { legend: { display: false } },
-      scales: {
-        y: {
-          min: -maxAbs,
-          max: maxAbs,
-          ticks: { stepSize: Math.ceil(maxAbs / 5) }
-        }
-      }
-    }
-  });
-}
 
 function createPieChart(data) {
   const ctx = document.getElementById("pie-chart").getContext("2d");
@@ -247,32 +203,19 @@ document.getElementById("search-button").addEventListener("click", async () => {
       ]
     ],5);
 
-    // 10半荘スコア
-    createTable("tenhan-table",[
-      ["最新スコア","2","3","4","5"],
+    // スコア先月比
+ createTable("sengetsudata-table",[
+      ["累計半荘数","総スコア","最高スコア","平均スコア","平均着順"],
       [
-        formatScore(data["最新スコア"]),
-        formatScore(data["2"]),
-        formatScore(data["3"]),
-        formatScore(data["4"]),
-        formatScore(data["5"])
-      ],
-      ["6","7","8","9","10"],
-      [
-        formatScore(data["6"]),
-        formatScore(data["7"]),
-        formatScore(data["8"]),
-        formatScore(data["9"]),
-        formatScore(data["10"])
+        `${Number(data["累計半荘数先月比"]).toFixed(0)}半荘`,
+        `${Number(data["総スコア先月比"]).toFixed(1)}pt`,
+        `${Number(data["最高スコア先月比"]).toFixed(1)}pt`,
+        `${Number(data["平均スコア先月比"]).toFixed(3)}pt`,
+        `${Number(data["平均着順先月比"]).toFixed(3)}位`
       ]
     ],5);
 
-    // 棒グラフ
-    createBarChart([
-      data["2"],data["3"],data["4"],data["5"],
-      data["6"],data["7"],data["8"],data["9"],
-      data["10"],data["最新スコア"]
-    ]);
+   
 
     // 着順回数テーブル（3列4列混在、空セル非表示）
     createTable("rank-count-table",[
