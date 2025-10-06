@@ -233,7 +233,7 @@ function renderSengetsuTable(data) {
     { value: 累計半荘数先月比, digits: 0, unit: "半荘", type: "signed" },
     { value: 総スコア先月比,   digits: 1, unit: "pt",   type: "signed" },
     { value: 最高スコア先月比, digits: 1, unit: "pt",   type: "signed" },
-    { value: 平均スコア先月比, digits: 2, unit: "pt",   type: "signed" },
+    { value: 平均スコア先月比, digits: 3, unit: "pt",   type: "signed" },
     { value: 平均着順先月比,   digits: 3, unit: "",     type: "rank"   }
   ];
 
