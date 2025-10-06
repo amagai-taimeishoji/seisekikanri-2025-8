@@ -211,37 +211,34 @@ function renderSengetsuTable(data) {
     return;
   }
 
-  // グリッド列幅を既存ルールに合わせる
   table.style.gridTemplateColumns = `repeat(5, 18vw)`;
 
-  // ヘッダー（見た目は既存の header クラスに合わせる）
   const headers = ["累計半荘数","総スコア","最高スコア","平均スコア","平均着順"];
-
-  // データキーとフォーマット設定（キー名はスプレッドシートと同じもの）
-  const cols = [
-    { key: "累計半荘数先月比", digits: 0, type: "signed", unit: "半荘" },
-    { key: "総スコア先月比",     digits: 1, type: "signed", unit: "pt" },
-    { key: "最高スコア先月比",   digits: 1, type: "signed", unit: "pt" },
-    { key: "平均スコア先月比",   digits: 2, type: "signed", unit: "pt" }, // 要望通り小数桁は2
-    { key: "平均着順先月比",     digits: 3, type: "rank",   unit: ""   }    // 平均着順は矢印表示
-  ];
-
-  // build html
   let html = "";
 
-  // header cells
+  // header行
   for (let h of headers) {
     html += `<div class="header">${h}</div>`;
   }
 
-  // data cells
-  for (let col of cols) {
-    const raw = data[col.key];
-    // 判定：数値として扱えるか
-    const rawStr = raw == null ? "" : String(raw);
-    const cleaned = rawStr.replace(/,/g, "").trim();
-    const num = cleaned === "" ? NaN : Number(cleaned);
+  // 各項目を data から直接参照
+  const 累計半荘数先月比 = Number(data["累計半荘数先月比"]) || 0;
+  const 総スコア先月比   = Number(data["総スコア先月比"]) || 0;
+  const 最高スコア先月比 = Number(data["最高スコア先月比"]) || 0;
+  const 平均スコア先月比 = Number(data["平均スコア先月比"]) || 0;
+  const 平均着順先月比   = Number(data["平均着順先月比"]) || 0;
 
+  // 表示するデータを配列でまとめてループ化
+  const cols = [
+    { value: 累計半荘数先月比, digits: 0, unit: "半荘", type: "signed" },
+    { value: 総スコア先月比,   digits: 1, unit: "pt",   type: "signed" },
+    { value: 最高スコア先月比, digits: 1, unit: "pt",   type: "signed" },
+    { value: 平均スコア先月比, digits: 2, unit: "pt",   type: "signed" },
+    { value: 平均着順先月比,   digits: 3, unit: "",     type: "rank"   }
+  ];
+
+  for (let col of cols) {
+    const num = col.value;
     if (!isFinite(num)) {
       html += `<div class="data">データ不足</div>`;
       continue;
@@ -254,33 +251,24 @@ function renderSengetsuTable(data) {
       else if (num < 0) text = `-${absStr}${col.unit}`;
       else text = `${absStr}${col.unit}`;
 
-      if (num > 0) {
-        html += `<div class="data"><span style="color:red;">${text}</span></div>`;
-      } else if (num < 0) {
-        html += `<div class="data"><span style="color:blue;">${text}</span></div>`;
-      } else {
-        html += `<div class="data">${text}</div>`;
-      }
+      const color = num > 0 ? "red" : num < 0 ? "blue" : "black";
+      html += `<div class="data"><span style="color:${color};">${text}</span></div>`;
 
     } else if (col.type === "rank") {
       const absStr = Math.abs(num).toFixed(col.digits);
-      // 平均着順の色は逆（要望）：正 => ↓ 青、負 => ↑ 赤
-      if (num > 0) {
+      // 平均着順の色は逆（正:↓青, 負:↑赤）
+      if (num > 0)
         html += `<div class="data"><span style="color:blue;">↓${absStr}</span></div>`;
-      } else if (num < 0) {
+      else if (num < 0)
         html += `<div class="data"><span style="color:red;">↑${absStr}</span></div>`;
-      } else {
+      else
         html += `<div class="data">${absStr}</div>`;
-      }
-    } else {
-      // 万が一の fallback
-      html += `<div class="data">${rawStr}</div>`;
     }
   }
 
   table.innerHTML = html;
 }
-   
+
 
     // 着順回数テーブル（3列4列混在、空セル非表示）
     createTable("rank-count-table",[
