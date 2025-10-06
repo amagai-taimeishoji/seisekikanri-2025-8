@@ -113,7 +113,7 @@ for(let m=1;m<=12;m++){
 }
 monthSelect.value=currentMonth;
 
-// 🔸ローディングアニメーション要素を追加
+// ローディングアニメーション要素を追加
 const loader = document.createElement("div");
 loader.id = "loading";
 loader.innerHTML = `
@@ -139,7 +139,7 @@ document.getElementById("search-button").addEventListener("click",async()=>{
     return;
   }
 
-  // 🔹ローディング表示
+  // ローディング表示
   loader.style.display = "flex";
   results.style.display="none";
   status.textContent="";
@@ -159,8 +159,17 @@ document.getElementById("search-button").addEventListener("click",async()=>{
     status.textContent="";
     results.style.display="block";
 
-    const lastUpdate = (typeof data["最終更新"] === "string" && data["最終更新"].trim() !== "") ? data["最終更新"] : "不明";
+    // 最終更新の取り出し（"最終更新" が優先、なければ "更新日時" を見る）
+    const rawUpdate = (data["最終更新"] ?? data["更新日時"] ?? "");
+    const lastUpdate = (typeof rawUpdate === "string" && rawUpdate.trim() !== "")
+      ? rawUpdate.trim()
+      : "不明";
 
+    // 上部の更新状況エリアに表示（HTML: #update-status）
+    const updateStatusEl = document.getElementById("update-status");
+    if (updateStatusEl) updateStatusEl.textContent = lastUpdate;
+
+    
     document.getElementById("period").textContent=`集計期間: ${year}/${String(month).padStart(2,'0')}/1 00:00 〜 ${lastUpdate}`;
     document.getElementById("visitor-count").textContent=`集計人数: ${data["集計人数"]||"不明"} 人`;
     document.getElementById("member-info").textContent=`No. ${data["No."]?String(data["No."]).padStart(4,'0'):"不明"}   ${data["名前"]}`;
