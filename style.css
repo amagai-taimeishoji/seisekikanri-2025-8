@@ -234,4 +234,40 @@ h1, h2, h3 {
   margin-left: 5vw;
   margin-bottom: 30px;
   margin-top: -30px !important;
+  }
+/* Loading */
+.loading-area {
+  display: flex;
+  flex-direction: column;   /* ← 縦並びにする */
+  align-items: center;      /* 中央揃え */
+  justify-content: center;
+  text-align: center;
 }
+
+.loading-bar {
+  width:80%; height:0.75rem;
+  background:#f2f2f2;
+  border-radius:8px;
+  overflow:hidden; border:1px solid #ddd;
+  margin-bottom: 8px; /* バーとテキストの間隔 */
+}
+
+.loading-fill {
+  width:0%; height:100%;
+  background: linear-gradient(90deg,#ff8b8b,#ff3b3b);
+  transition: width 0.3s ease;
+}
+
+.loading-text {
+  font-size: 1.1em;
+  color: #444;
+}
+
+/* 更新状況 */
+#update-row {
+  margin: 0 auto 1rem;
+  text-align: left;
+  width: 90%;
+}
+#update-label { font-size: 0.9rem; color:#666; }
+#update-status { font-size: 1rem; font-weight:600; margin-top:0.3rem; }
