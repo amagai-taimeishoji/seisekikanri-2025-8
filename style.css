@@ -1,17 +1,15 @@
-/* --- 元のCSS --- */
 body {
   font-family: 'Noto Sans JP', sans-serif;
   margin: 0 auto; 
   padding: 0;
   background: none !important;
-  background-color: 	#FFFFFF !important;
+  background-color: #FFFFFF !important;
   text-align: center;
   max-width: 100%; 
   height: 200vh;
   overflow-x: hidden; 
 }
 
-/* グラフタイトル */
 h1, h2, h3 {
   font-size: 4vw;
   font-weight: bold;
@@ -22,11 +20,11 @@ h1, h2, h3 {
 .box15, .box16, .box17, .box18 {
   padding: 0.5em 1em;
   max-width: 82vw;
-  width: 82vw; /* 幅をそろえる */
-  height: 3vh; /* 高さをそろえる */
+  width: 82vw;
+  height: 3vh;
   display: flex;
   justify-content: center;
-  align-items: center; /* 縦方向中央揃え */
+  align-items: center;
   background: repeating-linear-gradient(
       -45deg,
       #f0f8ff,
@@ -35,33 +33,23 @@ h1, h2, h3 {
       #e9f4ff 7px
   );
   margin-left: auto;
-  margin-right: auto; /* 中央揃え */
-  margin-bottom: 10px;
-  margin-top: 20px;
+  margin-right: auto;
+  margin-bottom: 15px;
+  margin-top: 10px;
 }
 
-box18 {
-  margin-bottom: 15px !important;
-  margin-top: 10px !important;
-}
-/* ヘッダー内のp要素中央揃え */
-.box15 p, .box16 p, .box17 p, .box18 p {
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-/* 検索エリア */
 #search-area {
   display: flex;
-  flex-direction: column; /* 縦並びにする */
+  flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  margin-left: 10px
+  margin-light: 10px
 }
 
 #search-inputs {
   display: flex;
-  flex-direction: row; /* 横並び */
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 5px;
@@ -76,15 +64,18 @@ box18 {
 }
 
 #year-select, #month-select {
-  flex: 0 0 auto;
-  font-size: 3.5vw;
-  padding: 6px;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: all 0.2s;
 }
 
 #name-input {
   flex: 1;
   min-width: 30%;
-  max-width: 40%;
+  max-width: 35%;
   padding: 8px;
   font-size: 3.5vw;
   border: 1px solid #ccc;
@@ -93,7 +84,6 @@ box18 {
   box-sizing: border-box;
 }
 
-/* 検索ボタン */
 #search-button {
   background: linear-gradient(45deg, #4caf50, #81c784);
   color: white;
@@ -111,42 +101,44 @@ box18 {
   background: linear-gradient(45deg, #45a049, #66bb6a);
 }
 
-/* 結果表示エリア */
 #results {
   text-align: center;
-  height: 200vh;        /* 画面の高さに固定 */
-  overflow-y: hidden;     /* 内容が多いときは縦スクロール */
+  height: 200vh;
+  overflow-y: hidden;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* 集計期間・来店人数・名前 */
+.empty-cell {
+  border: none !important; /* 空白セルだけ枠線を消す */
+  background: none !important;
+}
+
 #info-container {
   width: 90%;
-  padding: -5px 10px -5px;
   margin-bottom: 10px;
+  margin-top: 0px !important;
   display: flex;
   flex-direction: column;
+  padding-left: 10px !important;
 }
 
 #period-visitor {
   display: flex;
-  flex-direction: column; /* 縦並び */
-  align-items: flex-start; /* 左寄せ */
+  flex-direction: column;
+  align-items: flex-start;
   font-size: 5vw;
   margin-bottom: 5px;
   padding-left: 10px;
 }
 
-/* 集計期間 */
 #period {
   text-align: left;
   font-size: 3.5vw;
   margin-bottom: 3px;
 }
 
-/* 集計人数（左寄せ） */
 #visitor-count.left-align-under {
   text-align: left;
   font-size: 5vw !important;
@@ -159,19 +151,18 @@ box18 {
   margin-top: 5px;
 }
 
-/* テーブル */
 .table {
   display: grid;
   width: 90%;
   grid-auto-rows: 9vw;
   border-collapse: collapse;
-  margin-bottom: 15px;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: none;
-  margin-left: 5vw;  /* 左に10vwの余白を追加 */
-  margin-right: auto; /* 右側は自動で詰める */
-  justify-content: start; /* グリッドの内容を左寄せ */
+  margin-left: 5vw;
+  margin-right: auto;
+  justify-content: start;
+  margin-bottom: 35px;
 }
 
 .table div {
@@ -206,13 +197,17 @@ box18 {
   align-items: flex-end;
 }
 
-
+/* 空セル非表示用 */
+.empty-cell {
+  display: none;
+}
 
 /* グラフ */
 #bar-chart {
   width: 100%;
   max-width: 90vw;
-  margin-bottom: -10px !important;
+  margin-bottom: 15px !important;
+  margin-top: -35px !important;
 }
 
 #pie-chart {
@@ -230,4 +225,13 @@ box18 {
   display: block;
   margin-left: 5vw;
   margin-right: auto;
+}
+  .setumei p1 {
+  font-size: 3vw;   /* スマホなら画面幅に応じたサイズ */
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-left: 5vw;
+  margin-bottom: 30px;
+  margin-top: -30px !important;
 }
