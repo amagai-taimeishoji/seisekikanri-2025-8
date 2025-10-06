@@ -204,6 +204,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     ],5);
 
     // スコア先月比
+// スコア先月比
 function renderSengetsuTable(data) {
   const table = document.getElementById("sengetsudata-table");
   if (!table) {
@@ -228,7 +229,6 @@ function renderSengetsuTable(data) {
   const 平均スコア先月比 = Number(data["平均スコア先月比"]) || 0;
   const 平均着順先月比   = Number(data["平均着順先月比"]) || 0;
 
-  // 表示するデータを配列でまとめてループ化
   const cols = [
     { value: 累計半荘数先月比, digits: 0, unit: "半荘", type: "signed" },
     { value: 総スコア先月比,   digits: 1, unit: "pt",   type: "signed" },
@@ -268,6 +268,9 @@ function renderSengetsuTable(data) {
 
   table.innerHTML = html;
 }
+
+// ← ここを追加！
+renderSengetsuTable(data);
 
 
     // 着順回数テーブル（3列4列混在、空セル非表示）
