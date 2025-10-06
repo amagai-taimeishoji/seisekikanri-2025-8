@@ -113,6 +113,18 @@ for(let m=1;m<=12;m++){
 }
 monthSelect.value=currentMonth;
 
+// 🔸ローディングアニメーション要素を追加
+const loader = document.createElement("div");
+loader.id = "loading";
+loader.innerHTML = `
+  <div class="loader-bar"></div>
+  <p class="loading-text">読み込みチュ…♡</p>
+`;
+document.body.appendChild(loader);
+
+// CSSで最初は非表示に
+loader.style.display = "none";
+
 // 検索ボタン
 document.getElementById("search-button").addEventListener("click",async()=>{
   const name=document.getElementById("name-input").value.trim();
@@ -127,8 +139,10 @@ document.getElementById("search-button").addEventListener("click",async()=>{
     return;
   }
 
-  status.textContent="ロード、チュ…♡";
+  // 🔹ローディング表示
+  loader.style.display = "flex";
   results.style.display="none";
+  status.textContent="";
 
   try{
     const res=await fetch(`${API_URL}?name=${encodeURIComponent(name)}&year=${year}&month=${month}`);
@@ -136,18 +150,21 @@ document.getElementById("search-button").addEventListener("click",async()=>{
     const data=await res.json();
 
     if(data.error){
+      loader.style.display="none";
       status.textContent=data.error.includes("見つかりません")?"選択した年月のデータは見つからないよっ":`エラー: ${data.error}`;
       return;
     }
 
+    loader.style.display="none";
     status.textContent="";
     results.style.display="block";
 
-    document.getElementById("period").textContent=`集計期間: ${year}/${String(month).padStart(2,'0')}/1 00:00 〜 ${data["最終更新"]||"不明"}`;
+    const lastUpdate = (typeof data["最終更新"] === "string" && data["最終更新"].trim() !== "") ? data["最終更新"] : "不明";
+
+    document.getElementById("period").textContent=`集計期間: ${year}/${String(month).padStart(2,'0')}/1 00:00 〜 ${lastUpdate}`;
     document.getElementById("visitor-count").textContent=`集計人数: ${data["集計人数"]||"不明"} 人`;
     document.getElementById("member-info").textContent=`No. ${data["No."]?String(data["No."]).padStart(4,'0'):"不明"}   ${data["名前"]}`;
 
-    // ランキング
     createTable("ranking-table",[
       ["累計半荘数\nランキング","総スコア\nランキング","最高スコア\nランキング","平均スコア\nランキング","平均着順\nランキング"],
       [
@@ -159,7 +176,6 @@ document.getElementById("search-button").addEventListener("click",async()=>{
       ]
     ],5);
 
-    // スコアデータ
     createTable("scoredata-table",[
       ["累計半荘数","総スコア","最高スコア","平均スコア","平均着順"],
       [
@@ -171,7 +187,6 @@ document.getElementById("search-button").addEventListener("click",async()=>{
       ]
     ],5);
 
-    // 10半荘スコア
     createTable("tenhan-table",[
       ["最新スコア","2","3","4","5"],
       [
@@ -191,14 +206,12 @@ document.getElementById("search-button").addEventListener("click",async()=>{
       ]
     ],5);
 
-    // 棒グラフ
     createBarChart([
       data["2"],data["3"],data["4"],data["5"],
       data["6"],data["7"],data["8"],data["9"],
       data["10"],data["最新スコア"]
     ]);
 
-    // 着順回数テーブル（3列4列混在、空セル非表示）
     createTable("rank-count-table",[
       ["1着の回数","2着の回数","3着の回数","4着の回数"],
       [
@@ -207,20 +220,20 @@ document.getElementById("search-button").addEventListener("click",async()=>{
         `${data["3着の回数"]||0}回`,
         `${data["4着の回数"]||0}回`
       ],
-      ["1.5着の回数","2.5着の回数","3.5着の回数",""], // 空セル追加
+      ["1.5着の回数","2.5着の回数","3.5着の回数",""],
       [
         `${data["1.5着の回数"]||0}回`,
         `${data["2.5着の回数"]||0}回`,
         `${data["3.5着の回数"]||0}回`,
-        "" // 空セル
+        ""
       ]
     ],4);
 
-    // 円グラフ
     createPieChart(data);
 
   }catch(e){
     console.error(e);
+    loader.style.display="none";
     status.textContent=`成績更新チュ♡今は見れません (${e.message})`;
   }
 });
@@ -237,12 +250,7 @@ function createTable(id, rows, cols) {
       const div = document.createElement("div");
       div.textContent = cell;
       div.className = rowIndex % 2 === 0 ? "header" : "data";
-
-      // 空白セルなら "empty-cell" クラスを追加
-      if (!cell || cell.toString().trim() === "") {
-        div.classList.add("empty-cell");
-      }
-
+      if (!cell || cell.toString().trim() === "") div.classList.add("empty-cell");
       table.appendChild(div);
     });
   });
