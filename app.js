@@ -204,75 +204,34 @@ document.getElementById("search-button").addEventListener("click", async () => {
     ],5);
 
     // スコア先月比
-function renderSengetsuTable(data) {
-  const table = document.getElementById("sengetsudata-table");
-  if (!table) return;
-  table.innerHTML = "";
-  table.style.gridTemplateColumns = `repeat(${5}, 18vw)`; // 5列
+// スコア先月比テーブル作成
+createTable("sengetsudata-table", [
+  ["累計半荘数", "総スコア", "最高スコア", "平均スコア", "平均着順"],
+  [
+    formatChangeValue(data["累計半荘数先月比"], "半荘", false),
+    formatChangeValue(data["総スコア先月比"], "pt", false),
+    formatChangeValue(data["最高スコア先月比"], "pt", false),
+    formatChangeValue(data["平均スコア先月比"], "pt", false),
+    formatChangeValue(data["平均着順先月比"], "位", true)
+  ]
+], 5);
 
-  // ヘッダー（表示は元の見た目と合わせる）
-  const headers = ["累計半荘数","総スコア","最高スコア","平均スコア","平均着順"];
-  headers.forEach(h => {
-    const div = document.createElement("div");
-    div.textContent = h;
-    div.className = "header";
-    table.appendChild(div);
-  });
+// 表示用フォーマッタ関数
+function formatChangeValue(value, unit, isRank) {
+  const num = Number(value);
+  if (isNaN(num)) return "-";
 
-  // データキーと表示ルール
-  const cols = [
-    { key: "累計半荘数先月比", digits: 0, type: "signed", unit: "半荘" },
-    { key: "総スコア先月比",     digits: 1, type: "signed", unit: "pt" },
-    { key: "最高スコア先月比",   digits: 1, type: "signed", unit: "pt" },
-    { key: "平均スコア先月比",   digits: 3, type: "signed", unit: "pt" },
-    { key: "平均着順先月比",     digits: 3, type: "rank",   unit: ""   }
-  ];
+  // 平均着順のみ特殊表現（↑↓）
+  if (isRank) {
+    const arrow = num > 0 ? "↓" : "↑";
+    const color = num > 0 ? "red" : "blue";
+    return `<span style="color:${color};">${arrow}${Math.abs(num).toFixed(3)}${unit}</span>`;
+  }
 
-  cols.forEach(col => {
-    const div = document.createElement("div");
-    div.className = "data";
-
-    const raw = data[col.key];
-
-    // 不正・空ならデータ不足
-    if (raw === undefined || raw === null || raw === "" || isNaN(Number(String(raw).replace(/,/g, "")))) {
-      div.textContent = "データ不足";
-      table.appendChild(div);
-      return;
-    }
-
-    // 数値化（カンマなどが入っていても対応）
-    const num = Number(String(raw).replace(/,/g, ""));
-
-    if (col.type === "signed") {
-      // 正: +, 負: -, 0: 符号なし。色は正→赤、負→青
-      const absStr = Math.abs(num).toFixed(col.digits);
-      let text;
-      if (num > 0) text = `+${absStr}${col.unit}`;
-      else if (num < 0) text = `-${absStr}${col.unit}`;
-      else text = `${absStr}${col.unit}`;
-
-      div.textContent = text;
-      if (num > 0) div.style.color = "red";
-      else if (num < 0) div.style.color = "blue";
-      // 0 は色なし（既定）
-
-    } else if (col.type === "rank") {
-      // 平均着順：正なら ↓abs（赤）、負なら ↑abs（青）、0はそのまま数値（黒）
-      const absStr = Math.abs(num).toFixed(col.digits);
-      if (num > 0) {
-        div.textContent = `↓${absStr}`;
-        div.style.color = "blue";
-      } else if (num < 0) {
-        div.textContent = `↑${absStr}`;
-        div.style.color = "red";
-      } else {
-        div.textContent = `${absStr}`;
-      }
-    }
-
-    table.appendChild(div);
-  });
+  // それ以外（±を表示）
+  const sign = num > 0 ? "+" : "";
+  const color = num > 0 ? "red" : (num < 0 ? "blue" : "black");
+  return `<span style="color:${color};">${sign}${num.toFixed(1)}${unit}</span>`;
 }
    
 
