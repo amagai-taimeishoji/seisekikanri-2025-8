@@ -210,7 +210,7 @@ function renderSengetsuTable(data) {
   table.innerHTML = "";
   table.style.gridTemplateColumns = `repeat(${5}, 18vw)`; // 5列
 
-  // ヘッダー行
+  // ヘッダー（表示は元の見た目と合わせる）
   const headers = ["累計半荘数","総スコア","最高スコア","平均スコア","平均着順"];
   headers.forEach(h => {
     const div = document.createElement("div");
@@ -219,14 +219,13 @@ function renderSengetsuTable(data) {
     table.appendChild(div);
   });
 
-  // 値行（先月比）
-  // 定義：key, 小数桁数, 表示タイプ
+  // データキーと表示ルール
   const cols = [
     { key: "累計半荘数先月比", digits: 0, type: "signed", unit: "半荘" },
     { key: "総スコア先月比",     digits: 1, type: "signed", unit: "pt" },
     { key: "最高スコア先月比",   digits: 1, type: "signed", unit: "pt" },
     { key: "平均スコア先月比",   digits: 3, type: "signed", unit: "pt" },
-    { key: "平均着順先月比",     digits: 3, type: "rank",   unit: "位" }
+    { key: "平均着順先月比",     digits: 3, type: "rank",   unit: ""   }
   ];
 
   cols.forEach(col => {
@@ -234,47 +233,47 @@ function renderSengetsuTable(data) {
     div.className = "data";
 
     const raw = data[col.key];
-    if (raw === null || raw === undefined || raw === "" || isNaN(Number(raw))) {
+
+    // 不正・空ならデータ不足
+    if (raw === undefined || raw === null || raw === "" || isNaN(Number(String(raw).replace(/,/g, "")))) {
       div.textContent = "データ不足";
       table.appendChild(div);
       return;
     }
 
-    const num = Number(raw);
+    // 数値化（カンマなどが入っていても対応）
+    const num = Number(String(raw).replace(/,/g, ""));
 
     if (col.type === "signed") {
-      // 正: +, 負: -, 0: なし。色は正→赤、負→青、0→黒
-      let sign = "";
-      let color = "";
-      if (num > 0) { sign = "+"; color = "red"; }
-      else if (num < 0) { sign = "-"; color = "blue"; }
-      else { sign = ""; color = ""; }
-
+      // 正: +, 負: -, 0: 符号なし。色は正→赤、負→青
       const absStr = Math.abs(num).toFixed(col.digits);
-      div.textContent = `${sign}${absStr}${col.unit ? col.unit : ""}`;
-      if (color) div.style.color = color;
+      let text;
+      if (num > 0) text = `+${absStr}${col.unit}`;
+      else if (num < 0) text = `-${absStr}${col.unit}`;
+      else text = `${absStr}${col.unit}`;
+
+      div.textContent = text;
+      if (num > 0) div.style.color = "red";
+      else if (num < 0) div.style.color = "blue";
+      // 0 は色なし（既定）
 
     } else if (col.type === "rank") {
-      // 平均着順：正なら ↓abs, 負なら ↑abs（色は同様）
-      let arrow = "";
-      let color = "";
-      if (num > 0) { arrow = "↓"; color = "blue"; }
-      else if (num < 0) { arrow = "↑"; color = "red"; }
-      else { arrow = ""; color = ""; }
-
+      // 平均着順：正なら ↓abs（赤）、負なら ↑abs（青）、0はそのまま数値（黒）
       const absStr = Math.abs(num).toFixed(col.digits);
-      if (arrow) {
-        div.textContent = `${arrow}${absStr}`;
+      if (num > 0) {
+        div.textContent = `↓${absStr}`;
+        div.style.color = "blue";
+      } else if (num < 0) {
+        div.textContent = `↑${absStr}`;
+        div.style.color = "red";
       } else {
-        div.textContent = `${absStr}`; // 0 の場合は矢印なし
+        div.textContent = `${absStr}`;
       }
-      if (color) div.style.color = color;
     }
 
     table.appendChild(div);
   });
 }
-
    
 
     // 着順回数テーブル（3列4列混在、空セル非表示）
