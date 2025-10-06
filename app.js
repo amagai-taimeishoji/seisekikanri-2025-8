@@ -116,10 +116,8 @@ for(let m=1;m<=12;m++){
 monthSelect.value=currentMonth;
 
 /* -------------------------
-   ローディング関連（追加部分）
+   ローディング関連
    ------------------------- */
-// HTML側に以下の要素がある想定:
-// #loadingArea, #loadingFill, #loadingText, #update-status
 const loadingArea = document.getElementById("loadingArea");
 const loadingFill = document.getElementById("loadingFill");
 const loadingText = document.getElementById("loadingText");
@@ -180,7 +178,7 @@ function stopLoading() {
 }
 
 /* -------------------------
-   検索イベント（ほぼ原形維持。ただしローディングを差し替え）
+   検索イベント
    ------------------------- */
 document.getElementById("search-button").addEventListener("click", async () => {
   const name = document.getElementById("name-input").value.trim();
@@ -195,7 +193,7 @@ document.getElementById("search-button").addEventListener("click", async () => {
     return;
   }
 
-  // ローディング開始（ここだけ差し替え）
+  // ローディング開始
   startLoading();
   if (results) results.style.display = "none";
   if (status) status.textContent = "";
