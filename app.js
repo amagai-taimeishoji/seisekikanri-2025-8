@@ -204,16 +204,76 @@ document.getElementById("search-button").addEventListener("click", async () => {
     ],5);
 
     // スコア先月比
- createTable("sengetsudata-table",[
-      ["累計半荘数","総スコア","最高スコア","平均スコア","平均着順"],
-      [
-        `${Number(data["累計半荘数先月比"]).toFixed(0)}半荘`,
-        `${Number(data["総スコア先月比"]).toFixed(1)}pt`,
-        `${Number(data["最高スコア先月比"]).toFixed(1)}pt`,
-        `${Number(data["平均スコア先月比"]).toFixed(3)}pt`,
-        `${Number(data["平均着順先月比"]).toFixed(3)}位`
-      ]
-    ],5);
+function renderSengetsuTable(data) {
+  const table = document.getElementById("sengetsudata-table");
+  if (!table) return;
+  table.innerHTML = "";
+  table.style.gridTemplateColumns = `repeat(${5}, 18vw)`; // 5列
+
+  // ヘッダー行
+  const headers = ["累計半荘数","総スコア","最高スコア","平均スコア","平均着順"];
+  headers.forEach(h => {
+    const div = document.createElement("div");
+    div.textContent = h;
+    div.className = "header";
+    table.appendChild(div);
+  });
+
+  // 値行（先月比）
+  // 定義：key, 小数桁数, 表示タイプ
+  const cols = [
+    { key: "累計半荘数先月比", digits: 0, type: "signed", unit: "半荘" },
+    { key: "総スコア先月比",     digits: 1, type: "signed", unit: "pt" },
+    { key: "最高スコア先月比",   digits: 1, type: "signed", unit: "pt" },
+    { key: "平均スコア先月比",   digits: 3, type: "signed", unit: "pt" },
+    { key: "平均着順先月比",     digits: 3, type: "rank",   unit: "位" }
+  ];
+
+  cols.forEach(col => {
+    const div = document.createElement("div");
+    div.className = "data";
+
+    const raw = data[col.key];
+    if (raw === null || raw === undefined || raw === "" || isNaN(Number(raw))) {
+      div.textContent = "データ不足";
+      table.appendChild(div);
+      return;
+    }
+
+    const num = Number(raw);
+
+    if (col.type === "signed") {
+      // 正: +, 負: -, 0: なし。色は正→赤、負→青、0→黒
+      let sign = "";
+      let color = "";
+      if (num > 0) { sign = "+"; color = "red"; }
+      else if (num < 0) { sign = "-"; color = "blue"; }
+      else { sign = ""; color = ""; }
+
+      const absStr = Math.abs(num).toFixed(col.digits);
+      div.textContent = `${sign}${absStr}${col.unit ? col.unit : ""}`;
+      if (color) div.style.color = color;
+
+    } else if (col.type === "rank") {
+      // 平均着順：正なら ↓abs, 負なら ↑abs（色は同様）
+      let arrow = "";
+      let color = "";
+      if (num > 0) { arrow = "↓"; color = "blue"; }
+      else if (num < 0) { arrow = "↑"; color = "red"; }
+      else { arrow = ""; color = ""; }
+
+      const absStr = Math.abs(num).toFixed(col.digits);
+      if (arrow) {
+        div.textContent = `${arrow}${absStr}`;
+      } else {
+        div.textContent = `${absStr}`; // 0 の場合は矢印なし
+      }
+      if (color) div.style.color = color;
+    }
+
+    table.appendChild(div);
+  });
+}
 
    
 
