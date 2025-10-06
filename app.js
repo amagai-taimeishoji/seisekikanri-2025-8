@@ -204,7 +204,6 @@ document.getElementById("search-button").addEventListener("click", async () => {
     ],5);
 
     // スコア先月比
-// スコア先月比
 function renderSengetsuTable(data) {
   const table = document.getElementById("sengetsudata-table");
   if (!table) {
@@ -217,33 +216,39 @@ function renderSengetsuTable(data) {
   const headers = ["累計半荘数","総スコア","最高スコア","平均スコア","平均着順"];
   let html = "";
 
-  // header行
+  // ヘッダー行
   for (let h of headers) {
     html += `<div class="header">${h}</div>`;
   }
 
   // 各項目を data から直接参照
-  const 累計半荘数先月比 = Number(data["累計半荘数先月比"]) || 0;
-  const 総スコア先月比   = Number(data["総スコア先月比"]) || 0;
-  const 最高スコア先月比 = Number(data["最高スコア先月比"]) || 0;
-  const 平均スコア先月比 = Number(data["平均スコア先月比"]) || 0;
-  const 平均着順先月比   = Number(data["平均着順先月比"]) || 0;
+  const values = {
+    "累計半荘数先月比": data["累計半荘数先月比"],
+    "総スコア先月比": data["総スコア先月比"],
+    "最高スコア先月比": data["最高スコア先月比"],
+    "平均スコア先月比": data["平均スコア先月比"],
+    "平均着順先月比": data["平均着順先月比"]
+  };
 
   const cols = [
-    { value: 累計半荘数先月比, digits: 0, unit: "半荘", type: "signed" },
-    { value: 総スコア先月比,   digits: 1, unit: "pt",   type: "signed" },
-    { value: 最高スコア先月比, digits: 1, unit: "pt",   type: "signed" },
-    { value: 平均スコア先月比, digits: 3, unit: "pt",   type: "signed" },
-    { value: 平均着順先月比,   digits: 3, unit: "",     type: "rank"   }
+    { key: "累計半荘数先月比", digits: 0, unit: "半荘", type: "signed" },
+    { key: "総スコア先月比",   digits: 1, unit: "pt",   type: "signed" },
+    { key: "最高スコア先月比", digits: 1, unit: "pt",   type: "signed" },
+    { key: "平均スコア先月比", digits: 3, unit: "pt",   type: "signed" },
+    { key: "平均着順先月比",   digits: 3, unit: "",     type: "rank"   }
   ];
 
   for (let col of cols) {
-    const num = col.value;
-    if (!isFinite(num)) {
+    const raw = values[col.key];
+    const num = Number(raw);
+
+    // データがない場合
+    if (raw == null || raw === "" || isNaN(num)) {
       html += `<div class="data">-</div>`;
       continue;
     }
 
+    // signed系
     if (col.type === "signed") {
       const absStr = Math.abs(num).toFixed(col.digits);
       let text;
@@ -253,10 +258,11 @@ function renderSengetsuTable(data) {
 
       const color = num > 0 ? "red" : num < 0 ? "blue" : "black";
       html += `<div class="data"><span style="color:${color};">${text}</span></div>`;
+    }
 
-    } else if (col.type === "rank") {
+    // 平均着順（逆色）
+    else if (col.type === "rank") {
       const absStr = Math.abs(num).toFixed(col.digits);
-      // 平均着順の色は逆（正:↓青, 負:↑赤）
       if (num > 0)
         html += `<div class="data"><span style="color:blue;">↓${absStr}</span></div>`;
       else if (num < 0)
@@ -268,7 +274,6 @@ function renderSengetsuTable(data) {
 
   table.innerHTML = html;
 }
-
 // ← ここを追加！
 renderSengetsuTable(data);
 
